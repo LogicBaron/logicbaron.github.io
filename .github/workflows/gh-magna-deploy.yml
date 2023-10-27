@@ -37,6 +37,7 @@ jobs:
           git merge dev
 
   deploy:
+    needs: merge-to-gh-pages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
