@@ -1,5 +1,6 @@
 name: magnalapis deployment at gh-pages push
-permissions: read-all
+permissions:
+  id-token: write
 on:
   push:
     branches: ['gh-pages']
