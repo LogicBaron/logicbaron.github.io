@@ -9,12 +9,12 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[hello]]></title>
-            <link>https://magnalapis.github.io/blog/2023/10/27/hello</link>
-            <guid>https://magnalapis.github.io/blog/2023/10/27/hello</guid>
+            <title><![CDATA[first letter]]></title>
+            <link>https://magnalapis.github.io/blog/2023/10/27/first letter</link>
+            <guid>https://magnalapis.github.io/blog/2023/10/27/first letter</guid>
             <pubDate>Fri, 27 Oct 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[test]]></description>
-            <content:encoded><![CDATA[<p>test</p>]]></content:encoded>
+            <description><![CDATA[hello,]]></description>
+            <content:encoded><![CDATA[<p>hello,</p><p>this is magnalapis.</p><p>this is my first letter to you.</p>]]></content:encoded>
         </item>
     </channel>
 </rss>

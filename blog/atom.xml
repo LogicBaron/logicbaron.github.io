@@ -8,11 +8,11 @@
     <subtitle>Magna Lapis Blog</subtitle>
     <icon>https://magnalapis.github.io/img/eyestone.ico</icon>
     <entry>
-        <title type="html"><![CDATA[hello]]></title>
-        <id>https://magnalapis.github.io/blog/2023/10/27/hello</id>
-        <link href="https://magnalapis.github.io/blog/2023/10/27/hello"/>
+        <title type="html"><![CDATA[first letter]]></title>
+        <id>https://magnalapis.github.io/blog/2023/10/27/first letter</id>
+        <link href="https://magnalapis.github.io/blog/2023/10/27/first letter"/>
         <updated>2023-10-27T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[test]]></summary>
-        <content type="html"><![CDATA[<p>test</p>]]></content>
+        <summary type="html"><![CDATA[hello,]]></summary>
+        <content type="html"><![CDATA[<p>hello,</p><p>this is magnalapis.</p><p>this is my first letter to you.</p>]]></content>
     </entry>
 </feed>
