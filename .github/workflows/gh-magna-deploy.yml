@@ -33,6 +33,7 @@ jobs:
 
       - name: Merge to gh-pages
         run: |
+          git remote update
           git checkout gh-pages
           git merge dev
 
