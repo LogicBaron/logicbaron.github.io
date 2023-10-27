@@ -1,4 +1,0 @@
----
-id: contributor
----
-# Contributors
