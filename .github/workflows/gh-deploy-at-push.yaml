@@ -3,7 +3,7 @@ permissions:
   id-token: write
 on:
   push:
-    branches: ['dev']
+    branches: ['gh-pages']
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,9 +41,13 @@ jobs:
       - name: Build Docs
         run: npm run build
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+
       - name: Deploy Docs
         id: deployment
         uses: actions/deploy-pages@v2
         with:
           github_token: ${{ secrets.GH_ACTIONS_TOKEN }}
           publish_dir: ./build
+
