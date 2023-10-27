@@ -22,7 +22,7 @@ jobs:
         run: npm run build
 
   deploy:
-    needs: merge-to-gh-pages
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
