@@ -1,7 +1,7 @@
 name: magnalapis deployment
 on:
   push:
-    branches: ['dev']
+    branches: ['gh-pages']
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,23 +20,6 @@ jobs:
       
       - name: Build code
         run: npm run build
-
-  merge-to-gh-pages:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          ref: dev
-
-      - name: Merge to gh-pages
-        run: |
-          git remote update
-          git checkout gh-pages
-          git pull origin gh-pages --allow-unrelated-histories
-          git merge dev
 
   deploy:
     needs: merge-to-gh-pages
