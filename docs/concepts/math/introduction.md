@@ -11,13 +11,13 @@ Linear Algebra, Statistics, Information Theory 그리고 Calculus, 4가지 분�
 
 ## Linear Algebra
 
-> 머신 러닝 **과정**을 표현하는 수학적 언어. 머신러닝을 기록하고 전달하는 방법이다.
+> 머신 러닝에서 다루는 **객체를 서술**하는 수학적 표현. 머신러닝을 기록하고 전달하는 방법이다.
 
 머신 러닝에서 다루는 고차원의 데이터는 **vector**로 표현된다. 대형 데이터와 모델의 parameter 들은 **matrix** 형태로 기술한다. 또한 머신 러닝의 연산 등의 모든 과정은 matrix 연산, 즉 linear algebra 를 기반으로 한다.
 
 ## Statistics
 
-> 머신 러닝의 **목적**을 표현하는 수학적 언어이다.
+> 머신 러닝의 I/O을 포함하는 전체 **과정을 서술**하는 수학적 표현.
 
 머신 러닝은 pattern recognition 을 목표로 하며 자연현상의 패턴을 확률 분포로써 기술하며 모델 output 역시 확률 분포로써 설명한다. 
 
@@ -25,7 +25,7 @@ Linear Algebra, Statistics, Information Theory 그리고 Calculus, 4가지 분�
 
 ## Information Theory
 
-> 머신 러닝의 **원리** 와 **해석**을 표현하는 수학적 언어이다.
+> 머신 러닝을 **설명하고 해석**하기 위한 수학적 도구.
 
 모델은 어떻게 학습하며, 모델이 내놓는 결과는 어떤 의미를 가지는가?
 
