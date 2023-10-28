@@ -43,14 +43,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://https://github.com/magnalapis/magnalapis.github.io',
+            'https://github.com/magnalapis/magnalapis.github.io/tree/dev/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://https://github.com/magnalapis/magnalapis.github.io',
+            'https://github.com/magnalapis/magnalapis.github.io/tree/dev/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
