@@ -21,7 +21,7 @@ Linear Algebra, Statistics, Information Theory 그리고 Calculus, 4가지 분�
 
 머신 러닝은 pattern recognition 을 목표로 하며 자연현상의 패턴을 확률 분포로써 기술하며 모델 output 역시 확률 분포로써 설명한다. 
 
-머신 러닝을 수행하면서 pattern 이 무엇이며, 모델이 무엇을 학습하고자 하고 어떤 결과를 보여주는지 정확히 이해하기 위해서는 확률론에 대한 지식이 필수적이다.
+머신 러닝을 수행하면서 pattern 이 어떻게 표현하며, 모델이 무엇을 학습하고자 하고 어떤 결과를 보여주는지 정확히 이해하기 위해서는 확률론에 대한 지식이 필수적이다.
 
 ## Information Theory
 
