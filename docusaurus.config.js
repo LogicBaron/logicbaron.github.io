@@ -160,6 +160,28 @@ const config = {
               },
             ]
           },
+          {
+            type: 'dropdown',
+            label: 'Tasks',
+            position: 'left',
+            items: [
+              {
+                type: 'docSidebar',
+                sidebarId: 'RecommendationSidebar',
+                label: 'Recommendation'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'InformationextractionSidebar',
+                label: 'Information Extraction'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'RetrievalSidebar',
+                label: 'Retrieval'
+              },
+            ]
+          },
           {to: '/blog', label: 'Blog', position: 'right'},
           {
             href: 'https://github.com/magnalapis',
