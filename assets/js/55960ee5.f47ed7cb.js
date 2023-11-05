@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmagnalapis=self.webpackChunkmagnalapis||[]).push([[121],{8070:a=>{a.exports=JSON.parse('[{"label":"Programming","permalink":"/docs/tags/programming","count":1}]')}}]);
