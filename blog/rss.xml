@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
-        <title>Magna Lapis Blog</title>
-        <link>https://magnalapis.github.io/blog</link>
-        <description>Magna Lapis Blog</description>
-        <lastBuildDate>Fri, 27 Oct 2023 00:00:00 GMT</lastBuildDate>
+        <title>Logic Baron Blog</title>
+        <link>https://logicbaron.github.io/blog</link>
+        <description>Logic Baron Blog</description>
+        <lastBuildDate>Tue, 07 Nov 2023 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <copyright>Copyright © 2023 Facebook, Inc.</copyright>
         <item>
-            <title><![CDATA[first letter]]></title>
-            <link>https://magnalapis.github.io/blog/2023/10/27/first letter</link>
-            <guid>https://magnalapis.github.io/blog/2023/10/27/first letter</guid>
-            <pubDate>Fri, 27 Oct 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[hello!]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_LWe7" id="hello">hello!<a href="#hello" class="hash-link" aria-label="Direct link to hello!" title="Direct link to hello!">​</a></h3><p>this is magnalapis.</p><p>this is my first letter to you.</p><p>Today, I setup github pages.</p><ol><li><p>color.</p></li><li><p>github actions for automated build &amp; deploy websites.</p></li><li><p>config.js, documents and sidebars.</p></li><li><p>TeamProfileCards.</p></li></ol><p>Tomorrow, I will study some markdown feature &amp; styling tools useful for docusaurus framework.</p>]]></content:encoded>
+            <title><![CDATA[웹 데이터 뷰어 만들기]]></title>
+            <link>https://logicbaron.github.io/blog/2023/11/07/</link>
+            <guid>https://logicbaron.github.io/blog/2023/11/07/</guid>
+            <pubDate>Tue, 07 Nov 2023 00:00:00 GMT</pubDate>
+            <description><![CDATA[서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.]]></description>
+            <content:encoded><![CDATA[<p>서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.</p>]]></content:encoded>
         </item>
     </channel>
 </rss>

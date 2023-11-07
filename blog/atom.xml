@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://magnalapis.github.io/blog</id>
-    <title>Magna Lapis Blog</title>
-    <updated>2023-10-27T00:00:00.000Z</updated>
+    <id>https://logicbaron.github.io/blog</id>
+    <title>Logic Baron Blog</title>
+    <updated>2023-11-07T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://magnalapis.github.io/blog"/>
-    <subtitle>Magna Lapis Blog</subtitle>
-    <icon>https://magnalapis.github.io/img/eyestone.ico</icon>
+    <link rel="alternate" href="https://logicbaron.github.io/blog"/>
+    <subtitle>Logic Baron Blog</subtitle>
+    <icon>https://logicbaron.github.io/img/eyestone.ico</icon>
+    <rights>Copyright © 2023 Facebook, Inc.</rights>
     <entry>
-        <title type="html"><![CDATA[first letter]]></title>
-        <id>https://magnalapis.github.io/blog/2023/10/27/first letter</id>
-        <link href="https://magnalapis.github.io/blog/2023/10/27/first letter"/>
-        <updated>2023-10-27T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[hello!]]></summary>
-        <content type="html"><![CDATA[<h3 class="anchor anchorWithStickyNavbar_LWe7" id="hello">hello!<a href="#hello" class="hash-link" aria-label="Direct link to hello!" title="Direct link to hello!">​</a></h3><p>this is magnalapis.</p><p>this is my first letter to you.</p><p>Today, I setup github pages.</p><ol><li><p>color.</p></li><li><p>github actions for automated build &amp; deploy websites.</p></li><li><p>config.js, documents and sidebars.</p></li><li><p>TeamProfileCards.</p></li></ol><p>Tomorrow, I will study some markdown feature &amp; styling tools useful for docusaurus framework.</p>]]></content>
+        <title type="html"><![CDATA[웹 데이터 뷰어 만들기]]></title>
+        <id>https://logicbaron.github.io/blog/2023/11/07/</id>
+        <link href="https://logicbaron.github.io/blog/2023/11/07/"/>
+        <updated>2023-11-07T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.]]></summary>
+        <content type="html"><![CDATA[<p>서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.</p>]]></content>
     </entry>
 </feed>

@@ -1,0 +1,17 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Logic Baron Blog",
+    "home_page_url": "https://logicbaron.github.io/blog",
+    "description": "Logic Baron Blog",
+    "items": [
+        {
+            "id": "https://logicbaron.github.io/blog/2023/11/07/",
+            "content_html": "<p>서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.</p>",
+            "url": "https://logicbaron.github.io/blog/2023/11/07/",
+            "title": "웹 데이터 뷰어 만들기",
+            "summary": "서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.",
+            "date_modified": "2023-11-07T00:00:00.000Z",
+            "tags": []
+        }
+    ]
+}
