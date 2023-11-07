@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: 'Better Knowledge',
-    Svg: require('@site/static/img/knowledge.svg').default,
+    Svg: require('@site/static/img/logicbaron_book.svg').default,
     description: (
       <>
         Our goal is to record more accurate and deeper knowledge.
@@ -14,7 +14,7 @@ const FeatureList = [
   },
   {
     title: 'Focus on AI',
-    Svg: require('@site/static/img/ai_platform.svg').default,
+    Svg: require('@site/static/img/logicbaron_aiai.svg').default,
     description: (
       <>
         We record mathematics, information theory, computer science, and machine learning for AI.
@@ -23,7 +23,7 @@ const FeatureList = [
   },
   {
     title: 'LIFE and MUSIC',
-    Svg: require('@site/static/img/guitar.svg').default,
+    Svg: require('@site/static/img/logicbaron_guitar.svg').default,
     description: (
       <>
         I record life. I play music.

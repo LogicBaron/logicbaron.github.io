@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'Logic Baron',
   tagline: 'Math, Information and Machine Learning',
-  favicon: 'img/eyestone.ico',
+  favicon: 'img/logicbaron.ico',
 
   // Set the production url of your site here
   url: 'https://logicbaron.github.io/',
@@ -76,7 +76,7 @@ const config = {
         title: 'LogicBaron',
         logo: {
           alt: 'EyeStone Logo',
-          src: 'img/eyestone.svg',
+          src: 'img/logicbaron.svg',
         },
         style: 'dark',
         items: [
