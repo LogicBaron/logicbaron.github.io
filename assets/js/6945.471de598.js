@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunklogicbaron=self.webpackChunklogicbaron||[]).push([[6945],{6945:(c,e,s)=>{s.r(e)}}]);
