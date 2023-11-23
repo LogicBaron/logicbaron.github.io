@@ -83,7 +83,7 @@ export function ActiveTeamRow(): JSX.Element {
     <div className="row">
       <TeamProfileCardCol
         name="Jonghun Park"
-        githubUrl="https://github.com/magnalapis">
+        githubUrl="https://github.com/logicbaron">
         <Translate id="team.profile.Jonghun Park.body">
           Novice AI & ML Engineer. 😄 Striving for growth.
           Passionate about fundamental theories, including math.🦈

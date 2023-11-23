@@ -100,7 +100,7 @@ const config = {
   
         //... other Algolia params
       },
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/logicbaron_social_card.jpg',
       navbar: {
         title: 'LogicBaron',
         logo: {

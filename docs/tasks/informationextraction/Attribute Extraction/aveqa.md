@@ -1,13 +1,21 @@
-import aveqa_attribute_per_category from './aveqa_attribute_per_category.png';
-import aveqa_datastat from './aveqa_datastat.png';
-import aveqa_aveqa from './aveqa_aveqa.png';
-import aveqa_maveqa from './aveqa_maveqa.png';
-import aveqa_result from './aveqa_result.png';
+---
+id: hello
+sidebar_position: 0
+tags:
+  - google
+  - 2022
+---
+import aveqa_attribute_per_category from './asset/aveqa_attribute_per_category.png';
+import aveqa_datastat from './asset/aveqa_datastat.png';
+import aveqa_aveqa from './asset/aveqa_aveqa.png';
+import aveqa_maveqa from './asset/aveqa_maveqa.png';
+import aveqa_result from './asset/aveqa_result.png';
 
 
 # AVEQA & MAVEQA
 
-구글에서 발표한 속성 데이터셑은 MAVE 와 속성 추출 모델 AVEQA 와 MAVEQA 를 간단하게 리뷰. 특히 모델의 경우, 상세한 architecture 보다는 idea 위주로 정리하겠습니다.
+
+2022년 구글에서 발표한 속성 데이터셑은 MAVE 와 속성 추출 모델 AVEQA 와 MAVEQA 를 간단하게 리뷰. 특히 모델의 경우, 상세한 architecture 보다는 idea 위주로 정리하겠습니다.
 
 - 페이퍼 링크
   - [AVEQA](https://dl.acm.org/doi/pdf/10.1145/3394486.3403047)
