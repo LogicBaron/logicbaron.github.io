@@ -1,6 +1,6 @@
 ---
 id: hello
-sidebar_position: 0
+sidebar_position: 1
 tags:
   - google
   - 2022
@@ -16,6 +16,8 @@ import aveqa_result from './asset/aveqa_result.png';
 
 
 2022년 구글에서 발표한 속성 데이터셑은 MAVE 와 속성 추출 모델 AVEQA 와 MAVEQA 를 간단하게 리뷰. 특히 모델의 경우, 상세한 architecture 보다는 idea 위주로 정리하겠습니다.
+
+---
 
 - 페이퍼 링크
   - [AVEQA](https://dl.acm.org/doi/pdf/10.1145/3394486.3403047)
