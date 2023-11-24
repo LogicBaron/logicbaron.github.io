@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunklogicbaron=self.webpackChunklogicbaron||[]).push([[4121],{8070:e=>{e.exports=JSON.parse('[{"label":"google","permalink":"/docs/tags/google","count":1},{"label":"2022","permalink":"/docs/tags/2022","count":1}]')}}]);
