@@ -4,6 +4,9 @@ sidebar_position: 1
 tags: [information]
 ---
 import entropy_cat from './asset/entropy_cat.png';
+import entropy_catcolor from './asset/entropy_catcolor.png';
+import entropy_catcolor2 from './asset/entropy_catcolor2.png';
+import entropy_catcolor3 from './asset/entropy_catcolor3.png';
 
 # Entropy
 
@@ -167,6 +170,11 @@ A: Y
 
 마지막으로 정보와 엔트로피의 개념을 하나의 예시를 살펴보며 정리해보겠습니다. 털색깔 A, B 의 확률이 각각 0.2 이고 나머지 C, D, E, F, G, H, I, J 의 확률이 0.075인 분포를 생각해봅시다. 초기 분포의 엔트로피는 3.17 입니다.
 
+
+<div style={{textAlign: 'center'}}>
+ <img src={entropy_catcolor} style={{width: 300}} />
+</div>
+
 ---
 
 `Q: 특별 고양이의 털 색깔이 A, B, C 중에 있나요?`
@@ -181,6 +189,10 @@ A: Y
 
 ---
 
+<div style={{textAlign: 'center'}}>
+ <img src={entropy_catcolor2} style={{width: 300}} />
+</div>
+
 `Q: 특별 고양이의 털 색깔이 D,E,F,G 중에 있나요?`
   - 질문의 확률 분포는 정답일 확률 0.57, 오답이 확률 0.43의 확률 분포이며, 엔트로피는 0.985 입니다.
   - 정답이 있을 확률의 정보량은 0.8, 없을 확률의 정보량은 1.2 입니다.
@@ -191,7 +203,11 @@ A: Y
   - 2.8-1.2=1.6 입니다. 정확하게 계산하면 두 값은 같습니다. 이는 이 때부터 분포가 균등분포, 즉 엔트로피의 크기와 가능하 사건의 수가 비례하기 떄문입니다.
 
 ---
-`Q: 특별 고양이의 털 색깔이 G인가요?`
+<div style={{textAlign: 'center'}}>
+ <img src={entropy_catcolor3} style={{width: 300}} />
+</div>
+
+`Q: 특별 고양이의 털 색깔이 J인가요?`
   - 질문의 확률 분포는 정답일 확률 0.33, 오답일 확률 0.66의 확률분포이며 엔트로피는 0.92 입니다.
   - 정답인 사건의 정보량은 1.58, 오답인 사건의 정보량은 0.58입니다.
 `A: N`
