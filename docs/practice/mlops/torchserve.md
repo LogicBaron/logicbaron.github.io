@@ -1,6 +1,6 @@
 ---
 title: Torchserve
-sidebar_position: 0
+sidebar_position: 1
 tags: [mlops, torchserve]
 ---
 import torchserve_torchserve from './asset/torchserve_torchserve.png';
@@ -42,7 +42,7 @@ torch-model-archive --model-name <model_name> --version 1.0 --model-file <./my_m
          - [step1:configuration 설정](https://github.com/pytorch/serve/blob/master/docs/configuration.md#allow-model-specific-custom-python-packages) -> [step2:requirements 전달](https://github.com/pytorch/serve/blob/master/model-archiver/README.md#torch-model-archiver-command-line-interface)
      - [dockerization](https://github.com/pytorch/serve/blob/master/docker/README.md) (구매옵션 api에서 사용)
           - 도커화 시켜서 필요한 dependency 설치 후 작업.
-          
+
 - `--model_name` 값을 통해 관리. `--serialized file` : state_dict
 
 - entry point
