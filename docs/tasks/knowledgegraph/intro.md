@@ -1,5 +1,5 @@
 ---
-id: hello
+id: knowledgegraph
 sidebar_position: 0
 ---
 # Knowledge Graph

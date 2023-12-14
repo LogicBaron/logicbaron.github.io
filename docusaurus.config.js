@@ -230,6 +230,16 @@ const config = {
                 sidebarId: 'RetrievalSidebar',
                 label: 'Retrieval'
               },
+              {
+                type: 'docSidebar',
+                sidebarId: 'KnowledgegraphSidebar',
+                label: 'Knowledge Graph',
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'LLMSidebar',
+                label: 'LLM & Prompt'
+              }
             ]
           },
           {to: '/blog', label: 'Blog', position: 'right'},
