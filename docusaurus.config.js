@@ -139,6 +139,11 @@ const config = {
               },
               {
                 type: 'docSidebar',
+                sidebarId: 'DeepLearningSidebar',
+                label: 'Deep Learning'
+              },
+              {
+                type: 'docSidebar',
                 sidebarId: 'ProgrammingSidebar',
                 label: 'Programming'
               },
@@ -174,17 +179,17 @@ const config = {
               {
                 type: 'docSidebar',
                 sidebarId: 'MLModelSidebar',
-                label: 'ML models'
+                label: 'ML Models'
               },
               {
                 type: 'docSidebar',
                 sidebarId: 'AIModelSidebar',
-                label: 'AI models'
+                label: 'AI Models'
               },
               {
                 type: 'docSidebar',
                 sidebarId: 'LargeModelSidebar',
-                label: 'Large models'
+                label: 'Large Models'
               },
             ]
           },
