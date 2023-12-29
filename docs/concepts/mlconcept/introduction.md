@@ -1,5 +1,5 @@
 ---
-id: introductoin
+id: introduction
 sidebar_position: 0
 ---
 

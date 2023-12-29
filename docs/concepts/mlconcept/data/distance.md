@@ -80,9 +80,9 @@ $$
  - **generalized Mahalanobis distance**
 
  $$
-||x-\mu||_{\bold{\Sigma}} = \sqrt{(x-\mu)^\top \bold{\Sigma}^{-1} (x-\mu)}
+||x-\mu||_{\bold{W}} = \sqrt{(x-\mu)^\top \bold{W} (x-\mu)}
 $$
 
 ## Metric Learning
 
- 현재 가지고 있는 data point 들에 대해서 비슷한 데이터는 가깝게, 다른 데이터는 멀게 해석할 수 있는 적절한 weight matrix $W$ 를 찾는다면 data point 에 대한 해석이 훨씬 수월해집니다. 이러한 방법론의 연구를 **[Metric Learning](/docs/concepts/mlconcept/Taxonomy/metriclearning)** 이라고 합니다.
+ 현재 가지고 있는 data point 들에 대해서 비슷한 데이터는 가깝게, 다른 데이터는 멀게 해석할 수 있는 적절한 weight matrix $W$ 를 찾는다면 data point 에 대한 해석이 훨씬 수월해집니다. 이러한 방법론의 연구를 **[Metric Learning](/docs/concepts/mlconcept/taxonomy/metriclearning)** 이라고 합니다.
