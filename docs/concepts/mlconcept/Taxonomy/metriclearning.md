@@ -2,6 +2,8 @@
 id: metriclearning
 sidebar_position: 0
 ---
+import metriclearning_concept from './asset/metriclearning_concept.png';
+
 # Metric Learning
 
 :::note
@@ -14,8 +16,12 @@ Dimensionality reduction 와 manifold learning 의 한 종류로써,
 
 metric learning 은 **서로 다른 데이터를 떨어뜨리고, 비슷한 데이터를 가까이**하는 distance metric 또는 embedding space 를 학습하는 방법입니다. 이는 수학적으로는, 최적의 Mahalanobis weight matrix 를 찾아가는 과정입니다.
 
-![Alt text](image.png)
+<div style={{textAlign: 'Center'}}>
+  <img src={metriclearning_concept} />
+</div>
 
+
+``
 아래 순서로 metric learning 개념들을 정리합니다.
 - **Spectral Metric Learning**
   - generalized eigenvalue problem 의 한 형태로, matrix 분해를 통해 좋은 projection 을 찾는 방식.
