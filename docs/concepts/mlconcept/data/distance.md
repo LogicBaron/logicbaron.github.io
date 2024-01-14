@@ -30,6 +30,11 @@ metric space $X$ 에 대해서, 함수 $d: X \times X \rightarrow [0, \inf)$ 가
 
 또, data cloud 와 data point 의 거리는 어떻게 계산할 수 있을까요?
 
+## Hamming Distance
+
+ Binary data 에 대해 대표적으로 사용할 수 있는 거리 함수로써, 두 데이터에 대해 값이 다른 bit 의 수를 의미합니다. XOR 연산 결과의 bit 수와 같습니다.
+
+ 
 ## Mahalanobis Distance
 
 이 그림에서 data point $x$ 는 $X_1$ 에 속한다고 보는 게 타당할까요, $X_2$ 에 속한다고 보는게 타당할까요?
