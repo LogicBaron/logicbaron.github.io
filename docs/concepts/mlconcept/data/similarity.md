@@ -28,7 +28,10 @@ Jaccard Index 의 단점은 클러스터의 포함 유무와 같은 **binary dat
 
 예를 들어서, 신규 기능 A 와 B 의 유사도를 비교하기 위해서 사용한 유저 그룹을 비교하려고 한다고 생각해봅시다. **Jaccard Index** 는 기능을 사용한 유저의 수만을 비교하지만, 실제로는 각 유저가 기능을 몇 번 사용했는지의 정보도 중요할 수 있습니다. **Weighted Jaccard Index** 는 이렇게 두 그룹을 element 의 중요도(weight)를 고려해서 평가하기 위한 지표입니다.
 
-두 데이터 $\bold{x}=(x_1, x_2, ..., x_n)$, $\bold{y}=(y_1, y_2, ..., y_n)$ 에 대해 $x_i, y_i \geq 0$ 일 때, weighted jaccard index 는 아래와 같이 정의됩니다.
+---
+- **Def. Weighted Jaccard Index**
+
+두 데이터 $\bold{x}=(x_1, x_2, ..., x_n)$, $\bold{y}=(y_1, y_2, ..., y_n)$ 에 대해 $x_i, y_i \geq 0$ 일 때, **weighted jaccard index** 는 아래와 같이 정의됩니다.
 
 $$
 J_W(x,y) = \frac{\sum_i \min (x_i, y_i)}{\sum_j \max (x_j, y_j)}
@@ -36,6 +39,7 @@ $$
 
 Weighted jaccard index 의 단점은, 음의 상관계수를 측정할 수 없다는 점입니다.
 
+---
 
 
 
