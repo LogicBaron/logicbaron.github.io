@@ -34,7 +34,14 @@ metric space $X$ 에 대해서, 함수 $d: X \times X \rightarrow [0, \inf)$ 가
 
  Binary data 에 대해 대표적으로 사용할 수 있는 거리 함수로써, 두 데이터에 대해 값이 다른 bit 의 수를 의미합니다. XOR 연산 결과의 bit 수와 같습니다.
 
- 
+
+## KL Divergence
+
+KL Divergence 는 확률 분포간의 유사도를 측정하는 방식입니다.
+
+KL Divergence 개념은 [Concept: Math](/docs/concepts/math/introduction)의 [KL Divergence](/docs/concepts/math/information/kl_divergence.md) 문서 참조.
+
+
 ## Mahalanobis Distance
 
 이 그림에서 data point $x$ 는 $X_1$ 에 속한다고 보는 게 타당할까요, $X_2$ 에 속한다고 보는게 타당할까요?
@@ -76,7 +83,7 @@ $$
 ||x-\mu||_{\bold{\Sigma}} = \sqrt{(x-\mu)^\top \bold{\Sigma}^{-1} (x-\mu)}
 $$
 
-## Generalized Mahalanobis Distance
+### Generalized Mahalanobis Distance
 
  covariance matrix $\bold{\Sigma}$ 가 positive-semidefinite, invertible matrix 이므로 같은 특성을 가진 임의의 positive semi-definite weight matrix $W \geq 0$ 을 상정할 수 있습니다. 
 
