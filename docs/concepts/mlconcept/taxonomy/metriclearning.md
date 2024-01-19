@@ -21,7 +21,6 @@ metric learning 은 **서로 다른 데이터를 떨어뜨리고, 비슷한 데�
 </div>
 
 
-``
 아래 순서로 metric learning 개념들을 정리합니다.
 - **Spectral Metric Learning**
   - generalized eigenvalue problem 의 한 형태로, matrix 분해를 통해 좋은 projection 을 찾는 방식.
@@ -32,8 +31,6 @@ metric learning 은 **서로 다른 데이터를 떨어뜨리고, 비슷한 데�
   - https://hav4ik.github.io/articles/deep-metric-learning-survey
 
 ## Spectral Metric Learning
-
-
 
 
 ## Probabilistic Metric Learning

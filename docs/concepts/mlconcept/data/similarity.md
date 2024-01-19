@@ -40,9 +40,3 @@ $$
 Weighted jaccard index 의 단점은, 음의 상관계수를 측정할 수 없다는 점입니다.
 
 ---
-
-## KL Divergence
-
-KL Divergence 는 확률 분포간의 유사도를 측정하는 방식입니다.
-
-KL Divergence 개념은 [Concept: Math](/docs/concepts/math/introduction)의 [KL Divergence](/docs/concepts/math/information/kl_divergence.md) 문서 참조.
