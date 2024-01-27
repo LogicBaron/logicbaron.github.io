@@ -85,15 +85,22 @@ $$
 
 ### Generalized Mahalanobis Distance
 
- covariance matrix $\bold{\Sigma}$ 가 positive-semidefinite, invertible matrix 이므로 같은 특성을 가진 임의의 positive semi-definite weight matrix $W \geq 0$ 을 상정할 수 있습니다. 
+ covariance matrix $\bold{\Sigma}$ 가 positive-semidefinite, invertible matrix 이므로 같은 특성을 가진 임의의 positive semi-definite matrix, $W \geq 0$ 을 상정할 수 있습니다. 
 
  이 방법은, data cloud 가 퍼져있는 정도인 covariance matrix 가 아니라 weight matrix 를 기준으로 data point 들 간의 거리를 재해석한다는 의미를 가집니다.
 
  - **generalized Mahalanobis distance**
 
- $$
-||x-\mu||_{\bold{W}} = \sqrt{(x-\mu)^\top \bold{W} (x-\mu)}
+ covariance matrix 와 그 역은 positive semi-definite 이므로 covariance matrix 를 임의의 positive semi-definite matrix $\bold{W} \ge 0$ 으로 바꾸어도 mahalanobis distance 가 정의됩니다. 이를 **Generalized Mahalanobis Distance** 라고 정의합니다.
+
 $$
+||\bold{x}_i - \bold{x}_j||_{\bold{W}} := \sqrt{(\bold{x}_i - \bold{x}_j)^\top \bold{W} (\bold{x}_i - \bold{x}_j)}
+$$
+
+$$
+\therefore ||\bold{x}_i - \bold{x}_j||^2_{\bold{W}} := (\bold{x}_i - \bold{x}_j)^\top \bold{W} (\bold{x}_i - \bold{x}_j)
+$$
+
 
 ## Metric Learning
 
