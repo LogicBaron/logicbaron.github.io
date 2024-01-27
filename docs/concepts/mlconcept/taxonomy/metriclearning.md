@@ -122,13 +122,13 @@ $$
 
 이 외에도 Probabilistic Metric Learning 방법들은 다양합니다.
 
-- Neighborhood Component Analysis(NCA)
+- **Neighborhood Component Analysis(NCA).**
   - $p^0_{ij}$ 와 가까워지도록 하는 weight matrix 를 학습하는 것이 아니라,
   - Similar samples 간의 $p^W_{ij}$ 의 합이 최대가 되도록 학습합니다. $ \underset{\bold{W}}{\text{maximize}} \sum_{i=1}^n \sum_{\bold{x}_j \in S_i} p^W_{ij} $ 
-- Bayesian Metric Learning.
+- **Bayesian Metric Learning.**
   - $p^W_{ij}$ 의 distribution 을 추정하는 variational inference 의 관점으로 접근합니다.
   - $p^W_{ij}$ 의 분포에 대한 prior distribution 을 상정하고, data points 로부터 likelihood 를 구해서 variational inference 를 수행합니다.
-- Information Theoritic Metirc Learning.
+- **Information Theoritic Metirc Learning.**
   - known prior weight matrix $\bold{W}_0$ 를 상정하고,
   - relative entorpy(kl-divergence)이 최소가 되도록 혹은 mutual information 이 최대가 되도록 학습합니다.
   - prior weight matrix 는 주로 데이터로부터 추정합니다.
