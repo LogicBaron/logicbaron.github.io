@@ -93,11 +93,51 @@ $$
 
 ## Probabilistic Metric Learning
 
+Probabilistic Metric Learning 은 두 데이터가 similar pair 일 확률을 distance 로부터 정의합니다.
 
+$$
+p^W_{ij} = \frac{\text{exp}(-||\bold{x}_i-\bold{x}_j||^2_{\bold{W}})}{\sum_{k \neq i} \text{exp}(-||\bold{x}_i-\bold{x}_k||^2_{\bold{W}})}
+$$
 
+그리고 이 확률 분포를 이상적인 확률 분포 $p^0_{ij}$ 에 가까워지도록 weight matrix 를 학습합니다. 
 
+$$
+p^0_{ij} :=
+\begin{cases}
+1 &\text{ if} (\bold{x}_i, \bold{x}_j) \in S \\
+0 &\text{ if} (\bold{x}_i, \bold{x}_j) \in D
+\end{cases}
+$$
+
+두 확률 분포가 비슷해지도록 하는 방법 중 하나는, KL-divergence 를 최소화하도록 학습하는 것입니다.
+
+$$
+\begin{alignedat}{2}
+& \underset{\bold{W}}{\text{minimize}} \sum_{i=1}^n \sum_{j=1, j\neq i}^n \text{KL}(p_{ij}^W|p_{ij}^0) \\
+& \text{subject to } \bold{W} \ge 0
+\end{alignedat}
+$$
+
+이 최적화 문제는 gradient method 를 통해 해를 찾을 수 있습니다. 
+
+이 외에도 Probabilistic Metric Learning 방법들은 다양합니다.
+
+- Neighborhood Component Analysis(NCA)
+  - $p^0_{ij}$ 와 가까워지도록 하는 weight matrix 를 학습하는 것이 아니라,
+  - Similar samples 간의 $p^W_{ij}$ 의 합이 최대가 되도록 학습합니다. $ \underset{\bold{W}}{\text{maximize}} \sum_{i=1}^n \sum_{\bold{x}_j \in S_i} p^W_{ij} $ 
+- Bayesian Metric Learning.
+  - $p^W_{ij}$ 의 distribution 을 추정하는 variational inference 의 관점으로 접근합니다.
+  - $p^W_{ij}$ 의 분포에 대한 prior distribution 을 상정하고, data points 로부터 likelihood 를 구해서 variational inference 를 수행합니다.
+- Information Theoritic Metirc Learning.
+  - known prior weight matrix $\bold{W}_0$ 를 상정하고,
+  - relative entorpy(kl-divergence)이 최소가 되도록 혹은 mutual information 이 최대가 되도록 학습합니다.
+  - prior weight matrix 는 주로 데이터로부터 추정합니다.
 
 ## Deep Metric Learning
+
+deep metric learning 에서는 데이터 포인트들의 표현(embedding) 혹은 거리 함수를 deep model 의 output 으로 사용합니다. 매우 복잡한 확률 분포의 모델링을 deep model 을 통해 수행한다고 이해하면 될 것 같습니다.
+
+deep metric learning 은 deep learning concept: [deep metric learning](/docs/concepts/deeplearning/taxonomy/metriclearning.md) 에서 다루고 있습니다.
 
 # Ref
 
