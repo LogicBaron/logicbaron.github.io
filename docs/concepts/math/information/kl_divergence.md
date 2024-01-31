@@ -9,10 +9,6 @@ tags: [information]
 
 ## What is inference of Random Variable?
 
-:::warning[Pre-requiste]
-이 부분부터는 	&lt;statistics: distribtuion&gt; 가 선행되야 이해하기 쉽습니다.
-:::
-
 이 시점부터는 inference 가 무엇인지를 먼저 지각해야 합니다. 
 
 추론의 예시를 이런 식으로 생각해볼 수 있습니다. `특별 고양이는 회색 털을 가지고 있을 것이다.`. 실제로 지금까지 질문은 이런식으로 이루어졌죠. 이 추론을 조금 더 수학적으로 표현하면 `특별 고양이의 털 색깔의 확률 분포는 회색일 확률이 100%이다.` 라 할수 있습니다. 이 문장은 통계학적으로는, 회색털의 확률이 1인 categorical distribution: Categorical(회색털=1) 이라고 합니다.
