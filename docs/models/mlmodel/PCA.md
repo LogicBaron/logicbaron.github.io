@@ -15,10 +15,12 @@ import pca_alg5 from './asset/pca_alg5.png';
 import pca_alg6 from './asset/pca_alg6.png';
 
 
+
+# Principle Component Analysis(PCA)
+
 <div style={{textAlign: 'Center'}}> 
     <img src={pca_main} />
 </div>
-# Principle Component Analysis(PCA)
 
 PCA 는 주로 고차원의 데이터를 보다 저차원으로 표현해서, 사람이 이해하기 쉽도록 하기 위해 사용되는 기술입니다.
 - [Curse of Dimension](/docs/concepts/mlconcept/data/Curse%20of%20Dimension.md) 참조.
