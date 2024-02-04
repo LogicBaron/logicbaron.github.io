@@ -32,7 +32,7 @@ sidebar_position: 1
 
 # Dimension Reduction
 
-고차원의 데이터는 curse of dimension 으로 인해 다루는 게 매우 어려워서, 머신 러닝에서는 고차원의 데이터에서 우리가 필요로 하는 특성을 전부 잘 나타낼 수 있는 저차원의 공간이 있다고 가정합니다. 그리고 이러한 저차원의 공간을 **manifold** 라고 부르며 **manifold**를 찾는 학습 방법을 **manifold learning** 이라고 합니다.
+고차원의 데이터는 curse of dimension 으로 인해 다루는 게 매우 어려워서, 머신 러닝에서는 고차원의 데이터에서 우리가 필요로 하는 특성을 전부 잘 나타낼 수 있는 저차원의 공간이 있다고 가정합니다. 그리고 이러한 저차원의 공간을 **manifold** 라고 부르며 **manifold**를 찾는 학습 방법을 **manifold learning** 이라고 합니다. manifold learning 의 한 예로는 [PCA](/docs/models/mlmodel/PCA.md)가 있습니다.
 
  ![Alt text](asset/image.png)
 
