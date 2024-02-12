@@ -12,14 +12,7 @@ data cloud 간의 거리는 어떻게 계산할 수 있을까요?
 
 또, data cloud 와 data point 의 거리는 어떻게 계산할 수 있을까요?
 
-## 1. KL Divergence
-
-KL Divergence 는 확률 분포간의 유사도를 측정하는 방식입니다.
-
-KL Divergence 개념은 [Concept: Math](/docs/concepts/math/introduction)의 [KL Divergence](/docs/concepts/math/information/kl_divergence.md) 문서 참조.
-
-
-## 2. Mahalanobis Distance
+## 1. Mahalanobis Distance
 
 이 그림에서 data point $x$ 는 $X_1$ 에 속한다고 보는 게 타당할까요, $X_2$ 에 속한다고 보는게 타당할까요?
 
@@ -78,10 +71,26 @@ $$
 \therefore ||\bold{x}_i - \bold{x}_j||^2_{\bold{W}} := (\bold{x}_i - \bold{x}_j)^\top \bold{W} (\bold{x}_i - \bold{x}_j)
 $$
 
+
+## 2. KL Divergence
+
+KL Divergence 는 확률 분포간의 유사도를 측정하는 방식입니다. 
+
+Bayesian Inference 등을 통해 데이터 클라우드는 확률 분포 모형으로 추정이 가능합니다. 당장 Mahalanobis Distance 역시 데이터 클라우드로부터 데이터의 분산을 추정합니다. 데이터의 분포를 추정하는 것은 몇 가지 장점이 있습니다. 가장 중요한 점은 데이터에 대해서 우리가 가지고 있는 **사전 지식**, **prior knowledge** 를 데이터의 분석에 반영할 수 있다는 점입니다. 예를 들어서, **"데이터의 분포는 Gaussian 분포를 따를 것이다."** 역시 prior knowledge 의 일종입니다.
+
+KL Divergence 개념은 [Concept: Math](/docs/concepts/math/introduction)의 [KL Divergence](/docs/concepts/math/information/kl_divergence.md) 문서 참조.
+
+KL Divergence 는 **일반적으로 Discrete Domain 에서 정의**되지만 일부 확률 분포에 대해서는 정의역에 대한 Closed-form KL divergence 가 계산되어 있습니다.
+
 ## 3. Wasserstein Distance
 
+Wasserstein Distance는 상품 수송 및 관리를 위해서 연구된 개념입니다. 이 거리는 두 확률 분포 사이의 **최소 수송 비용** 을 계산합니다. 
+
+직관적인 이해를 먼저 해봅시다. 어떤 확률 분포 $P$를 따르고 있는 상품들을 다른 확률 분포 $Q$를 따르도록 이동시키기 위해서 발생하는 비용을 측정합니다. 어떤 방식으로 상품을 이동시키는 것이 가장 효율적일까요?
 
 ## 4. Sampling Method
+
+ Distribution 사이의 거리를 측정하는 방법 중 한 가지는 확률 분포로부터 데이터를 샘플링해서 샘플링된 데이터간의 거리를 측정하는 방법입니다.
 
 
 ## ...Metric Learning
