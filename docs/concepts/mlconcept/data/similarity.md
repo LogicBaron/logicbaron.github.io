@@ -40,3 +40,13 @@ $$
 Weighted jaccard index 의 단점은, 음의 상관계수를 측정할 수 없다는 점입니다.
 
 ---
+
+## Cosine Similarity
+
+두 벡터 사이 각도의 cosine 값으로 유사도를 판정하는 방식이며 주로 normalized vector 를 사용하는 머신 러닝에서 활용됩니다.
+
+$$
+\text{cosine similarity}(A, B) := cos(\theta) = \frac{A \cdot B}{||A||\text{ }||B||}
+$$
+
+
