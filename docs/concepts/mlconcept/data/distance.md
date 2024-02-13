@@ -2,7 +2,6 @@
 id: distance
 sidebar_position: 1
 ---
-import dist_concept from './asset/dist_concept.png';
 
 # Distance
 

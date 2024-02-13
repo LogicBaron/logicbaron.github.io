@@ -3,6 +3,8 @@ id: cloud_distance
 sidbar_position: 4
 ---
 import dist_concept from './asset/dist_concept.png';
+import wass_1 from './asset/wass_1.png';
+import wass_2 from './asset/wass_2.png';
 
 # Cloud Distance
 
@@ -17,7 +19,7 @@ data cloud 간의 거리는 어떻게 계산할 수 있을까요?
 이 그림에서 data point $x$ 는 $X_1$ 에 속한다고 보는 게 타당할까요, $X_2$ 에 속한다고 보는게 타당할까요?
 
 <div style={{textAlign: 'Center'}}> 
-    <img src={dist_concept} />
+    <img src={dist_concept} style={{width: 700}}  />
 </div>
 
 
@@ -86,7 +88,31 @@ KL Divergence 는 **일반적으로 Discrete Domain 에서 정의**되지만 일
 
 Wasserstein Distance는 상품 수송 및 관리를 위해서 연구된 개념입니다. 이 거리는 두 확률 분포 사이의 **최소 수송 비용** 을 계산합니다. 
 
-직관적인 이해를 먼저 해봅시다. 어떤 확률 분포 $P$를 따르고 있는 상품들을 다른 확률 분포 $Q$를 따르도록 이동시키기 위해서 발생하는 비용을 측정합니다. 어떤 방식으로 상품을 이동시키는 것이 가장 효율적일까요?
+직관적인 이해를 먼저 해봅시다. 어떤 확률 분포 $P$를 따르고 있는 상품들을 다른 확률 분포 $Q$를 따르도록 이동시키기 위해서 발생하는 비용을 측정합니다. 
+
+아래 그림에서 파란색으로 표시된 점들을 빨간색으로 옮기기 위해서는 어떻게 하는 것이 가장 효율적일까요?
+
+<div style={{textAlign: 'Center'}}> 
+    <img src={wass_1} style={{width: 500}}  />
+</div>
+
+바로 최적 효율을 알아볼 수는 없으니, "더 효율적인 경로가 있다" 정도의 직관만 얻어봅시다. 아래 그림에서 표시된 두 경로 중에서는, **오른쪽의 경로가 훨씬 효율적** 으로 보여집니다.
+
+<div style={{textAlign: 'Center'}}> 
+    <img src={wass_2} />
+</div>
+
+Wasserstein Distance 는 두 데이터 분포 사이의 거리를 **이러한 수송 경로 중 가장 최적의 경로에서의 총 경로** 로 계산합니다. 데이터 포인트의 크기는 데이터 포인트의 발생 확률에 비례합니다. 발생할 확률이 높은 데이터일수록 더 짧은 경로를 할당해주는 것이 효율적이겠죠? 
+
+$$
+W(P, Q) = \underset{\gamma \in \Pi (P, Q)}{\text{inf}} \int{d(x,y)\gamma(dxdy)} = \underset{\gamma \in \Pi (P, Q)}{\text{inf}} E^{\gamma} [d(X, Y)]
+$$
+
+- $\text{inf}$ 는 infimum(하한), 즉 최소값의 의미로 받아들일 수 있습니다. (엄밀하게는 약간 다르지만 거의 동일한 의미입니다.)
+- $\Pi (P, Q)$ 는 $P$ 와 $Q$ 의 결합 확률 분포의 정의역을 의미하며 $\gamma$ 는 그 원소입니다.
+
+즉 전체 식은 **가능한 결합 확률 분포의 정의역 쌍 $\gamma = (x, y)$ 에 대해서 거리의 최소값의 기댓값** 을 의미합니다.
+
 
 ## 4. Sampling Method
 
