@@ -59,7 +59,7 @@ Cross Entropy 는 항상 0이상입니다.
 
 #### 1. Cross Entropy 는 실제 사건 엔트로피보다 크거나 같다.
 
-사건에 대한 불확실한 추론은 언제나 사건의 불확실성을 증가시키게 됩니다. 그리고 이 **추론으로 인해 증가하는 불확실성**을 KL divergence 라고 합니다.
+사건에 대한 불확실한 추론은 언제나 사건의 불확실성을 증가시키게 됩니다. 그리고 이 **추론으로 인해 증가하는 불확실성**을 KL divergence 라고 합니다. 
 
 cross-entropy loss 도 사실은 [KL divergence](/docs/concepts/math/information/kl_divergence.md)를 0으로 만드는 것과 같은 의미입니다. 이 부분은 [KL divergence](/docs/concepts/math/information/kl_divergence.md)에서 더 다루겠습니다.
 
