@@ -1,6 +1,6 @@
 ---
 id: clip
-sidebar_position: 0
+sidebar_position: 11
 ---
 # CLIP
 
