@@ -1,6 +1,6 @@
 ---
 id: clip
-sidebar_position: 11
+sidebar_position: 0
 ---
 import clip_model from "./asset/clip_model.png";
 import clip_transfer from "./asset/clip_transfer.png"
@@ -78,7 +78,7 @@ clip 저자들은 CLIP linear probe 의 성능을 다른 이미지 모델들과 
 
 기존 이미지넷 모델들과 비교해서, linear probe 결과 모델의 성능 개선이 훨씬 크다는 점을 먼저 확인하였습니다. 
 
-또한, 다양한 domain 에서 zero-shot 또는 few-shot learning  dml tjdsmddp e
+또한, 다양한 domain 에서 zero-shot 또는 few-shot learning 결과 기존 이미지넽 모델보다 훨씬 성능이 
 
 <div style={{textAlign: 'Center'}}>
     <img src={clip_domainshift} style={{width: 700}} />
@@ -89,6 +89,13 @@ clip 저자들은 CLIP linear probe 의 성능을 다른 이미지 모델들과 
 
 Large Dataset 에 대한 효과는 저자들도 인지하고 있습니다. 저자들이 대규모 데이터셑을 사용했기 떄문에 Overfit 을 크게 고려하지ㅏ 않았다고 언급합니다.
 
+## Conclusion
+
+CLIP 논문은 Milestone 급 논문인 만큼, 논문 자체에 분석할 점이 정말 많습니다. 학습이나, 분석에서의 인사이트도 도움이 되구요. 현재 작성하면서 빠르게 논문들을 정리하려다 보니 충분히 CLIP을 깊게 다루지 못했는데 이 글은 시간이 될 때 충분히 자세하게 보충을 할 예정입니다.
+
+개인적으로 생각하는 CLIP 의 장점들은 데이터셑 규모에서 나온다고 생각합니다. 그래서 데이터셑 규모에 대한 강조가 많이 이루어졌습니다.
+
+또한, CLIP 논문의 목적은 어디까지나 **high-quality image representation 을 학습**하는 것이 주입니다. CLIP 학습 방법 상 image-text embedding alignment 도 기대해볼 수 있다고 여겨지지만 실제로는 잘 이루어지지 않습니다. 이에 대한 후속 연구도 많기에 시간이 된다면 소개하겠습니다.
 
 # Ref
 
