@@ -32,42 +32,85 @@ ALBEF 논문은 이 점에서 착안해서 기존 multimodal pretrain 방식의 
 ## Model
 
 ### Train
-ALBEF 논문의 Motivation 을 이해했다면 모델 구조를 이해하기 어렵지 않습니다. ALBEF 의 구조는 **fusion 이전의 image-text contrastive loss를 통한 alignment**와 alignment 이후 **fusion을 통한 multimodal representation 학습**으로 나누어집니다.
+ALBEF 논문의 Motivation 을 이해했다면 모델 구조를 이해하기 어렵지 않습니다. ALBEF 의 구조는 **fusion 이전의 image-text contrastive loss를 통한 alignment**와 alignment 이후 **fusion을 통한 multimodal representation 학습**으로 나누어집니다. 마지막으로 momentum model 이라는 부분이 있는데요, 이 부분은 전체 모델 학습 과정을 먼저 설명하고 다루겠습니다.
 
 ![Alt text](image.png)
 
-먼저 Alignment 단계인 Image-Text Contrastive learning을 먼저 살펴보겠습니다. 이 논문의 특징은 모든 loss 를 정보이론적 관점에서 유도하는 식으로 명시한다는 점입니다.
+
+#### Image-Text Contrastive Learning
+먼저 fusion 이전의 이미지와 텍스트 representation을 align하기 위한 image-text contrastive learning 단계를 살펴보겠습니다. 이 학습 과정과 사용하는 contrastive loss의 설계는 CLIP과 동일합니다. 이미지와 텍스트는 각각 자신의 쌍과 가장 가까워지도록 학습됩니다. 식 자체가 기존에 익숙하던 방식이 아닌 정보 이론 용어로 기재되어 있는데, [크로스 엔트로피](/docs/concepts/math/information/cross_entropy.md) 문서를 참조하면 비교적 쉽게 이해할 수 있습니다.
 
 $$
 L_{itc} = \frac{1}{2} E_{(I,T) \sim D}[H(y^{i2t}(I), p^{i2t}(I)) + H(y^{t2i}(T), p^{t2i}(T))]
 $$
 
-이 식은 실제 image와 text가 pair 일 확률과 모델이 예측한 분포의 cross-entropy를 표현합니다. 즉, CLIP 에서 사용한 loss 식과 동일합니다.
+N개의 텍스트와 N개의 이미지로 가능한 N^2 쌍의 (이미지, 텍스트) 에 대해 alignment 를 수행한 뒤, 올바른 (이미지, 텍스트) 쌍으로 multimodal embedding을 생성할 차례입니다.
 
-**alignment 이후 fusion**은 두 가지 loss 로부터 학습됩니다. **Masked Language Model**과 **Image-Text Matching**입니다. 이 단계에서 모든 task는 text 또는 image unimodal 이 아닌 text+image multimodal embedding을 기반으로 수행됩니다. 두 가지의 task에 대한 loss가 모델 학습에 사용됩니다.
+**alignment 이후 fusion**은 cross-attention 방식을 사용합니다. cross modal attention 은 **text 의 representation 을 key, value 로 이미지 representation 을 query 로 사용** 합니다. 이렇게 Transformer의 cross-modal attention 을 사용해서 이미지와 텍스트의 특징을 전부 반영한 multimodal representation을 생성했으니 학습만 잘 시키면 됩니다.
 
-첫 번째는 masked languge modeling입니다. language model 공부하면서 익히 보셨을 그 MLM과 동일한 의미입니다.
+multimodal encoder는 **Masked Language Model**과 **Image-Text Matching**, 두 가지 task를 통해 학습됩니다. 당연히 모든 task는 text 또는 image unimodal embedding이 아닌 text+image multimodal embedding을 기반으로 수행됩니다.
+
+#### Musked Language Model
+
+첫 번째 **Masked languge model(MLM)** 은 일반적으로 Language Model 에서 수행하는 MLM과 동일합니다. 단지 최종적으로 Prediction 을 수행하는 token embedding 이 텍스트+이미지 multimodal token embedding이라는 점만이 다릅니다. loss 역시 동일합니다.
+
 $$
 L_{mlm} = E_{(I, \hat{T}) \sim D} H(y^{mask}, p^{mask}(I, \hat{T}))
 $$
 
-두 번째는 Image-Text Matching 으로 multimodal embedding을 기반으로 각각의 이미지, 텍스트가 서로 연관이 되어 이쓴ㄴ지 확인하는 과제입니다. Image-Text Matching 이 이전 단계인 ITC 에서 아무리 잘 수행됐더라도 multimodal embedding을 잘 생성하지 못하면 지표가 좋게 나올 수 없다는 말입니다. 각 task의 loss 는 역시 정보이론적인 관점에서 기술됩니다.
+#### Image-Text Matching
+
+두 번째 **Image-Text Matching** 은 multimodal representation 생성에 사용된 이미지-텍스트의 일치 여부를 예측합니다. Alignment 과정과 다릅니다. Alignment 과정에서는 각 이미지 임베딩, 텍스트 임베딩의 cosine similarity를 통해 이미지-텍스트의 일치 여부를 예측했습니다. Image-Text Matching task는 multimodal representation 의 [CLS] token embedding을 binary classification 합니다. 
+
+그런데 multimodal representation learning 은 일치하는 (image, text) 쌍에 대해서만 수행되는데 어떻게 불일치하는 경우에 대해 학습할 수 있을까요? ALBEF 논문에서는 불일치 하는 경우를 **hard-negative sampling**해서 추가로 image-text match 학습에서 사용합니다. ALBEF 논문에서 사용하는 In-batch hard negative sampling 방식은 **각각의 이미지에 대해서, ITC 수행 결과 cosine similarity가 가장 높은 오답 텍스트를 샘플링**합니다.
 
 $$
 L_{itm} = E_{(I, T) \sim D} H(y^{itm}, p^{itm}(I, T))
 $$
 
-최종적인 loss 는 세 값을 전부 더한 값입니다. 즉 ALBEF 모델은 Alignment를 먼저 학습하지 않습니다. batch를 (image, text) pair 를 배치로 사용하고 이로부터 모델을 학습해나갑니다.
+ALBEF 논문은 이 세가지 loss 전부 더한 값을 최종 loss 로 사용합니다.
 
 $$
-L = L_{itc} + L_{mlm} + L{itm}
+L = L_{itc} + L_{mlm} + L_{itm}
 $$
 
-### Moemntum Distillation
+### Momentum Distillation
 
-CLIP 을 비롯한 모델들의 학습 방법에는 한 가지 문제점이 있습니다. Noisy dataset 을 사용한 이유도 있지만 그보다 근본적으로 존재하는 문제입니다. 이미지에 대한 텍스트 설명이 한 가지가 아닐 수 있다. 그리고 텍스트에 상응하는 이미지가 하나가 일 수 있다는 점입니다. binary label 로 학습을 진행하는 MLM 에는 충분한 정제가 이루어지지 않으면 치명적인 부분입니다.
+Momentum Model 은 noisy한 web data 의 한계를 극복하기 위해서 ALBEF 모델에 추가된 모듈입니다. Noisy Dataset 의 (이미지, 텍스트) 쌍은 실제로는 서로 일치하지 않을 수 있습니다. 또 어떤 경우에는 이미지를 더 잘 설명하는 텍스트가 있을 수 있고 그런 데이터가 데이터셑 안에 존재할 수 있습니다. (심지어 같은 "더 좋은 쌍" 이 존재할 수 있습니다!)
 
-논문에서는 $L_{itc}^{mod}$를 계산합니다. 각각의 loss 에 대해서는 momentum distillation은 기존 로직으로 발생한 loss만큼 신규 로직에 대한 weight를 감소싴ㅂ니다.
+CLIP 논문같은 경우에는 image-text contrastive loss 만 수행했기 때문에 충분히 많은 양의 데이터로 학습하기에 mini-batch 내에서 "그나마 가장 좋은 쌍" 일 확률이 커서 noise 의 영향이 비교적 적었습니다. 반면 ALBEF 모델은 MLM 학습에서는 그런 효과를 기대할 수 없습니다. 데이터셑 내에서 이미지를 표현하는 더 좋은 단어를 학습했다면 그 외의 모든 단어들은 틀린 단어가 될 테니까요.
+
+**Momentum Distillation 은 Web Data 만 믿지말고, ALBEF 모델의 예측 결과도 함께 사용하자.** 라는 인사이트를 가집니다. momentum model은 ALBEF unimodal & multimodal encoder 의 exponential-moving-average 버전입니다. 그리고 이 momentum model 로 예측한 결과값을 이용해서 pseudo-label을 생성해서 사용합니다.
+
+첫 번째로, Image-text  contrastive learning 과정에서는 momentum model 의 unimodal encoder output 의 cosine-similarity 를 pseudo-label 로 사용합니다.
+
+$$
+s'(I, T) = g^v_{cls}(v')^\top g^w_{cls}(w') \quad \text{and} \quad s'(T, I) = g^w_{cls}(w_{cls})^\top g^v_{cls}(v').
+$$
+
+$s'(I, T)$ 와 $s'(T, I)$ 에 softmax를 취해 $q^{i2t}$ 와 $q^{t2i}$ 를 계산합니다. 최종적으로 ITC에서 momentum distillation은 다음과 같이 loss에다가 추가 term을 더해주는 방식으로 이루어집니다.
+
+$$
+\mathcal{L}^{\text{mod}}_{\text{itc}} = (1 - \alpha) \mathcal{L}_{\text{itc}} + \frac{\alpha}{2} \mathbb{E}_{(I,T)\sim\mathcal{D}} \left[ KL(q^{2t}(I) || p^{2t}(I)) + KL(q^{2i}(T) || p^{2i}(T)) \right]
+$$
+
+MLM 학습에서도 비슷한 방식으로, momentum model 의 prediction 결과를 pseudo-label token 으로 사용합니다. 
+
+$$
+\mathcal{L}^{\text{mod}}_{\text{mlm}} = (1 - \alpha) \mathcal{L}_{\text{mlm}} + \alpha \mathbb{E}_{(I,\tilde{T})\sim\mathcal{D}} \left[ KL\left(q^{\text{msk}}(I, \tilde{T}) \parallel p^{\text{msk}}(I, \tilde{T})\right) \right]
+$$
+
+momentum distillation 에서 **pseudo-label 에 대해서 cross-entropy 가 아닌 KL divergence 를 사용하는 이유**에 대해서 저자들이 특별히 언급하지는 않습니다. 그런데 사실 classification 문제에서는 class probability가 1이므로 KL divergence 와 cross entropy 가 똑같은 의미를 가집니다. **pseudo-label 은 확률이 1이 아니므로 자체적인 불확실성**이 있기에 저자들이 이를 배제하고 있는 KL divergence 를 사용한 것이라고 사료됩니다.
+
+저자들이 여러 차례 실험한 결과 pretraining 과 down-stream task에서 일관적으로 $\alpha=0.4$ 값을 사용했습니다. 
+
+Momentum Distillation 의 성능에 대해서는 Ablation Study가 있습니다. 재미있는 점은 ITC 에만 MoD 를 적용해도 성능이 어느정도 오른다는 사실입니다. ITC 에는 적용하지 않고 MLM 에만 적용한 결과도 궁금했는데, 저자들이 해당 부분은 실험 결과에 적어두지 않았습니다. (혹시 MLM에만 적용하면 성능이 오히려 떨어진 거 아닐까)
+
+
+## Mutual-Information Maximization 
+
+
+
 
 ## Analysis
 
