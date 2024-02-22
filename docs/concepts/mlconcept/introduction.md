@@ -7,7 +7,7 @@ sidebar_position: 0
 
 Machine learning(ML) 에서 통용되는 개념들에 대한 소개.
 
-MLP(Multi Layer Perceptron) 이후 기술과 관련된, Deep Learning 에서 통용되는 개념은 [Concept: Deep Learning](/docs/concepts/deeplearning/) 을 참조해주세요.
+MLP(Multi Layer Perceptron) 이후 기술과 관련된, Deep Learning 에서 통용되는 개념은 [Concept: Deep Learning](/docs/concepts/deeplearning/intro.md) 을 참조해주세요.
 
 ## Data
 
