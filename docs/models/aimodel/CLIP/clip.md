@@ -8,7 +8,7 @@ import clip_domainshift from "./asset/clip_domainshift.png"
 
 # CLIP
 
-## Learning Transferable Visual Models From Natural Language Supervision
+## Learning Transferable Visual Models From Natural Language Supervision, 2021
 
 CLIP 계열 모델들의 첫 번째 글인 CLIP (Contrastive Image-Text Pretraining) 논문입니다. 
 
@@ -41,7 +41,7 @@ CLIP 모델은 이미지의 표현 학습을 이미지에 대해 정확한(exact
 - generative task 는 contrastive task 보다 더 좋은 representation 을 학습하지만 exponential 하게 computation 비용이 발생한다.
 
 <div style={{textAlign: 'Center'}}>
-    <img src={clip_model} />
+    <img src={clip_model} style={{border: 'solid'}} />
 </div>
 
 
@@ -73,7 +73,7 @@ CLIP 논문에서는 classification 과 같은 테스트를 수행할 때 단순
 clip 저자들은 CLIP linear probe 의 성능을 다른 이미지 모델들과 비교합니다. CLIP 은 다양한 데이터셑에 대해서 zero-shot 성능과 linear probe 성능이 강한 correlation 을 보여줍니다. 
 
 <div style={{textAlign: 'Center'}}>
-    <img src={clip_transfer} style={{width: 700}}  />
+    <img src={clip_transfer} style={{width: 700}} style={{border: 'solid'}}   />
 </div>
 
 기존 이미지넷 모델들과 비교해서, linear probe 결과 모델의 성능 개선이 훨씬 크다는 점을 먼저 확인하였습니다. 
@@ -81,7 +81,7 @@ clip 저자들은 CLIP linear probe 의 성능을 다른 이미지 모델들과 
 또한, 다양한 domain 에서 zero-shot 또는 few-shot learning 결과 기존 이미지넽 모델보다 훨씬 성능이 
 
 <div style={{textAlign: 'Center'}}>
-    <img src={clip_domainshift} style={{width: 700}} />
+    <img src={clip_domainshift} style={{width: 700}} style={{border: 'solid'}}  />
 </div>
 
 

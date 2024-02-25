@@ -9,7 +9,7 @@ import albef_result2 from './asset/albef_result2.png';
 
 
 # ALBEF
-## Align Before Fuse: Vision and Language Representation Learning with Momentum Distillation
+## Align Before Fuse: Vision and Language Representation Learning with Momentum Distillation, 2021
 
 
 ## Motivation
@@ -41,7 +41,7 @@ ALBEF 논문은 이 점에서 착안해서 기존 multimodal pretrain 방식의 
 ALBEF 논문의 Motivation 을 이해했다면 모델 구조를 이해하기 어렵지 않습니다. ALBEF 의 구조는 **fusion 이전의 image-text contrastive loss를 통한 alignment**와 alignment 이후 **fusion을 통한 multimodal representation 학습**으로 나누어집니다. 마지막으로 momentum model 이라는 부분이 있는데요, 이 부분은 전체 모델 학습 과정을 먼저 설명하고 다루겠습니다.
 
 <div style={{textAlign: 'Center'}}>
-    <img src={albef_model} />
+    <img src={albef_model} style={{border: 'solid'}} />
 </div>
 
 
@@ -185,13 +185,13 @@ ALBEF 논문은 세 가지 downstream task에 대해서 ALBEF 모델의 성능�
 논문에서 제안된 Visual Grounding 의 수행 결과와 성능 지표입니다. Visual Grounding 의 과정이 이해하기 어려울 수 있을 것 같아 따로 첨부합니다.
 
 <div style={{textAlign: 'Center'}}>
-    <img src={albef_result1} />
+    <img src={albef_result1} style={{border: 'solid'}} />
 </div>
 
 그 외 다른 task에 대한 ALBEF 모델의 성능 지표입니다. ALBEF 논문의 4M 개의 데이터로 pretrain 시킨 모델과 14M 의 모델로 pretrain 시킨 모델을 비교합니다. 
 
 <div style={{textAlign: 'Center'}}>
-    <img src={albef_result2} />
+    <img src={albef_result2} style={{border: 'solid'}} />
 </div>
 
 모든 실험에서 **ALBEF-4M 모델은 비슷한 크기의 데이터셑으로 훈련시킨 모델들보다 훨씬 성능이 좋고**, 심지어 1.2B의 엄청난 양의 데이터로 훈련시킨 ALIGN보다도 성능이 좋습니다. 
