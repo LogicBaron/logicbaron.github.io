@@ -17,6 +17,7 @@ backbone 으로 사용할 수 있는 ai 모델들의 구조 및 인사이트. �
 - vision transformer
 
 ## CLIP
-- clip
-- albef
-- blip & blip-2
+- [CLIP](/docs/models/aimodel/CLIP/clip.md)
+- [ALBEF](/docs/models/aimodel/CLIP/albef.md)
+- [BLIP](/docs/models/aimodel/CLIP/blip.md)
+- BLIP2
