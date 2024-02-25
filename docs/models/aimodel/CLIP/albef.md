@@ -2,6 +2,12 @@
 id: albef
 sidebar_position: 1
 ---
+import albef_model from './asset/albef_model.png';
+import albef_result1 from './asset/albef_result1.png';
+import albef_result2 from './asset/albef_result2.png';
+
+
+
 # ALBEF
 ## Align Before Fuse: Vision and Language Representation Learning with Momentum Distillation
 
@@ -34,7 +40,9 @@ ALBEF 논문은 이 점에서 착안해서 기존 multimodal pretrain 방식의 
 ### Train
 ALBEF 논문의 Motivation 을 이해했다면 모델 구조를 이해하기 어렵지 않습니다. ALBEF 의 구조는 **fusion 이전의 image-text contrastive loss를 통한 alignment**와 alignment 이후 **fusion을 통한 multimodal representation 학습**으로 나누어집니다. 마지막으로 momentum model 이라는 부분이 있는데요, 이 부분은 전체 모델 학습 과정을 먼저 설명하고 다루겠습니다.
 
-![Alt text](image.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={albef_model} />
+</div>
 
 
 #### Image-Text Contrastive Learning
@@ -100,7 +108,7 @@ $$
 \mathcal{L}^{\text{mod}}_{\text{mlm}} = (1 - \alpha) \mathcal{L}_{\text{mlm}} + \alpha \mathbb{E}_{(I,\tilde{T})\sim\mathcal{D}} \left[ KL\left(q^{\text{msk}}(I, \tilde{T}) \parallel p^{\text{msk}}(I, \tilde{T})\right) \right]
 $$
 
-momentum distillation 에서 **pseudo-label 에 대해서 cross-entropy 가 아닌 KL divergence 를 사용하는 이유**에 대해서 저자들이 특별히 언급하지는 않습니다. 그런데 사실 classification 문제에서는 class probability가 1이므로 KL divergence 와 cross entropy 가 똑같은 의미를 가집니다. **pseudo-label 은 확률이 1이 아니므로 자체적인 불확실성**이 있기에 저자들이 이를 배제하고 있는 KL divergence 를 사용한 것이라고 사료됩니다.
+momentum distillation 에서 **pseudo-label 에 대해서 cross-entropy 가 아닌 KL divergence 를 사용하는 이유**에 대해서 저자들이 특별히 언급하지는 않습니다. 그런데 사실 classification 문제에서는 one-hot label을 사용하기에 class probability가 1이므로 KL divergence 와 cross entropy 가 똑같은 의미를 가집니다. **pseudo-label 은 확률이 1이 아니므로 자체적인 불확실성**이 있기에 저자들이 이를 배제하고 있는 KL divergence 를 사용한 것이라고 사료됩니다.
 
 저자들이 여러 차례 실험한 결과 pretraining 과 down-stream task에서 일관적으로 $\alpha=0.4$ 값을 사용했습니다. 
 
@@ -109,20 +117,88 @@ Momentum Distillation 의 성능에 대해서는 Ablation Study가 있습니다.
 
 ## Mutual-Information Maximization 
 
+ 저자들은 vision-text representatino learning 을 **image-text 에 대한 다양한 관점의 representation** - 이 논문에서 Unimodal encoder similarity, [multimodal encoder](/docs/concepts/math/information/mutual_information.md) 그리고 momentum model의 인코더; 가 서로에 대한 mutual inofrmation 이 커야한다고 이야기합니다. mutual information 이 크다, 즉 같은 이미지-텍스트 쌍에 대해 **저 중 하나의 representation만 알아도 다른 두개의 representation 에 대해 충분히 알 수 있어야 한다**는 이야기 입니다. 
 
+ 이 논문에서는 같은 image-text 에 대해 다른 방식으로 생성한 representation을 다른 **관점, view**라고 표현합니다. 그리고 서로 다른 관점 사이의 mutual information 을 최대화 하기 위해 InfoNCE loss 를 사용합니다. 조금 더 정확히 말하자면, InfoNCE loss 는 서로 다른 관점 사이의 **mutual information 의 lower bound 를 최대화** 합니다. 
 
+ 서로 다른 두 관점, $a$와 $b$에 대한 InfoNCE loss 는 아래와 같습니다.
 
-## Analysis
+$$
+ \mathcal{L}_{\text{NCE}} = -\mathbb{E}_{p(a, b)} \left[ \log \frac{\exp(s(a, b))}{\sum_{\hat{b} \in \hat{B}} \exp(s(a, \hat{b}))} \right]
+$$
 
-이 논문의 정수는 두가지가 있습니다.
+여기서 $s(a,b)s 는 두 관점에 대한 scoring functino$입니다. similarity와 같이 두 관점이 나타내는 바가 같을수록 높은 점수를 부여합니다. $\hat{B}$ 는 a와 같은 image-text를 표현하는 positive sample과 다른 image-text를 표현하는 negative sample 을 전부 포함하고 있는 집합을 의미합니다.
 
-첫 번째는 기존의 unimodal train framework 와 multimodal train framework 를 통합시켰다는 점입니다. 다만, 이 과정에서 alignment에 대한 논의는 이전 논문 그리고 후속 논문에서 꾸준히 연구되어집니다. 저도 한 번 CLIP-계열 모델의 alignment에 대한 주제로 글을 써볼 생각입니다.
+그리고 저자들은 InfoNCE loss 의 관점에서 논문에서 사용된 ITC, MLM 그리고 MoD loss를 해석합니다. 이 과정은 크게 어렵지 않습니다. **식을 rewrite**하는 것 뿐입니다.
 
-두 번재는 현상에 대한 정보이론 관점의 분석입니다. 이 논문에서 물론 모든 loss에 닿는 분석을 순차적으로 진행하지는 않지만 예측 분포 $q$와 실제 분포 $p$ 사이의 거리 분포에 대한 항을 전부 더해줍니다. KL divergence와 cross entropy가 혼재하는, 엄청 해석하다보면 아름다운 식인데요... 
+### Mutual Information Maximization : ITC
 
-이 글에서는 못 남기는게 아쉬울 따름입니다. 언젠가 이 글도 보충해두겠습니다. 다만 별 어려운 건 없습니다. 저자들은 alignment, 즉 tex representation 과 image representation 이 서로 align되길 바라는 점에서 비슷한 점이 있거든요.
+먼저 ITC loss 는 다음과 같이 다시 쓸 수 있습니다.
 
-제가 글을 쓰는 이유 중 하나는, motivation의 정리입니다. 사실 motivation만 잘 이해한다면 어떤 논문을 읽더라도 저자의 의도를 잘 이해하고 해석할 수 있을 거라 믿습니다. 정리글을 보더라두요. 감사합니다.
+$$
+\mathcal{L}_{itc} = -\frac{1}{2} \mathbb{E}_{p(I,T)} \left[ \log \frac{\exp(s(I, T)/\tau)}{\sum_{m=1}^{M} \exp(s(I, T_m)/\tau)} + \log \frac{\exp(s(T, I)/\tau)}{\sum_{m=1}^{M} \exp(s(T, I_m)/\tau)} \right]
+$$
+
+ITC loss 는 두개의 InfoNCE loss 를 합친 꼴입니다. Image에 대한 Text 의 관점에서의  InfoNCE 그리고 Text 에 대한 Image의 관점에서 InfoNCE.
+
+### Mutual Information Maximization : MLM
+
+MLM loss 는 다음과 같이 다시 쓸 수 있습니다.
+
+$$
+\mathcal{L}_{mlm} = -\mathbb{E}_{p(I,\hat{T})} \left[ \log \frac{\exp(\psi(y^{msk}) f(I, \hat{T}))}{\sum_{y \in V} \exp(\psi(y) f(I, \hat{T}))} \right]
+$$
+
+이 식에서 $\psi: y \rightarrow V$ 는 lookup function, 즉 masked token 의 representation을 의미합니다. $V$ 는 vocabulary set을 의미합니다. 해석하자면, MLM loss는 1) **가능한 모든 vocabulary 에 있는 단어에 대한 현재 문맥에서의 representation**과 2)**image-masked text representation** 사이의 mutual infomration을 최대화하는 과정입니다.
+
+### Mutual Information Maximization : MoD
+
+상기했듯이 Momentum Distillation은 noisy data 의 true label 을 완전히 신뢰하지 않고 모델의 예측 결과로부터 pseudo-label 을 만들어내는 과정입니다. 즉, 일종의 또 다른 (image, text) view 를 만들어내는 과정입니다. KL divergence가 cross-entropy와 동일한 의미를 가질 수 있다는 점은 위에서 설명했기에, 논문에서 서술된 식을 이해하는데 큰 어려움이 없을 것 같습니다.
+
+## Result
+
+ALBEF 논문은 세 가지 downstream task에 대해서 ALBEF 모델의 성능을 다른 모델들과 비교합니다.
+
+- **Image-Text Retrieval**
+  - image to text retrieval, and text to image retrieval.
+  - image 와 text embedding 의 similarity 가 최대화 되도록 finetuning
+  - unimodal embedding 의 similarity score 바탕으로 수행.
+  - Flick30K, COCO dataset 에 대해 수행.
+- **Visual Entailment**
+  - Image 와 Text 의 관계가 "함의", "중립", 그리고 "모순" 중 무엇인지 예측. (classification)
+  - [CLS] token representation 에 대한 MLP classifier.
+- **Visual Question Answering**
+  - ALBEF multimodal encoder 를 생성한 임베딩으로부터 디코딩 하는 방식 + finetune.
+  - 6-layer transformer decoder 를 이용한 generation 수행.
+  - auto-regressive answer generation
+- **Natural Language for Visual Reasoning**
+  - image pair 를 text 가 설명하고 있는지 예측하는 문제.
+  - image-pair 를 인코딩 하기 위한 cross-attention을 포함하는 transformer block을 설계.
+  - 각각의 transformer block 을 ALBEF multimodal encoder 를 사용해 initialization 한 뒤, 새로 pretrain 해서 사용.
+- **Visual Grounding**
+  - 텍스트가 표현하고 있는 이미지 내 영역 탐지(object detection).
+  - image-text retrieval과 같은 방식으로, image embedding 과 text embedding 의 similarity 를 최대화 하도록 finetuning 함.
+  - 다만 여기서는 ITC loss 가 아니라 multimodal encoder를 ITM loss 로 finetuning하는게 더 성능이 좋았다고 함.
+  - 그 후 image encoder output을 GradCAM 을 이용해 heatmap을 얻고, 활성화된 영역으로부터 proposal 영역 추출하는 방식.
+  - RefCOCO+ dataset에 대해서 수행.
+
+논문에서 제안된 Visual Grounding 의 수행 결과와 성능 지표입니다. Visual Grounding 의 과정이 이해하기 어려울 수 있을 것 같아 따로 첨부합니다.
+
+<div style={{textAlign: 'Center'}}>
+    <img src={albef_result1} />
+</div>
+
+그 외 다른 task에 대한 ALBEF 모델의 성능 지표입니다. ALBEF 논문의 4M 개의 데이터로 pretrain 시킨 모델과 14M 의 모델로 pretrain 시킨 모델을 비교합니다. 
+
+<div style={{textAlign: 'Center'}}>
+    <img src={albef_result2} />
+</div>
+
+모든 실험에서 **ALBEF-4M 모델은 비슷한 크기의 데이터셑으로 훈련시킨 모델들보다 훨씬 성능이 좋고**, 심지어 1.2B의 엄청난 양의 데이터로 훈련시킨 ALIGN보다도 성능이 좋습니다. 
+
+다른 modality 의 데이터를 align 시켜서 **더 좋은 multimodal representation을 생성했**다는 것 외에도, 이 모델은 이전 SOTA 모델인 ALIGN에 비해 훨씬 **데이터의 수를 효율적으로 감소**시켰다는 점에 의의가 있습니다. 
+
+그리고 ALBEF-14M 은 그런 4M 보다도 더 우수한 성능을 보여줍니다.
 
 ## Result
 
