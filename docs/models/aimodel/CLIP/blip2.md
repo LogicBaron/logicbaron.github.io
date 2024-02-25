@@ -2,6 +2,10 @@
 id: blip2
 sidebar_position: 3
 ---
+import blip2_model from './asset/blip2_model.png';
+import blip2_q from './asset/blip2_q.png';
+import blip2_llm from './asset/blip2_llm.png';
+
 # BLIP-2
 ## Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models, 2023
 
@@ -20,7 +24,9 @@ BLIP2 논문은 BLIP과 같이 129M 사이즈 데이터셑의 이미지를 사�
 
 ## Model
 
-![Alt text](image-1.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={blip2_model} style={{width: '500px', border: 'solid'}} />
+</div>
 
 논문의 흐름에 맞게 LLM input 이라는 생각은 배제하고, **이미지 모델을 Freeze**시키고 BLIP과 같이 **좋은 unimodal, multimodal encoder를 만드는 Q-former라는 이름의 모듈**부터 살펴보겠습니다.
 
@@ -28,8 +34,9 @@ BLIP2 논문은 BLIP과 같이 129M 사이즈 데이터셑의 이미지를 사�
 
 BLIP2 모델의 핵심이 되어주는 LLM input 생성기입니다. BLIP의 구조는 image encoder, text encoder 그리고 image grounded text encoder 와 image grounded text decoder로 이루어져있었습니다. Q-former 역시 똑같은 형태입니다. 
 
-![Alt text](image.png)
-
+<div style={{textAlign: 'Center'}}>
+    <img src={blip2_q} style={{border: 'solid'}}  />
+</div>
 Q-former 는 두 개의 transformer 구조로 이루어져 있습니다. 하나의 transformer 는 Image Encoder 로 동작합니다. 첫 번째 transformer 는 "학습 가능한 쿼리 벡터" 를 input으로 받습니다. 일반적인 언어 모델은 토큰들을 임베딩으로 변경 해주는 embedding layer가 있는데 이 Layer 없이 바로 벡터를 input으로 사용합니다. 그리고 Frozen Image Model에서 생성된 이미지 벡터는 cross-attention layer를 통해 인입됩니다.
 
 두 번째 transformer 는 텍스트를 input으로 받습니다. 이 트랜스포머는 masking policy에 따라 텍스트 인코더, 디코더로 전부 사용될 수 있습니다.
@@ -46,7 +53,9 @@ BLIP과 같은 loss를 사용해서 학습이 되면서 "쿼리 벡터" 들은 1
 
 ### Bootstrap Vision-to-Language Generative Learning from a Frozen LLM
 
-![Alt text](image-2.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={blip2_llm} style={{border: 'solid'}}  />
+</div>
 
 BLIP2 훈련의 두 번째 단계는 Q-former의 output을 input으로 하는 LLM을 통한 generative learning입니다. 텍스트 정보가 주어지지 않은 Q-former의 output은 이미지 임베딩이라고도 볼 수 있습니다. 각각의 쿼리들이 이미지로부터 도움이 되는 정보를 포착하고 있는 임베딩의 형태를 이루게 됩니다.
 
