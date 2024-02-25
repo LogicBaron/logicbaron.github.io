@@ -23,7 +23,7 @@ SimVLM과 같이 generation task로 모델을 학습하는 **Encoder-Decoder bas
 
 다음은 CLIP, ALBEF와 같은 **encoder-based model** 입니다. encoder-based models는 captioning과 같은 generation tasks를 수행하기에 직관적이지 않고 - decoder를 학습해야함; 성능 역시 encoder-decoder based model에 비해 좋지 않습니다.
 
-그래서 BLIP 모델은 모든 학습을 다 진행합니다. unimodal encoder, image-grounded text encoder(multimodal encoder) 그리고 image-grounded text decoder(multimodal decoder) 를 학습시킵니다. 
+그래서 BLIP 모델은 모든 학습을 다 진행합니다. unimodal encoder, image-grounded text encoder(multimodal encoder) 그리고 image-grounded text decoder(multimodal decoder) 를 학습시킵니다. 한 마디로 BLIP은 하나의 백본 모델을 학습 시켜서 unimodal encoder, multimodal encoder 그리고 multimodal decoder 까지 전부 downstream task에서 사용할 수 있도록 하는 것이 목표입니다.
 
 
 ### Data Perspective

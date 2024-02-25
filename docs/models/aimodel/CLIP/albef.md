@@ -200,7 +200,6 @@ ALBEF 논문은 세 가지 downstream task에 대해서 ALBEF 모델의 성능�
 
 그리고 ALBEF-14M 은 그런 4M 보다도 더 우수한 성능을 보여줍니다.
 
-## Result
 
 # Ref
 1. [Align before Fuse: Vision and Language Representation Learning with Momentum Distillation](https://arxiv.org/pdf/2107.07651.pdf)
