@@ -134,6 +134,11 @@ const config = {
             items: [
               {
                 type: 'docSidebar',
+                sidebarId: 'MathSidebar',
+                label: 'Math'
+              },
+              {
+                type: 'docSidebar',
                 sidebarId: 'MLConceptSidebar',
                 label: 'Machine Learning'
               },
@@ -144,14 +149,15 @@ const config = {
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'ProgrammingSidebar',
-                label: 'Programming'
+                sidebarId: 'LargeModelSidebar',
+                label: 'Large Model'
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'MathSidebar',
-                label: 'Math'
+                sidebarId: 'ProgrammingSidebar',
+                label: 'Programming'
               },
+
             ]
           },
           {

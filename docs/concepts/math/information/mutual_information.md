@@ -8,6 +8,9 @@ tags: [information]
 
 Information 과 관련해서 마지막 글이 될 것 같습니다. Mutual Information 은 **상호 정보량** 으로써 조금 생소합니다. 
 
+mutual informatoin 은 **하나의 사건을 관측함으로써 또 다른 사건에 대해 얻을 수 있는 정보의 양** 을 의미합니다. 이 의미에 대해서 아래 문단에서 조금 더 살펴보겠습니다.
+
+
 ## Example of Mutual Information
 
 Mutual Information 의 개념에 대해서 먼저 직관적으로 이해해봅시다. 
