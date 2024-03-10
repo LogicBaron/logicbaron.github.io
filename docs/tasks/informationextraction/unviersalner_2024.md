@@ -24,9 +24,9 @@ Prompt: Given a passage, your task is to extract all entities and identify their
 Passage: {input_passage}
 ```
 
-해당 방식으로 저자들은 13,020개의 entity type 에 대한 annotation을 생성합니다. LLM을 이용한 oopen-world NER의 경우 동일한 entity type이 서로 다른 언어로 표시되는 **entity paraphrasing** 현상이 발생합니다. 저자들은 이에 대응하깅 위해서 chatGPT에게 각 **entity type에 대한 짧은 설명을 함께 생성**하는 실험을 함께 진행했습니다.
+해당 방식으로 저자들은 13,020개의 entity type 에 대한 annotation을 생성합니다. LLM을 이용한 oopen-world NER의 경우 동일한 entity type이 서로 다른 언어로 표시되는 **entity paraphrasing** 현상이 발생합니다. 저자들은 이에 대응하깅 위해서 chatGPT에게 각 **entity type에 대한 짧은 설명을 생성**하는 실험을 함께 진행했습니다.
 
-실험 결과, 짧은 설명을 덧붙이여달라고 하면 약 353,092개의 훨씬 다양한 entity type이 생성되었다고 합니다. 그리고 이 데이터로 튜닝한 모델은 **정성적으로 entity paraphrasing에 덜 민감**했지만 **NER 데이터셑의 정량적 성능 평가에서 더 안 좋은 성능**을 보여줬다고 합니다.
+실험 결과, 짧은 설명을 덧붙이여달라고 하면 약 353,092개의 훨씬 다양한 entity type이 생성되었다고 합니다. 그리고 속성키 대신 속성키에 대한 짧은 설명을 사용한 데이터로 튜닝한 모델은 **정성적으로 entity paraphrasing에 덜 민감**했지만 **NER 데이터셑의 정량적 성능 평가에서 더 안 좋은 성능**을 보여줬다고 합니다.
 
 ### Tuning Template
 
@@ -66,6 +66,10 @@ Human-annotated dataset 의 경우 퀄리티가 좋습니다. Universal NER 도 
 ## 모델
 
 UniversalNER 모델은 LLama 7B, 그리고 13B 모델을 학습시킵니다. 
+ 
+## Performance
+
+사실 f1 score가 60% 정도 수준으로 나옵니다. UniversalNER이라도. 저자들은 
 
 # Ref
 
