@@ -61,3 +61,6 @@ XLM-R-large 모델을 사용합니다.
 언어적 특성과 annotation의 난도가 모델의 성능에 거의 직접적인 영향이 있다는 사실을 확인할 수 있습니다. 특히, 언어의 구조상으로 annotation이 매우 힘든 중국어에서 가장 낮은 cross-lingual transfer 성능을 보여줬습니다. 
 
 또한, cross-annotator agreement 점수가 PERSON에서 가장 높고 ORG, LOC 점수가 비교적 낮았는데요. ORG와 LOC 와 관련된 tag-level performance의 성능이 가장 낮았다고 합니다. 
+
+# Ref
+1. [UniversalNER](https://arxiv.org/pdf/2311.09122.pdf)
