@@ -4,7 +4,7 @@ sidebar_position: 2
 ---
 # UniversalNER: 2024
 
-UniversalNER 2024는 "Universal Entity Type"을 타겟팅합니다.
+UniversalNER 2024는 **"Universal Entity Type"** 을 타겟팅합니다.
 
 :::tip
 아래 링크에서 universal NER의 데모를 사용할 수 있습니다.
@@ -84,7 +84,7 @@ UniversalNER 모델은 LLama 7B, 그리고 13B 모델을 학습시킵니다.
  
 ## Performance
 
-집중해야 할, 훈련에 사용한 데이터와 같은 도메인의 데이터에 대해서는 성능이 최대 f1@85% 이라고 합니다. BERT에 비해서 약 5% 정도 더 높은 성능을 보여줍니다.
+실제 서빙에서 중요한 훈련에 사용한 데이터와 같은 도메인의 데이터에 대해서는 성능이 최대 f1@85% 이라고 합니다. BERT에 비해서 약 5% 정도 더 높은 성능을 보여줍니다.
 
 Dataset의 이름을 명시하는 방식 역시 뚜렷한 성능 향상을 가져왔습니다. 특히 다른 데이터셑과 공통된 entity type을 많이 사용하는 데이터셑에서 큰 성능 향상이 관찰됩니다.
 
