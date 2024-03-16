@@ -1,6 +1,6 @@
 ---
 id: universalner_2024
-sidebar_position: 2
+sidebar_position: 200
 ---
 # UniversalNER: 2024
 

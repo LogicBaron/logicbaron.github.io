@@ -71,8 +71,8 @@ BLIP-2는 1) Instructed Zero-shot Image-to-Text Generation, 2) Zero-shot VQA, 3)
 
 BLIP-2는 그리고 Large Models 와 비교해도 비슷하거나 혹은 더 좋은 성능을 보여주고 있습니다. 
 
-반면 BLIP-2 를 활용한 task 또는 LLM generation은 Limitation도 관찰되었다고 저자들이 밝히고 있습니다.
+하지만 BLIP-2 를 활용한 task, 특히 LLM generation 에서는 Limitation이 관찰되었다고 저자들이 밝히고 있습니다.
 
-첫 번째 논문은 ICL 성능이 약하다는 점입니다. LLM에서는 Input에 예시를 줌으로써 모델의 성능을 확연히 끌어올리는 In-context Learning이 이루어지는데 BLIP-2는 이런 ICL 성능이 약합니다. 저자들은 이를 BLIP2의 데이터셑이 샘플 별로 하나의 (이미지, 텍스트) 쌍으로만 모델이 학습하는 것을 이유로 꼽았습니다.
+첫 번째 한계점은 ICL 성능이 약하다는 점입니다. LLM에서는 Input에 예시를 줌으로써 모델의 성능을 확연히 끌어올리는 In-context Learning이 이루어지는데 BLIP-2는 이런 ICL 성능이 약합니다. 저자들은 이를 BLIP2의 데이터셑이 샘플 별로 하나의 (이미지, 텍스트) 쌍으로만 모델이 학습하는 것을 이유로 꼽았습니다.
 
 또한 BLIP-2 모델은 LLM을 domain-adaptive 하게 finetuning하지 않았기에 문장 생성이 적절한 reasoning이 이루어지지 않기도 합니다. 그리고 LLM이 가지고 있는 할루시네이션, 부적절한 언어 생성등의 문제점을 그대로 가지고 있다는 단점도 있습니다.

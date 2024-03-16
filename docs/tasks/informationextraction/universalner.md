@@ -1,9 +1,9 @@
 ---
 id: universalNER_2023
-sidebar_position: 1
+sidebar_position: 100
 ---
 
-# UniversalNER: 2023
+# UniversalNER
 
 UniversalNER 이라는 별명을 가지고 나온 논문이 두 개 있습니다. 1년 정도 밖에 시간 차이가 나지 않는데 저자도, 내용도 전혀 다릅니다. 
 
