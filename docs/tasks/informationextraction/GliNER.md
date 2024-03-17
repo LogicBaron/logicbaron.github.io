@@ -53,15 +53,15 @@ GliNER 모델의 구조는 sentence를 참조한 entity type의 임베딩과 ent
 
 특이한 점은 GliNER 모델은 **여러 개의 entity type을 동시에 input으로 사용한다는 점**입니다. 논문에서는 속도 향상에서 큰 장점이 있었다고 말하고 있는데 성능 면에서는 크게 언급이 없습니다. Ablation study에서는 **entity type의 개수를 바꾸어가며 학습시킨 결과 성능 향상**이 있었음을 시사합니다. 다만 **하나의 entity type 에 대해서만 학습 시키는 방법과 비교가 없어서** 조금 아쉬웠습니다.
 
-### Encoder
+### 1. Encoder
 
-GliNER 논문은 (sentence를 참조하고 있는) entity type 임베딩과 상응하는 entity span 임베딩을 가깝게 하는 contrastive learning을 수행합니다. 모델링의 첫 단계는 entity type 임베딩과 entity span 임베딩을 구하는 것입니다.
+GliNER 논문은 (sentence를 참조하고 있는) entity type 임베딩과 상응하는 entity span 임베딩을 가깝게 하는 contrastive learning을 수행합니다. 모델링의 첫 단계는 **entity type 임베딩**과 **entity span 임베딩**을 구하는 것입니다.
 
 [ENT] token 은 각각의 entity type앞에 붙어서 사용되며, 이 토큰의 임베딩이 **entity type embedding**: $\bold{q}_i$ 로 사용되게 됩니다. Bidirectional Transformer의 구조상 self-attention 모듈을 통해 각각의 entity type token들은 sentence token을 참조합니다.
 
-Span embeding 은 조금 더 복잡한 방법으로 구해집니다. 실제로 모델의 코드 구현을 보면 이 부분이 가장 난해합니다. semtemce span 은 연속된 token set 입니다. $i \sim j$ 까지의 token set 이 span을 이룬다고 가정할 때, GliNER은 **span embedding**: $S_{ij} = FFN(h_i \otimes h_j)$ 로 정의합니다. $\otimes$ 연산은 concatenation operation을 의미하며, GliNER 에서는 최대 12-length 까지의 span을 고려합니다. 
+**Span embeding** 은 조금 더 복잡한 방법으로 구해집니다. 실제로 모델의 코드 구현을 보면 이 부분이 가장 난해합니다. semtemce span 은 연속된 token set 입니다. $i \sim j$ 까지의 token set 이 span을 이룬다고 가정할 때, GliNER은 **span embedding**: $S_{ij} = FFN(h_i \otimes h_j)$ 로 정의합니다. $\otimes$ 연산은 concatenation operation을 의미하며, GliNER 에서는 최대 12-length 까지의 span을 고려합니다. 
 
-### Loss & Train
+### 2. Loss & Train
 
 contrastive learning 에서의 첫 단계는 거리 함수 또는 유사도 함수를 정의하는 것입니다. **entity type embedding $\bold{q}_i$와 span embedding $S_{ij}$의 유사도**는 벡터 내적 기반 점수를 사용합니다. 
 $$
@@ -86,9 +86,9 @@ $$
 
 추가로 학습에서는 두 가지 Regularization Scheme이 사용됩니다. 첫 번째는 input entity type이 순서 셔플링입니다. 두 번째는 랜덤하게 entity type을 drop해서 학습하는 방법입니다. 최종적으로는 학습 과정에서는 최대 25개까지의 entity type을 사용했다고 합니다.
 
-### Decoder
+### 3. Decoder
 
-GliNER 논문에서의 decoder는 matching score를 기반으로 entity type에 해당하는 entity span을 최종적으로 도출하는 모듈입니다. 예를 들어서 0~3 번째 span과 1~4 번째 span이 전부 0.5 점 이상 점수일 때 최종적인 정답 span을 어떻게 정할까, 의 문제입니다. 또한 특정한 span 이 두 개 이상의 entity type과 매칭될 수도 있습니다.
+GliNER 논문에서의 decoder는 matching score를 기반으로 entity type에 해당하는 entity span을 최종적으로 도출하는 모듈입니다. 예를 들어서 0\~3 번째 span과 1\~4 번째 span이 전부 0.5 점 이상 점수일 때 최종적인 정답 span을 어떻게 정할까, 의 문제입니다. 또한 특정한 span 이 두 개 이상의 entity type과 매칭될 수도 있습니다.
 
 기본적으로 matching score > 0.5 에 해당하는 span들을 고려해서 2가지 방법으로 디코딩을 수행합니다. 
 

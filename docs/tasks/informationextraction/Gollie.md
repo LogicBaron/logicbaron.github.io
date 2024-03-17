@@ -12,7 +12,8 @@ UniversalNER 을 포함해서 LLM의 등장이후 NER과 같은 Informatino Extr
 
 UniversalNER의 논문에서 NER 과정에서 named entity label 대신 entity description을 생성하고 이를 inference에 활용하는 실험이 있었습니다. 저자들은 entity description을 활용하는 방식이 성능 지표는 안 좋아졌지만 entity paraphrasing 관점에서는 오히려 강인해졌다고 평가했습니다.
 
-GoLLIE 논문은 이 실험의 확장판이라고 생각합니다. 이 논문에서는 단순히 entity type name을 사용하는 것이 아니라 **human annotator가 참조하는 annotation guideline을 사용**해서 LLM이 IE 과제를 수행하도록 합니다. 또한 다양한 IE task에 일반화된 input-output을 활용할 수 있도록 **python code 형태의 input-output**을 활용했다고 이야기합니다. 그런데 이 부분의 중요성은 크게 강조되지 않았습니다.
+GoLLIE 논문은 이 실험의 확장판이라고 생각합니다. 이 논문에서는 단순히 entity type name을 사용하는 것이 아니라 **human annotator가 참조하는 annotation guideline을 사용**해서 LLM이 IE 과제를 수행하도록 합니다. 또한 다양한 IE task에 일반화된 input-output을 활용할 수 있도록 **python code 형태의 input-output**을 활용했다고 이야기합니다. 사실 generation 기반의 IE task의 근본적인 문제점 중 하나는 generated text의 해석입니다. 이 논문에서는 output 형식 역시 제한해서 해석의 용이함을 더하기도 했습니다. 
+
 
 <div style={{textAlign: 'Center'}}>
     <img src={gollie_io} style={{border: 'solid'}}  />
