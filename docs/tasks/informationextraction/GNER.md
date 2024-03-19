@@ -86,11 +86,13 @@ New(B-Location) York(I-Location) .(O)
 
 TokenClassification 으로 BIO 태그를 예측하는 Bert-base 모델과 달리 `token(label)` set을 생성하는 LLM 방식은 generation 에 의한 고질적인 문제가 당연히 발생합니다. **Omission, Additions and Substituions** 가 대표적인 예시입니다. 단어가 생략되거나, 없던 단어가 추가되거나 단어가 변형되는 문제입니다. 
 
-모델의 output `token(label)` set이 input token set과 일치하지 않으므로 모델의 에측 label을 적절하게 input token에 할당해주기 위한 처리가 필요합니다. GNER에서는 **Longest Common Subsequence** 알고리즘과 **Back Tokenization**을 활용합니다.
 
-첫 번째로, **Longest Common Subsequence** 알고리즘을 통해 실제 토큰 셑과 예측 토큰 셑 사이 일치하는 토큰이 가장 많아지는 매핑을 찾습니다. LCS 알고리즘에 대해서는 따로 설명하지 않겠습니다. 
+모델의 output `token(label)` set이 input token set과 일치하지 않으므로 모델의 에측 label을 적절하게 input token에 할당해주기 위한 처리가 필요합니다. GNER에서는 **Longest Common Subsequence** 알고리즘과 **Back Tokenization**을 활용합니다. 이 부분의 실제 구현은 논문의 뉘앙스와 약간 차이가 있습니다.
 
 **Back Tokenization**은 예측 토큰이 원본과 다르게 변형된 경우에 대응합니다. LLM은 가끔 생성 과정에서 오타를 고치는 등의 원단어의 변형을 일으킵니다. 예를 들어서 `antropologia` 라는 단어가 `antropologa` 로 바뀌어서 생성되는 경우가 있습니다. Back Tokenization은 이 문제를 어느정도 해결하기 위한 알고리즘으로 원본 단어를 그대로 예측 값과 매칭하지 않고 model vocabulary를 사용하여 tokenizing -> detokenizing step을 거쳐 사용합니다. 모든 변형을 잡아낼 수 는 없지만 일부 케이스는 잡아낼 수 있습니다. 예를 들어, `antropologia` -> `antro, polo, g, <unknown>, a` -> `antropologa` 로 매칭되어 변형에 더욱 강인해집니다.
+
+원본 word 에 대한 back tokenization결과가 생성된 단어와 매칭이 되지 않을 경우에는 생성된 단어와 원본 단어가 얼마나 일치하는지 확인합니다. 확인하는 방법은 두 단계로 첫 번째 방법은 **substring match**입니다. substring match가 맞지 않을 경우 **Longest Common Subsequence** 알고리즘을 통해 실제 토큰 셑과 예측 토큰 셑 사이 일치하는 토큰이 가장 많아지는 매핑을 찾습니다. LCS 알고리즘에 대해서는 따로 설명하지 않겠습니다. 
+
 
 ## Result
 
@@ -120,6 +122,8 @@ IE task를 푸는 과정에서도 beam search 와 nucleus sampling 에 의한 �
 # Conclusion
 
 BIO tagging 방식이 LLM에서 시도해보는 것이 생각해볼만한데 생각해본적이 없었습니다. GNER 모델은 단순히 BIO schema를 적용하는 것이 아니라 모델이 negative sample을 학습하는 것이 중요하다고 주장합니다. 그리고 실제로 성능 향상이 매우 컸으며 성능이 수렴하는 모델 사이즈도 크게 낮추었습니다.
+
+### Limitation
 
 GNER 모델은 flat-NER 방식이 적용되어 불연속적으로 등장하는 entity를 처리하기 어렵다는 점을 문제로 꼽습니다. 그런데 이런 복잡한 구조의 entity prediction은 언제나 어려운 일이었습니다.
 
