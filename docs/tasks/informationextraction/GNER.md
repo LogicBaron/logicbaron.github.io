@@ -32,6 +32,8 @@ Flan-T5(encoder-decoder)모델과 LLaMa(decoder-only) 모델을 백본으로 사
 
 UniversalNER, GLiNER, InstructUIE, GoLLIE를 Baseline 모델로 사용합니다.
 
+#### Propmt Example
+
 <pre><code>
 <b>Token inputs (X)</b>: John explored Tokyo , sampling its famed sushi ,
  and flew back to New York .
@@ -44,6 +46,8 @@ GNER 모델은 토큰 별로 entity type 예측을 진행하기 때문에 훈련
 ### Learning with Entity Context
 
 GNER 모델은 IE 과제에서는 entity span 자체가 아니라 주변의 context 가 매우 중요한 역할을 한다고 이야기합니다. 예를 들어서 "go to" 뒤에는 Location에 해당하는 단어가 위치할 확률이 높습니다. GNER 모델은 entity 만을 사용해서 학습을 하는 방식은 context 정보를 활용할 수 없다고 이야기하며, **entity 에서 가까운 순서대로 L 길이만큼의 토큰을 유지하는 방식으로 context 정보를 input에 남겨둡니다**. 
+
+#### Input w. context
 
 <pre><code>
 <b>Training Propmt</b>
@@ -70,6 +74,8 @@ context를 포함시키게 되면 모델의 예측을 이해하기가 어려워�
 
 GNER 모델은 이 문제를 해결하기 위해 BIO 전략을 사용합니다. negative sample 은 "O" tag를 사용하고 entity type에 해당하는 token은 "B-entity type" 과 "I-entity type" 으로 라벨링합니다. 모델의 output은 각각의 token에 대해 BIO label을 예측하는 아래와 같은 형태입니다. 
 
+
+#### Output Example
 ```
 John(B-Person) explored(O) Tokyo(B-Location)
 ......(omitted text) and(O) flew(O) back(O) to(O)

@@ -57,9 +57,13 @@ GliNER 모델의 구조는 sentence를 참조한 entity type의 임베딩과 ent
 
 GliNER 논문은 (sentence를 참조하고 있는) entity type 임베딩과 상응하는 entity span 임베딩을 가깝게 하는 contrastive learning을 수행합니다. 모델링의 첫 단계는 **entity type 임베딩**과 **entity span 임베딩**을 구하는 것입니다.
 
-[ENT] token 은 각각의 entity type앞에 붙어서 사용되며, 이 토큰의 임베딩이 **entity type embedding**: $\bold{q}_i$ 로 사용되게 됩니다. Bidirectional Transformer의 구조상 self-attention 모듈을 통해 각각의 entity type token들은 sentence token을 참조합니다.
+[ENT] token 은 각각의 entity type앞에 붙어서 사용되며, 이 토큰의 임베딩이 **entity type embedding**: $\bold{q}_i$ 로 사용되게 됩니다. Bidirectional Transformer의 구조상 self-attention 모듈을 통해 각각의 entity type token들은 sentence token을 참조합니다. GliNER에서는 특이하게 word 단위 임베딩을 사용하는데 각 word의 첫 번째 subword token embedding을 word embedding으로 활용합니다.
 
 **Span embeding** 은 조금 더 복잡한 방법으로 구해집니다. 실제로 모델의 코드 구현을 보면 이 부분이 가장 난해합니다. semtemce span 은 연속된 token set 입니다. $i \sim j$ 까지의 token set 이 span을 이룬다고 가정할 때, GliNER은 **span embedding**: $S_{ij} = FFN(h_i \otimes h_j)$ 로 정의합니다. $\otimes$ 연산은 concatenation operation을 의미하며, GliNER 에서는 최대 12-length 까지의 span을 고려합니다. 
+
+:::tip
+실제 모델 구현에서는 첫 번째 subword token embedding을 LSTM layer를 추가로 통과시킵니다.
+:::
 
 ### 2. Loss & Train
 

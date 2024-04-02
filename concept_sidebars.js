@@ -93,8 +93,9 @@ const DeepLearningSidebar = [
 ]
 
 
-const LargeModelSidebar = [
+const LargeModelConceptSidebar = [
   'concepts/largemodel/introduction',
+  'concepts/largemodel/decoding'
 ]
 
 const ProgrammingSidebar = [
@@ -109,7 +110,7 @@ const ConceptSidebars  = {
     MathSidebar: MathSidebar,
     MLConceptSidebar: MLConceptSidebar,
     DeepLearningSidebar: DeepLearningSidebar,
-    LargeModelSidebar: LargeModelSidebar,
+    LargeModelConceptSidebar: LargeModelConceptSidebar,
     ProgrammingSidebar: ProgrammingSidebar,
 }
 

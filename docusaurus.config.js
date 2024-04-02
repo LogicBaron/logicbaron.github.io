@@ -149,7 +149,7 @@ const config = {
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'LargeModelSidebar',
+                sidebarId: 'LargeModelConceptSidebar',
                 label: 'Large Model'
               },
               {
