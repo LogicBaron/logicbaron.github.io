@@ -17,10 +17,10 @@ Generation Model 에서 텍스트를 생성하기 위해서는 **디코딩** 이
 
 예를 들어서 "먹었다" 라는 토큰이 앞에서 나왔다면 뒤의 토큰 확률 1위가 "책상" 이더라도 2위인 "사과"를 선택하는 게 더  현명할 것입니다. 이 글에서는 text를 생성하는 과정에서 토큰을 선택하는 5가지의 디코딩 전략을 소개합니다.
 
-- Greedy Search
-- Beam Search : BERT 계열 encoder-decoder generator 에서 활용
-- Top-k Sampling : GPT-2, GPT-3
-- Top-p Sampling : GPT-3 ,GPT-4
+- **Greedy Search**
+- **Beam Search** : BERT 계열 encoder-decoder generator 에서 활용
+- **Top-k Sampling** : GPT-2, GPT-3
+- **Top-p Sampling** : GPT-3 ,GPT-4
 
 ## Greedy Search
 
