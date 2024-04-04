@@ -40,6 +40,18 @@ Beam Search 의 장점은 현재 시점에서 알 수 없는 더 높은 확률�
 
 ## Sampling
 
+Greedy Search & Beam Search 방식은 다음 토큰의 확률에 따라 확정적인(deterministic) 알고리즘입니다. 이 방식은 생성된 텍스트의 다양성이 매우 떨어지게 됩니다. 또한 앞부분의 완성도가 떨어지는 텍스트를 생성은 학습 과정에서 피드백 자체가 이루어지지 않고, 이로 인해 짧은 문장 위주로 생성되며 동어 반복이 자주 일어나게 됩니다.
+
+Sampling 방식은 이러한 문제를 해결하기 위해 다음 단어의 생성을 토큰 확률로 부터 샘플링 하는 방식이 도입됩니다. 이 방식으로 모델은 현재 시점에서 일어날 확률이 매우 낮은 토큰도 생성하며, 학습할 수 있습니다. 
+
+![Alt text](image-2.png)
+
+확률에 따른 확정적인 알고리즘이 아니므로 이 시점부터는 토큰들의 확률 분포 형태 자체가 중요해집니다. GPT 모델들을 사용할 때 temperature 가 사용되는 이유가 이 부분입니다. cross-entropy loss에서 처음 사용된 temperature hyperparameter는 큰 값일수록 softmax function 으로 계산되어지는 확률 분포를 더욱 **완만하게** 만들어냅니다. (Temperature에 대한 부분은 따로 정리를 하려고 합니다.)
+
+![Alt text](image-3.png)
+
+즉, temperature가 높을수록 여러 토큰들이 더욱 균일한 확률로 생성될 수 있음을 의미합니다. 당연히 모델의 결과는 더욱 창의적이고 다양해집니다. GPT-api에서 제공하는 Temperature에 대한 설명에 이러한 배경이 있습니다.
+
 ## Top-k Sampling
 
 ## Top-p Sampling
