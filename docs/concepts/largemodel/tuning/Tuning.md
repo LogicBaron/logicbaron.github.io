@@ -1,7 +1,10 @@
 ---
 id: 0
-title: Instruction Tuning
+sidebar_position: 0
 ---
+import tuning from './assets/tuning.png';
+
+
 # Instruction Tuning
 
 ## Instruction Tuning?
@@ -12,6 +15,10 @@ Large Language Model(LLM) 의 가장 큰 특징이자 높은 task 수행력의 �
 
 ### Instruction Tuning vs. Finetuning
 **Instruction Tuning의 인사이트와 목적** 역시 **"모델은 충분한 지식을 가지고 있으니 Instruction 을 더 잘 이해할 수 있도록 도와주자"** 입니다. **Finetuning 의 목적과는 크게 상이**합니다. 
+
+<div style={{textAlign: 'Center'}}>
+    <img src={tuning} style={{border: 'solid', width: 600}} />
+</div>
 
 일반적인 모델은 general task를 별 문제 없이 수행할 수 있을 정도의 지식을 학습하지도, 지식을 저장하기 위한 parameter 도 가지고 있지 않습니다. 그렇기에 finetuning 의 주목적은 **특정 task에 맞도록 모델의 지식을 업데이트**하는 것입니다. 그렇기에 Finetuning 방식은 충분한 지식 - 충분한 데이터; 를 필요로 하며 고질적으로 zero-shot 수행능력에서 한계를 보입니다.
 
@@ -46,7 +53,7 @@ Instruction Tuning 방법은 1) **데이터를 어떻게 생성하는가** 그�
 
 ### 학습 방법 관점
 
-- **LORA**
+- [**LORA**](./lora)
 - STILITs
 - MTL
 
