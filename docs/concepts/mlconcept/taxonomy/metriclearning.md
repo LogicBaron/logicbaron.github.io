@@ -28,7 +28,6 @@ metric learning 은 **서로 다른 데이터를 떨어뜨리고, 비슷한 데�
   - probability distribution 을 통해 좋은 projection 을 찾는 방법
 - **Deep Metric Learning**
   - deep neural network 의 활용
-  - https://hav4ik.github.io/articles/deep-metric-learning-survey
   - deep learning concepts 에서 정리
 
 ## Main Idea of Metric Learning
