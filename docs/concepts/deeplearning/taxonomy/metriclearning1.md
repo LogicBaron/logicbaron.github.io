@@ -97,6 +97,10 @@ $$
 
 식이 약간 복잡하지만 거리 함수로 feature 간의 내적을 사용했다는 점만 제외하면 그렇게 복잡하지 않습니다. triplet loss, quadraple loss와 마찬가지로 positive pair의 거리는 가깝게 negative pair의 거리는 멀게 하는 것이 목표입니다. 
 
+:::note
+사실 내적을 사용한다는 점에서 n-pair loss 는 이미 각도의 개념이 들어가있기 때문에 다음 포스트인 **metric learning on sphere**에 가깝다고 느낄 수 있을 것 같습니다. 어느정도 맞다고 생각하지만 n-pair loss의 접근법이 euclidean 기반의 triplet loss와 너무 근접하여 이 문서에 남겨둡니다.
+:::
+
 N-pair loss는 아무리 negative mining이 잘 되더라도 다양한 class가 존재하는 데이터에서 활용하는 것이 좋습니다. 최소 batch-size 정도의 class가 나누어져 있어야 n-pair loss의 의미가 극대화되기 때문입니다. 최근에는 N-pair loss를 사용해서 contrastive representation learning 등에 활용하고 있습니다.
 
 
