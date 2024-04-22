@@ -5,11 +5,6 @@ sidebar_position: 3
 
 # Metric Learning on Cartesian
 
-Deep Metric Learning 개념에 대해 읽기 앞서 [distance](/concepts/mlconcept/data/distance) 글과 [ML: metric learning](/concepts/mlconcept/taxonomy/metriclearning) 글을 참조하길 파악합니다.
-
-Deep Learning 글에서는 Metric Learning 을 위해 발전되어온 Loss를 정리합니다.
-
-
 
 ## Notation
 
