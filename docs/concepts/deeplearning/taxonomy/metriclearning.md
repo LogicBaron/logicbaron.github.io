@@ -9,14 +9,14 @@ import metric_loss from './assets/metric_loss.png'
 
 :::tip
 Deep Metric Learning 개념에 대해 읽기 앞서
-- [distance](/concepts/mlconcept/data/distance)
-- [ML: metric learning](/concepts/mlconcept/taxonomy/metriclearning) 
+- [distance](/concepts/mlconcept/data/distance.md)
+- [ML: metric learning](/concepts/mlconcept/taxonomy/metriclearning.md) 
 
 을 참조하길 파악합니다.
 :::
 
 
-**Metric Learning**은 **두 데이터가 비슷하거나 다른 정도를 임베딩 공간에서 거리**로 학습하는 것을 목적으로 합니다. 
+**Metric Learning**은 **두 데이터가 비슷하거나 다른 정도를 임베딩 공간에서 거리**로 학습하는 것을 목적으로 합니다.
 
 
 <div style={{textAlign: 'Center'}}>
