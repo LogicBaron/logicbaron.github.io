@@ -1,6 +1,6 @@
 ---
 id: metric_learning1
-sidebar_position: 1
+sidebar_position: 3
 ---
 
 # Metric Learning on Cartesian
@@ -9,7 +9,7 @@ Deep Metric Learning 개념에 대해 읽기 앞서 [distance](/concepts/mlconce
 
 Deep Learning 글에서는 Metric Learning 을 위해 발전되어온 Loss를 정리합니다.
 
-![Alt text](image-1.png)
+
 
 ## Notation
 
