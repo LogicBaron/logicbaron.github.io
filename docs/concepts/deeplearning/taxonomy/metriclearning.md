@@ -23,8 +23,7 @@ Deep Metric Learning 개념에 대해 읽기 앞서
     <img src={metric} style={{border: 'solid', width: 700}} />
 </div>
 
-
-Deep Metric Learning은 **거리 공간으로 크게 두 가지**를 사용합니다. 
+Deep Metric Learning은 **거리 공간(함수)으로 크게 두 가지**를 사용합니다. 
 
 - **Cartesian Space**에서 Euclidean distance 포함한 n-norm distance를 활용하는 방식.
 - **Angular space**에서 데이터 간 각도를 활용하는 방식.
@@ -53,5 +52,5 @@ Deep Metric Learning 학습의 기본적인 프레임워크는,
 
 Deep Metric Learning에서 사용하는 Loss와 인사이트들은 아래와 같습니다.
 
-1. [Contrastive Loss](/docs/concepts/deeplearning/loss/contrastive.md)
-2. Triplet Loss & N-pair Loss
+### 1. [Contrastive Loss](/docs/concepts/deeplearning/loss/contrastive.md)
+### 2. Triplet Loss & N-pair Loss
