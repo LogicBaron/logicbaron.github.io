@@ -8,6 +8,7 @@ const MLModelSidebar  = [
 
 const AIModelSidebar = [
     'models/aimodel/intro',
+    'models/aimodel/autoencoder',
     {
         type: 'category',
         label: 'Transformer',
