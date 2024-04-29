@@ -3,6 +3,8 @@ id: triplet
 sidebar_position: 3
 ---
 import triplet from './assets/triplet.png';
+import quadraplet from './assets/quadraplet.png';
+import structure from './assets/structure.png';
 
 # Triplet Loss
 
@@ -33,7 +35,13 @@ $$
 
 ## Negative Mining
 
+
 Triplet Loss와, 이후 등장하는 Loss에서 가장 중요한 개념은 당연히 손실 함수의 설계입니다. 그리고 그 다음으로 중요한 것은, 손실 함수의 인사이트에 걸맞는 데이터셑 구성과 small-batch 구성입니다. 이 과정에 새롭게 부각되는 개념이 **negative mining**입니다. 
+
+
+:::note[Summary]
+Dataset 내에서 anchor와 negative sample을 찾자!
+:::
 
 **negative mining**이란, anchor에 대해 적절한 negative sample을 찾는 과정입니다. 그리고... **생각보다 어려운 작업입니다.** negative mining을 더 어렵게 하는 이유 중 한 가지는, **적절한** negative를 찾기 어렵다는 점입니다. 
 
@@ -52,28 +60,41 @@ hard negative sampling은 deep metric learning을 활용하는 대부분의 fram
 
 # Quadraplet Loss
 
-Tiplet Loss이후 Loss 발전은 당분간 triplet loss의 일반화에 집중됩니다. 방정식의 발전, 미분의 발전, 적분의 발전과 비슷하죠? 너무 재밌습니다. 3개의 데이터를 이용하는 triplet loss 다음으로 4개의 데이터를 이용하는 quadraple loss, 5개의 데이터의 이용하는 loss.. 에서 n개의 데이터를 이요하는 loss로 발전해왔습니다.
+<div style={{textAlign: 'Center'}}>
+    <img src={quadraplet} style={{border: 'solid', width: 700}} />
+</div>
 
 Quadraplet loss는 triplet loss와 똑같은 인사이트, 구조와 손실 함수를 공유합니다. 다만, 하나의 anchor point 에 대해 **하나의 positive pair 그리고 두 개의 negative pair를 사용**해서 학습합니다.
 
-## Small Batch 전부 보자, Structure Loss
+## Structured Loss
 
-Contrastive Loss ~ Quadraplet Loss 들은 한번에 2~4개 정도의 데이터 포인트를 학습합니다. 이 시기까지의 컴퓨팅 리소스의 한계, 그리고 deep metric learning 개념이 충분히 검증되지 않은 시기였기에 조심스러운 시도가 많았다고 생각합니다. Structured Loss 는 꽤 과감한 접근을 시도합니다.
+Triplet Loss (Quadraplet Loss) 는 데이터에게 positive 또는 negative 하나의 비교군이 아니라 두 가지 비교군을 함께 제시함으로써 데이터가 더 적절한 거리와 위치를 학습할 수 있도록 했습니다. Structure loss는 이 과정에서 몇 개의 점을 구분하는 것으로는 완벽한 위치를 학습하기 어렵다고 이야기하며, **배치 내의 가능한 모든 쌍을 고려하는 거리 개념과 손실함수를 제안**합니다.
 
-Structure Loss는 한 step에서 모든 학습 데이터는 아니더라도, **small batch내의 모든 데이터를 고려한 loss를 제안**합니다. 다만, 이 과정에 batch 내의 모든 데이터를 골고루 선택하는 것이 아니라 batch 내에서 가장 우선적으로 고려해야 할 샘플을 고려합니다.
+<div style={{textAlign: 'Center'}}>
+    <img src={structure} style={{border: 'solid', width: 700}} />
+</div>
 
-Strucute Loss 는 **small batch 내에서 positive 쌍 각각과 가장 가까운 두 negative data point가 최대한 멀어지도록** 학습합니다. 
+위 그림은 전체 임베딩 스페이스에서 적은 수의 쌍만을 비교할 경우 생길 수 있는 문제를 설명하고 있습니다. triplet loss 도 복잡하고 다양한 클래스로 구성된 임베딩 스페이스에서는 적절하지 못한 방향으로 학습이 이루어질 수 있음을 보여줍니다.
+
+### Definition
+
+Strucutred Loss 는 배치 내의 positive pair에 대한 손실 값, $J$의 힌지합으로 표현되는데 그 중 pair 손실 함수 $J$에 대해 먼저 살펴보겠습니다.
+
+
 
 $$
-\hat{J}_{i,j} = \max \left( \max_{(i,k) \in N} \left\{ \alpha - D^2_{f_\theta}(x_i, x_k) \right\}, \max_{(l,j) \in N} \left\{ \alpha - D^2_{f_\theta}(x_l, x_j) \right\} + D^2_{f_\theta}(x_i, x_j) \right)
+\hat{J}_{i,j} = \max \left( \max_{(i,k) \in N} \left\{ \alpha - D^2_{f_\theta}(x_i, x_k) \right\}, \max_{(l,j) \in N} \left\{ \alpha - D^2_{f_\theta}(x_l, x_j) \right\} + D^2_{f_\theta}(x_i, x_j) \right) + D_{i,j}
 $$
 
-라는 $\hat{J}_{i,j}$ 함수의 정의 하에서 loss 함수는 아래와 같이 정의됩니다. 조금 정리하자면, **posiive sample이 가까울수록 negative sample이 멀어질수록 작은 값을 가지게 되는**, 인사이트에 부합하는 $J$ 값을 따르는 loss 함수는 아래와 같습니다. 모든 조합에서.. loss $J$를 최소화합니다.
+
+$\hat{J}_{i,j}$는, **두 positive sample 중 어느 하나와 가장 가까운 배치 내의 negative sample과의 거리**로 정의됩니다. 즉 $\hat{J}_{i,j}$ 의 힌지 합이 손실함수라는 말은, `두 positive sample 중 어느 하나와 가장 가까운 배치 내의 negative sample과의 거리`이 작아지도록 모델이 학습한다는 의미입니다. 논문에서는 모든 negative sample을 고려하지 않는 이유를 computational complexity 상의 문제라고 이야기합니다. 또한 **margin $\alpha$** 두어서 negative sample 간의 최소 거리를 정의합니다. 각 sample과 margin 거리 내에는 negative sample이 존재하지 않도록 학습하게 됩니다.
 
 $$
 \hat{\mathcal{L}}_{\text{structured}} = \frac{1}{2|P|} \sum_{(i,j) \in P} \max \left( 0, \hat{J}_{i,j} \right)^2
 $$
 
-**small batch를 전부 활용하는 loss**를 활용함으로써 기존과 비슷한 수준의 컴퓨팅 리소스를 활용하면서도 모델이 데이터를 보는 관점이 훨씬 풍부해졌고, 모델의 표현력 역시 크게 상승헀습니다.
+상술했던 대로, 최종적인 손실함수는 small batch내의 모든 positive pair에 대한 $J$ 값의 hinge sum으로 정의됩니다.
+
+small batch 내의 모든 데이터(쌍)를 활용하는 loss 함수를 사용해서 structured loss는 각 데이터가 임베딩 공간 상에서 더 적절한 곳에 위치할 수 있도록 학습시켰습니다. 사실 이는 컴퓨팅 리소스와 학습 프레임워크의 발전이 함께 이루어졌길래 가능한 학습 방법이기도 합니다.
 
 이후의 Deep Metric Learning 은 **small batch 내의 모든 데이터를 활용하는 것은 당연**하고, 어떻게 더 잘 활용할지에 대해 고민하는 방향으로 발전합니다. 이 관점에서 magnet loss와 clustering loss가 등장하지만 이 두 loss는 크게 주목하지 못했습니다.

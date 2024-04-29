@@ -2,11 +2,25 @@
 id: npair
 sidebar_position: 4
 ---
+import npair from './assets/npair.png';
+
+
 # N-pair Loss
+
+<div style={{textAlign: 'Center'}}>
+    <img src={npair} style={{border: 'solid', width: 700}} />
+</div>
+
+
 
 Metric Learning 에서는 개인적으로 끝판왕이라고 생각하는 N-pair loss 입니다. **InfoNCE loss**라는 이름으로도 유명하며 CLIP에서 적용한 loss로도 유명합니다. 
 
-N-pair loss 는 Triplet Loss 의 Generalized Version으로 설명할 수 있습니다. N=3 인 tiplet loss, N=4인 Quadraplet loss의 연장선에서 N-pair loss는 하나의 positive pair와 N-1개의 Negative pair를 학습에 사용합니다. N-pair loss 논문에서 나온 loss는 다음과 같습니다.
+N-pair loss 는 Triplet Loss 의 Generalized Version으로 설명할 수 있습니다.
+
+Triplet loss는 anchor에 대해 1개의 positive sample, 1개의 negative sample을 비교합니다. Quadraple loss는 하나의 anchor에 대해 2개의 negative lsos를 고려합니다. n-pair역시 인사이트가 같습니다.
+
+하나의 anchor에 대해서 1개의 positive pair만을 고려하고 n-1개의 negative pair를 고려합니다. 
+
 
 $$
 \begin{align*}
