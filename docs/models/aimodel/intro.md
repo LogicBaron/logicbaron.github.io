@@ -9,15 +9,17 @@ backbone 으로 사용할 수 있는 ai 모델들의 구조 및 인사이트. �
 - 논문의 인사이트, 연구의 motivation
 - 쉽게 이해하기 힘들 정도로 간결하게 표현된 수식 관계
 
-에 대해서만 주로 다루고 나머지는 내버려둘 생각입ㄴ디ㅏ.
+에 대해서만 주로 다루고 나머지는 내버려둘 생각입다.
 
 ## Transformer
 - transformer
-- bert
 - vision transformer
+
+## BERT
+- bert
 
 ## CLIP
 - [CLIP](/docs/models/aimodel/CLIP/clip.md)
 - [ALBEF](/docs/models/aimodel/CLIP/albef.md)
 - [BLIP](/docs/models/aimodel/CLIP/blip.md)
-- BLIP2
+- [BLIP2](/docs/models/aimodel/CLIP/blip2.md)

@@ -52,5 +52,21 @@ Deep Metric Learning 학습의 기본적인 프레임워크는,
 
 Deep Metric Learning에서 사용하는 Loss와 인사이트들은 아래와 같습니다.
 
+:::note
+첨언하자면, 저는 데이터 포인턱 간의 거리간 단순히 임베딩 포인터 간의 거리 함수로 표현되지 않을 것이라 생각합니다.
+다만 임베딩은 가장 기본적인 형태이면서도 연구가 많이 이루어진 분야이니 임베딩 기반 인사이트를 따라가는 것이 분명 도움되는 부분이 있을 것 같습니다.
+:::
+
+:::tip
+Deep Metric Learning은 특히 Face Recognition 연구와 함께 많이 발전했습니다. Face Classification & Recognition 의 역사를 찾아봐도 많은 공부가 될 것입니다. 또한, 몇몇 Loss 글에서는 관련된 Face Recognition 논문을 함께 소개합니다.
+:::
+
 ### 1. [Contrastive Loss](/docs/concepts/deeplearning/loss/contrastive.md)
-### 2. Triplet Loss & N-pair Loss
+### 2. [Triplet Loss & Structured  Loss](/docs/concepts/deeplearning/loss/triplet.md)
+### 3. [N-pair Loss](/docs/concepts/deeplearning/loss/npair.md)
+### 4. [Center Loss](/docs/concepts/deeplearning/loss/center.md)
+### 5. [Angular Loss (feat. Sphere Face)](/docs/concepts/deeplearning/loss/angular.md)
+### 6. [CosFace & ArcFace Loss](/docs/concepts/deeplearning/loss/face.md)
+
+# Ref
+1. https://hav4ik.github.io/articles/deep-metric-learning-survey
