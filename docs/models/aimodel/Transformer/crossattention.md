@@ -52,3 +52,4 @@ $$
 $a_{il}$은 query $i$와 key $j$의 연관성을 의미합니다. 그리고 $k_{lj}$ 는 key $l$의 $j$ 번째 성분입니다.
 
 즉 cross attention 은 query와 key의 연관도를 weight로 사용해서, value의 element로 query embedding을 재구성하는 과정입니다. weighted vector 연산과 다른 점은 각 벡터 요소마다 weight 가 다르게 적용된다는 점입니다. attention 값으로요. 
+
