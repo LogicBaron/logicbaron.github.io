@@ -145,7 +145,5 @@ NuExtract 의 시사점 중 하나는 finetuning 으로 인해 작은 모델의 
 
 
 # Ref
-
-1.[NuExtract Blog](https://numind.ai/blog/nuextract-a-foundation-model-for-structured-extraction)
-
+1. [NuExtract Blog](https://numind.ai/blog/nuextract-a-foundation-model-for-structured-extraction)
 2. [NuNER Paper](https://arxiv.org/pdf/2402.15343)
