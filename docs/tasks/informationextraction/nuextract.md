@@ -4,6 +4,15 @@ sidebar_position: 400
 ---
 import nuextract from './asset/nuextract.png';
 
+
+Information Extraction Task 의 어려움 중 하나는 추출해야 하는 정보를 정의하는 일입니다.
+
+UniversalNER 을 포함한 LLM 등장 이전의 연구들의 방향은 이러한 어려움을 '일반적으로 적용가능한 entity type 체계' 를 사용해서 해결해왔습니다.
+
+GPT-3 의 등장 이후로는 LLM 이 학습한 데이터에 이미 충분한 entity type 정보가 녹아 있을 것이라는 가정하에 prompt 를 개선하며 entity type 체계를 정의하지 않는 방식이 선호되어 왔습니다.
+
+NuExtract 는 entity type 체계를 정의해주면 LLM 이 더욱 정확하게 데이터를 추출하며, 특히 **원문 텍스트에 있는 데이터** 추출 정확도가 올라간다고 주장합니다. 그렇다면, 문제는 entity type 체계를 어떻게 정의해주냐 일텐데 논문에서는 template 생성을 LLM 을 통해 진행합니다. 
+
 # NuExtract
 
 Numind 에서 제안하고 발표한 llm 을 활용한 information extraction 의 framework 입니다. 모델이 아니고 framework 라고 설명한 이유는 데이터의 수집, 프롬프트 작성 그리고 모델 학습까지의 전 과정을 포함하고 있기 떄문입니다.
@@ -21,7 +30,35 @@ NuExtract Framework 핵심은 크게 두 가지 입니다.
 
 먼저 Llama3 와 같은 Large-LLM 을 활용해 Information Extraction 과제의 input-output 을 생성합니다. 이 과정은 zero-shot 으로 수행합니다. NuExtract 의 특이점은 위에서 언급했듯 output 의 template 을 제공한다는 점입니다. 블로그에서 NuExtract 에서 사용한 prompt와, prompt 를 사용해 생성한 데이터의 예시를 전부 확인할 수 있습니다. 
 
+## 컨셉 이해
+
+먼저 inference 과정은 아래와 같은 propmt 를 사용한다고 이해하면 될 것 같습니다. input text 와 함께 infromation extraction 의 entity template 을 제공합니다. 모델은 template 에 맞춰서 input text 로 부터 entity value 를 추출합니다.
+
+```
+Given the following JSON template and text, return a version of the JSON template filled in with the relevant data. Don't return anything besides the filled in JSON content.
+
+{
+  "reactants" : [{”name” : “” , “quantity” : “”}],
+  "reagents" : [{”name” : ””, “quantity” : ””}],
+  "solvents" : [{”name” : ””, “quantity” : ””}],
+  "catalysts" : [{”name” : ””, “quantity” : ””}],
+  "time" : [“”],
+  "temperature" : [“”]
+}
+
+Input: *<input>*
+
+Output:
+```
+
+논문에서는 **ICL 을 활용하는 편이 단순히 template 을 제공하거나 각 field 에 대한 description 을 추가하는 것보다 더 성능이 좋다**고 이야기합니다. 예시에 훨씬 많은 정보가 녹아있다고 이야기합니다. 또한 **ICL 보다는 fine-tuning이 더 성능이 좋다**고 이야기합니다.
 먼저 prompt 의 예시입니다.
+
+## Framework
+
+**NuExtract 의 학습 데이터 구성을 위한 데이터 구축 방법**입니다. 기본적으로 C4 데이터셑에 포함된 english document 들을 데이터로 활용합니다.
+
+먼저 **LLM 을 사용해 각 데이터로부터 template(schema) 를 추출**합니다. 논문에서는 baseline LLM 으로 Llama3 를 사용합니다. 이 과정에서는 value 는 추출하지 않습니다. 
 
 ```
 !!!START Context!!!
@@ -50,7 +87,10 @@ Extracted information should be thematically coherent and form a well-structured
 *<few-shot examples>*
 ```
 
-논문에서는 템플릿에 맞는 에시를 반 사용하고, 나머지 반은 예시에 맞지 않아 아무런 output 이 없는 경우를 사용했다고 합니다. 다만 단순히 input-output 만 활용하면 hallucination 과 같은 부작용이 발생하기에 논문에서는 prompt를 약간 더 발전시켜서 사용한다고 합니다.
+다음으로 역시 LLM 을 활용해 생성한 template 을 활용해 entity value 를 추출합니다. 이 과정에서 input document text 를 변형합니다. 절반은 full-text  를 그대로 사용하고 나머지 절반은 텍스트의 일부를 삭제합니다. (template 은 유지합니다.)
+
+template 이 input document 를 활용해서 생성되었기에 사실상 negative entity type : 아무런 value 가 없는 entity type - 이 있을 수 없습니다. 그래서 **텍스트를 전부 사용해서 데이터를 생성하면 모델은 사실상 negative entity 를 학습할 수 없습니다**. non-negative dataset 을 통해 학습한 LLM 은 당연히 template 을 전부 채우는 방향으로 hallucination 이 심한 output 을 생성하게 될 것입니다. 그래서 저자들은 텍스트의 일부를 삭제하는 것을 hallucination 문제 해결을 위한 **negative sampling 의 일종**이라고 설명합니다. 
+
 
 ```
 !!!START Context!!!
@@ -83,7 +123,9 @@ Information to extract:
 *<schema>*
 ```
 
-저자들은, 이 prompt 를 활용해서 해결하고자 하는 문제의 output 형태는 **copy-pasting 구조, 즉 원문 텍스트에서 유래**됨을 강조합니다. 300k pair 에서 최종적으로 50k 개의 데이터 페어를 생성하여 학습에 사용합니다. 
+논문에서는 이렇게 생성된 데이터셑의 장점이자 단점으로 output이 **copy-pasting 구조, 즉 원문 텍스트에서 유래**됨을 강조합니다. 모델의 이러한 특성은 negative sampling 에서 유래되었다고 합니다.
+
+300k pair 에서 최종적으로 50k 개의 데이터 페어를 생성하여 학습에 사용합니다. 
 
 ## Train
 
@@ -103,5 +145,7 @@ NuExtract 의 시사점 중 하나는 finetuning 으로 인해 작은 모델의 
 
 
 # Ref
-1.[NuExtract Blog](https://numind.ai/blog/nuextract-a-foundation-model-for-structured-extraction    )
+
+1.[NuExtract Blog](https://numind.ai/blog/nuextract-a-foundation-model-for-structured-extraction)
+
 2. [NuNER Paper](https://arxiv.org/pdf/2402.15343)
