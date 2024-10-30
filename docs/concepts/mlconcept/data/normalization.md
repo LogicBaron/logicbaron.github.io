@@ -3,11 +3,11 @@ id: normalization
 sidebar_position: 1
 ---
 import normalization_batch from './asset/normalization_batch.png';
-import normalization_batch from './asset/normalization_layer.png';
-import normalization_batch from './asset/normalization_instance.png';
-import normalization_batch from './asset/normalization_group.png';
-import normalization_batch from './asset/normalization_group_performance.png';
-import normalization_batch from './asset/normalization_all.png';
+import normalization_layer from './asset/normalization_layer.png';
+import normalization_instance from './asset/normalization_instance.png';
+import normalization_group from './asset/normalization_group.png';
+import normalization_group_performance from './asset/normalization_group_performance.png';
+import normalization_all from './asset/normalization_all.png';
 
 
 # Normalization
@@ -127,7 +127,7 @@ Batch Normalization 을 수행하되,  전체 mini-batch 가 아닌 Group 단위
 ## 최종
 
 <div style={{textAlign: 'Center'}}>
-    <img src={normalization_all} style={{border: 'solid', width: 500}} />
+    <img src={normalization_all} style={{border: 'solid', width: 700}} />
 </div>
 
 # Reference
