@@ -2,6 +2,14 @@
 id: normalization
 sidebar_position: 1
 ---
+import normalization_batch from './asset/normalization_batch.png';
+import normalization_batch from './asset/normalization_layer.png';
+import normalization_batch from './asset/normalization_instance.png';
+import normalization_batch from './asset/normalization_group.png';
+import normalization_batch from './asset/normalization_group_performance.png';
+import normalization_batch from './asset/normalization_all.png';
+
+
 # Normalization
 
 Normalization 의 의의를 정확하게 이해하기 위해서는 Stochastic Gradient Descent 와 같은 통계적 기법에 대한 이해가 필요합니다. 딥 러닝을 하는 최선의 방법은 모든 데이터 샘플을 한 번에 학습하는 방법입니다. 다만 실제로 연산을 수행하는 하드웨어의 리소스 한계로 그런 방법은 거의 불가능합니다. 그렇기에 현대의 딥러닝에서 일반적으로 사용하는 방법은 전체 데이터 샘플을 훨씬 작은 단위로 나누어서 처리하는, mini-batch 에 기반한 방법론입니다.
@@ -31,7 +39,9 @@ Internal Covariate Shift 는 딥러닝 모델의 각 레이어 입력의 분포�
 
 ### Batch Normalization
 
-![alt text](image.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_batch} style={{border: 'solid', width: 500}} />
+</div>
 
 Batch Normalization 은 **각 채널에 대해서 전체 배치의 평균, 분산으로 Normalization**을 수행합니다.
 
@@ -76,7 +86,9 @@ Layer Normalization 역시 순차적 모델에서 Normalization을 수행하기 
 
 layer normalization 은 샘플 단위의 통계값을 사용해 데이터를 업데이트 합니다.
 
-![alt text](image-2.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_layer} style={{border: 'solid', width: 500}} />
+</div>
 
 예를 들어서, **batch normalization** 은 (이미지1, 이미지2, 이미지3) 에 대해서 'R(빨강)' 채널의 통계값을 사용해서 활성화값을 normalize 합니다. **layer normalization** 은 (이미지1, 이미지2, 이미지3) 에 대해서 '이미지1' 의 활성화값을 '이미지1' 의 통계값을 이용해서 활성화합니다.
 
@@ -92,7 +104,9 @@ Layer Normalization 은 주로 언어 처리에서 사용되었으며 이미지 
 
 Instance Normalization 은 각각의 샘플에 대해 채널의 통계 정보를 따로따로 다룹니다. Batch Normalization + Layer Normalization 처럼 동작합니다.
 
-![alt text](image-4.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_instance} style={{border: 'solid', width: 500}} />
+</div>
 
 ## Group Normalization (2018)
 
@@ -100,15 +114,21 @@ Group Normalization 은 Instance Normalization 과 Batch Normalization 이 혼�
 
 Batch Normalization 을 수행하되,  전체 mini-batch 가 아닌 Group 단위로 batch normalization 을 수행합니다. Group Normalization 은 Batch size 가 아닌 Group size 에 의해 성능이 결정되므로 train과 inference 과정에서 안정적인 성능을 보장합니다.
 
-![alt text](image-5.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_group} style={{border: 'solid', width: 500}} />
+</div>
 
 컴퓨팅 성능의 한계로 mini-batch 사이즈를 충분히 키우기 힘들 때는 오히려 Group Normalization 이 더 좋은 성능을 보여준다고 합니다. 
 
-![alt text](image-6.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_group_performance} style={{border: 'solid', width: 500}} />
+</div>
 
 ## 최종
 
-![alt text](image-7.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={normalization_all} style={{border: 'solid', width: 500}} />
+</div>
 
 # Reference
 [1] [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/pdf/1502.03167.pdf)
