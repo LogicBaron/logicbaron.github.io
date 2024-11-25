@@ -16,6 +16,13 @@ Weight Decay 기법은 Overfitting을 완화하기 위한 Regularization의 한 
 
 weight decay 는 보다 단순한 모델을 학습하도록 하기 위해, 모델의 복잡함에 따른 제약을 loss 함수에 추가합니다. 가장 간단한 모델 중 하나인 선형 함수 $f(x) = W^T x$ 의 복잡함을 측정하는 방법 중 하나는 $||W||^2$ 을 측정하는 것입니다. weight decay 는 모든 parameter 의 제곱놈 합을 이용해서 전체 모델의 복잡함을 측정하고, 이를 loss 함수에 제약으로 추가합니다.
 
+
+### 추가적인 해석
+
+Weight Decay 에서 Weight 크기만큼의 penalty 를 주는 것에 대한 이런 해석도 가능함.
+
+가장 단순한 함수의 형태는 trivial function 입니다. f(x) = 0 으로써, 모든 차항의 계수가 0인 형태입니다. parameter 에 penalty 를 주는 것은 딥러닝 모델이 모델링하고 있는 함수를 trivial 에 가깝게 하는 작용이라고 해석해도 됩니다.
+
 ## Weight Decay
 
 모델의 복잡함에 대한 측정값인 $||W||^2$ 의 특정 비율을 원래 loss 에 추가합니다. 이 비율을 의미하는 상수 $\lambda$는 weight decay hyper parameter, 또는 줄여서 weight decay 라고 부릅니다.
@@ -25,3 +32,4 @@ L_{total} = L_{origianl} + \lambda \sum_{i} {W_i^2}
 $$
 
 이렇게 L2 Norm 을 활용해서 Weight Decay 를 사용하는 것을 L2 Regularization 이라고도 합니다.
+
