@@ -1,7 +1,8 @@
 ---
 id: tokenizer
-sidebar_position :1
+sidebar_position: 1
 ---
+
 # Tokenizer
 
 ## BPE (Byte-Pair Encoding)
@@ -37,3 +38,7 @@ BPE 와 다르게 등장 빈도가 아니라, **가장 likelihood 가 높은 조
 Unigram은 초기 가정부터가 좀 다름. Unigram은 가능한 모든 vocabulary를 설정해두고 Vocabulary 의 크기를 줄여나가는 식으로 이루어짐.
 
 Unigram 알고리즘은 Vocabulary 에서 training data 에서 등장 확률이 가장 낮은 조합을 제거합니다. 
+
+## SentencePiece
+
+공백을 문자로 치환하여 추ㅢ급함.
