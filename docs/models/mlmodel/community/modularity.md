@@ -6,7 +6,7 @@ sidebar_position: 1
 
 네트워크 이론에서 다루는,
 
-전체 네트워크를 이루는 node들 중 일부 node 들로 이루어진 sub-group, cluster 또는 집합을 module 이라고 부른다.
+전체 네트워크를 이루는 node들 중 일부 node 들로 이루어진 sub-group, cluster, community 또는 집합을 module 이라고 부른다.
 
 # Modularity
 
