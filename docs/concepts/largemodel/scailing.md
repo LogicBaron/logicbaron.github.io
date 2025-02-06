@@ -8,9 +8,9 @@ Scaling law 는 모델의 크기, 그리고 학습 데이터의 크기가 커진
 
 Stupid backoff 에서 시작해 최근까지의 연구 결과에서, OpenAI 와 Deepmind 는 scaling law 를 아래와 같이 정리했다. 수식을 보면 알수 있듯이, 모델 크기와 데이터 크기의 지수배에 비례해서 loss 는 감소한다.
 
-$$$
+$$
 \text{Loss} \propto (\text{Model Size})^{-\alpha} + (\text{Data Size})^{-\beta} + \epsilon
-$$$
+$$
 
 언어 모델의 발전과 함께 Scaling law 의 발전을 알아보자.
 
@@ -57,9 +57,9 @@ GPT-3 에서 175B parameter 를 사용해 significant breakthrough 달성.
 
 ## Power Laws
 
-<A constructive prediction of the generalization error across scales>  에서 모델 크기와 데이터셑의 크기와 시스템 성능간에 지수 관계가 성립함을 확인. <Scling laws for neural language models> 에서 transformer 구조에 power law 가 강하게 적용됨을 확인함.
+"A constructive prediction of the generalization error across scales"  에서 모델 크기와 데이터셑의 크기와 시스템 성능간에 지수 관계가 성립함을 확인. "Scling laws for neural language models\> 에서 transformer 구조에 power law" 가 강하게 적용됨을 확인함.
 
 ## Scaling laws on LLM
 
-<Emergent abilities of large language models> 에서 LLM 에서도 Scalining law 가 적용되며 그 효과가 LR scheduling 에 의해 극대화 될 수 있음을 증명함.
+"Emergent abilities of large language models" 에서 LLM 에서도 Scalining law 가 적용되며 그 효과가 LR scheduling 에 의해 극대화 될 수 있음을 증명함.
 
