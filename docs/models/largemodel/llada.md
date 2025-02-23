@@ -38,6 +38,7 @@ LLaDA 논문은 ARM 방식이 아닌 **Masked Token Diffusion Model**  (**MDM**)
 <div style={{textAlign: 'Center'}}>
     <img src={llada} style={{border: 'solid', width: 500}} />
 </div>
+
 ### Pre-training
 
 LLaDA 모델 학습 방식은 **forward process**와 **backward process**로 이루어집니다. 그림 (a).
