@@ -3,6 +3,13 @@ title: Adaptive Attention Span in Transformer
 sidebar_position: 1
 tags: [MOE, Transformer]
 ---
+import adaptive_attention_span from './assets/adaptive_attention_span.png';
+import moe2_result from './assets/moe2_result.png';
+import span_filter from './assets/span_filter.png';
+import attention_result from './assets/attention_result.png';
+import adaptive_sequence_span from './assets/adaptive_sequence_span.png';
+
+
 # Adaptive Attention Span in Transformer
 
 Transformer 계열 모델의 구조는 사실상 Mixture of Experts 를 내포하고 있습니다. MHA 모듈의 각 head 는 concat 된 뒤 linear layer 를 거치면서 서로 다르게 활성화됩니다. 엄밀하게 MOE와 정확히 같지는 않고, 보다 복잡하고 세세하게 구성된 MOE 라고 볼 수 있습니다. 사실 Transformer 내부에는 다양한 "전문가" 를 만들어내려는 철학이 많이 녹아있어요. 
@@ -17,7 +24,9 @@ Transformer 계열에서 MOE 를 적용하는 것을 이해하기 위해서는 �
 
  Attention Head 는 각 토큰을 다른 토큰과 얼마나 연관지을지 결정합니다. 본 논문의 첫 관찰은, 각 Attention Head 가 참조하는 토큰의 범위가 크게 차이가 난다는 것입니다. 
 
- ![alt text](image-1.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={adaptive_attention_span} style={{border: 'solid', width: 600}} />
+</div>
 
 위 그림은 두 개의 attention head 에서 거리에 따른 attention 크기를 plot한 그래프입니다. Head B 는 Head A 에 비해 훨씬 먼 거리의 token 까지도 attention 값이 크게 유지되는 것을 확인할 수 있습니다. Head A 는 보다 가까운 단어들을 활용해서 문맥을 해석하고, Head B 는 보다 먼 단어들까지 활용해서 문맥을 해석합니다. 
 
@@ -25,7 +34,9 @@ Attention 모듈의 구조 상, Head A 는 가까운 단어들에 집중을 하�
 
 저자들은 아래와 같은 Span Filter 를 적용합니다. $z$ 는 attention head 마다 설정되는 parameter 이며 $R$ 은 일괄적으로 적용되는 smoothing parameter 입니다. 
 
-![alt text](image-2.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={span_filter} style={{border: 'solid', width: 600}} />
+</div>
 
  예를 들어서, 100번째 토큰을 처리할 때 $100-z$ ~ $100+z$ 까지의 attention 은 그대로 유지되어 활성화됩니다. $100+z$ ~ $100+z+R$ 와 $100-z-R$ ~ $100-z$ 범위의 attention 역시 filter 값을 곱한 크기만큼 활성화됩니다. 그 외 범위의 attention 은 masking 되어 계산에 사용되지 않습니다.
 
@@ -45,13 +56,23 @@ $$
 
 ### Attention 분석
 
-![alt text](image-4.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={attention_result} style={{border: 'solid', width: 600}} />
+</div>
 
 저자들은 하위 5개 Layer 에서는 attention span 의 크기가 매우 작다고 말합니다. 즉 하위 layer 에서는 굳이 full-attention 을 활용할 필요가 없다는 점을 시사합니다.
 
 반면 상위 layer 의 일부 어테션 헤드에서는 매우 큰, 몇 천 크기의 attnetion span 이 확인되었다고 이야기합니다.
 
 이는 CNN 의 설계에서 의도한 결과와 동일합니다. 두 방식 모두 초기에는 가까운 feature 위주로 분석하고, 후반에는 전체적인 의미를 해석하도록 동작합니다. 
+
+두 번째 분석은 **input sequence 에 따른 dynamic span** 변화입니다.
+
+아래 그림은 input sequence 에 따른 평균적인 dynamic span 을 나타내는데, 단어의 앞과 끝에서는 비교적 짧은 span이, 단어의 중간에서는 비교적 긴 span이 적용되는 패턴이 있음을 알 수 있습니다.
+
+<div style={{textAlign: 'Center'}}>
+    <img src={adaptive_sequence_span} style={{border: 'solid', width: 600}} />
+</div>
 
 참고로 Decoder-Only 모델에서는 재밌는 결과가 관찰됩니다. Decoder-only 모델은 input text, output text 에 가장 가까운 초기 그리고 마지막 layer 에서 문법적인 해석에 집중하는 모습을 보여줍니다. 문법은 보다 전체적인 문장 구조를 이해해야하는 과제인데, 이는 encoder 구조와 decoder-only 구조가 그 동작의 유사성과 별개로 과정은 완전히 다를 수 있다는 점을 보여줍니다. 
 
@@ -61,7 +82,9 @@ $$
 
 비교를 위해 baseline 모델: Fixed span - 의 attention width 역시 $S$ 로 제한합니다. attention window 를 상정하면 될 것 같습니다.
 
-![alt text](image-3.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={moe2_result} style={{border: 'solid', width: 600}} />
+</div>
 
 가장 왼쪽 그래프는 Adaptive Span 을 적용한 모델과 Fixed Span 모델의 BPC 성능을 보여줍니다. 낮은 span 크기에서는 모델의 성능이 비슷이 비슷한데 1000이 넘어가는 범위의 span 크기에서는 adaptive span 모델의 성능이 더 좋아집니다. 하지만 이 결과는 실제로는 모델 성능이 아니라 모델 효용의 문제라고 저는 해석합니다. 큰 모델을 학습하기 위해서는 충분히 많은 데이터와 컴퓨팅 리소스가 필요합니다. 해당 논문에서 사용할 수 있는 데이터와 컴퓨팅 리소스의 크기가 충분하지 않았으며, 만약 충분했다면 Fixed span 의 성능이 더 좋았을 것입니다. 
 

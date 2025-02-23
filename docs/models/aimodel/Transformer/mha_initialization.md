@@ -5,7 +5,7 @@ sidebar_position: 10
 ---
 # Multi Head Attention Initialization
 
-출처는 알 수 없는데, 다른분이 정리해주신 내용을 정리합니다.
+원출처는 알 수 없는데, 사내 동료분께서 정리해주신 내용입니다.
 
 ## Random Initialization?
 

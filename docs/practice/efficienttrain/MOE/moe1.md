@@ -3,6 +3,7 @@ title: Sparsely-Gated MOE Layer
 sidebar_position: 0
 tags: [MOE, LSTM]
 ---
+import moe1_structure from './assets/moe1_structure.png';
 
 # The Sparsely-Gated Mixture-Of-Experts Layer.
 
@@ -26,7 +27,9 @@ Mixture of Experts 를 정리하는 첫 번째 글이다. 첫 번째 글을 꽤 
 
 해당 논문은 17년도 논문인 만큼, LSTM 을 사용합니다. 이로 인해 각 cell 은 거의 전체가 'Expert' 로 활용된다. 모델 구조의 극히 일부 - FFN - 이 expert 로 분기되는 것은 이보다 몇 넌은 뒤의 연구...
 
-![alt text](image.png)
+<div style={{textAlign: 'Center'}}>
+    <img src={moe1_structure} style={{border: 'solid', width: 600}} />
+</div>
 
 LSTM 의 cell 이 expert 가 되므로 해석은 단순해진다. 각각의 word, 또는 token 이 cell 에 입력이 될때마다 gating network 를 통과하고 이에 따른 expert cell network 를 통과한다. 다음 timestep 은 해당 결과와 현재 token 을 받아 같은 과정을 반복한다. 핵심은, **각각의 token 또는 time 에 따라 expert 가 정해진다는 점**이다.
 
