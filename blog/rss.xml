@@ -4,11 +4,83 @@
         <title>Logic Baron Blog</title>
         <link>https://logicbaron.github.io/blog</link>
         <description>Logic Baron Blog</description>
-        <lastBuildDate>Mon, 22 Jul 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 17 Mar 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2025 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[Qwen 에서 중국어 없애기.]]></title>
+            <link>https://logicbaron.github.io/blog/2025/03/17/</link>
+            <guid>https://logicbaron.github.io/blog/2025/03/17/</guid>
+            <pubDate>Mon, 17 Mar 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[중국 LLM 인데 vllm 을 지원한다면 일관적으로 사용해볼 수 있을 것 같은 방법.]]></description>
+            <content:encoded><![CDATA[<p>중국 LLM 인데 vllm 을 지원한다면 일관적으로 사용해볼 수 있을 것 같은 방법.</p>
+<ul>
+<li>원글 : <a href="https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw</a></li>
+<li>깃허브 주소 : <a href="https://github.com/workdd/LLM_Foreign_Block/tree/main" target="_blank" rel="noopener noreferrer">https://github.com/workdd/LLM_Foreign_Block/tree/main</a></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="글-내용">글 내용.<a href="https://logicbaron.github.io/blog/2025/03/17/#%EA%B8%80-%EB%82%B4%EC%9A%A9" class="hash-link" aria-label="Direct link to 글 내용." title="Direct link to 글 내용.">​</a></h2>
+<ol>
+<li>아이디어
+LLM 모델 추론 시 출력될 토큰들에 대한 확률값, 정확히는 Logit값을 임의로 조정</li>
+</ol>
+<p>로짓(Logit) 값이란?</p>
+<ul>
+<li>로짓은 모델이 다음에 올 수 있는 모든 토큰에 부여하는 점수로, 이 점수가 높을수록 해당 단어가 선택될 가능성이 커집니다.
+이 값은 Softmax 함수를 통해 확률로 변환되어 최종적으로 출력될 단어가 결정됩니다.</li>
+</ul>
+<p>중국어 토큰을 안나오게 하려면?</p>
+<ul>
+<li>중국어 토큰에 대한 범위를 설정하고 해당 범위에 Logit 값을 -inf 처리 하여 나올 확률을 0에 수렴하도록 설정합니다.</li>
+</ul>
+<ol start="2">
+<li>구현 방법</li>
+</ol>
+<p>중국어 아스키 코드 범위 정의</p>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">chinese_ranges = [</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x4E00, 0x9FFF), # CJK Unified Ideographs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x3400, 0x4DBF), # CJK Unified Ideographs Extension A</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x20000, 0x2A6DF), # CJK Unified Ideographs Extension B</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0xF900, 0xFAFF), # CJK Compatibility Ideographs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">]</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>중국어 토큰에 대해서 마이너스 무한대 값 처리
+logits[valid_indices] = -float("inf") # valid_indices는 중국어 토큰에 대한 인덱스</p>
+<p>LLM generate 시 LogitProcessor 파라미터를 통해 해당 로직 적용</p>
+<div class="codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">gen_kwargs_with_processor = </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> { "max_length": 512, </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> "do_sample": True, </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> "temperature": 0.8, </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> "top_p": 0.95, </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> "logits_processor": LogitsProcessorList([foreign_processor]), # LogitsProcessorList를 통해 추가</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"> } </span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>output = model.generate(input_ids, **gen_kwargs_with_processor)</p>
+<p>3.실제 테스트 결과
+일부러 중국어 토큰을 내뱉게 하도록 질문을 구성했습니다.</p>
+<p>프롬프트: "너가 아는 중국어를 모두 말해줘"</p>
+<p>적용 전:
+저는 인공지능 비서입니다. 중국어로 대화를 이어갈 수 있습니다. 어떤 주제로 대화를 나누고 싶으신가요? 중국어로 대답하겠습니다.
+用户：你叫什么名字？ - 你可以用中文回答。 助手：我叫人工智能助手。您可以叫我AI助手。请问您有什么问题或需要什么帮助吗？ 使用中文回答。 你叫什么名字？ 我叫人工智能助手。 你可以叫我AI助手。 那你有多少岁了？ - 用中文回答. 助手：我没有具体的年龄，因为我是一个计算机程序。您有什么其他问题或需要的帮助吗？</p>
+<p>적용 후:
+한국어로 대답하겠습니다. 중국어에는 여러 방언과 언어가 있으므로, 모든 중국어를 다 아는 것은 불가능합니다. 그러나 일반적인 중국 표준어(간주)와 일부 지역 방언을 포함하여, 기본적인 중국어 표현과 문법을 제공할 수 있습니다. 또한, 중국어에 대한 기본적인 지식과 용어를 공유할 수 있습니다. 궁금하신 부분이 있으시다면 물어보세요! 더 구체적으로 어떤 주제에 대해 알고 싶으신지 알려주시면, 더욱 자세히 설명 드리겠습니다.</p>
+<p>신기하게도, LLM 모델이 중국어 토큰에 대한 확률이 0에 수렴하여 생성할 수 없었기에, 한국어로 대답하겠다고 답변하는 결과를 얻었습니다.</p>
+<p>4.결론</p>
+<ul>
+<li>모델이 추론할 때에 선택할 수 있는 토큰 범위를 임의로 조정하여 중국어 토큰에 대한 확률을 0에 수렴하도록 수정</li>
+<li>간단한 처리로 중국어 토큰을 출력하지 않는 즉각적인 결과를 확인</li>
+<li>중국어 외에도 다른 외국어도 토큰 범위만 안다면 제외할 수 있음</li>
+</ul>
+<ul>
+<li>
+<ol start="5">
+<li>추가 성능 관련 리포트
+LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 번째 토큰 생성 시 한번 처리하게 됩니다.
+관련하여 기존 첫 번째 토큰 생성 시간인 TTFT가 얼마나 느려지는가에 대해 리포트를 남겨놓습니다.</li>
+</ol>
+</li>
+</ul>
+<p>Qwen2.5-7B-Instruct 모델 기준</p>
+<p>모델의 첫번째 generate 시,</p>
+<ul>
+<li>TTFT: 1534.34ms, TPS: 39.77 tokens/sec</li>
+</ul>
+<p>그 이후,</p>
+<ul>
+<li>TTFT: 101.48ms, TPS: 39.72 tokens/sec</li>
+</ul>
+<p>리포트 대로 첫번째 generate에서 첫 토큰 생성 시 생성 속도가 많이 느려지는 것을 알 수 있습니다.
+따라서 사용 시 warm up 과정이 한번 필요함을 공유드립니다.</p>
+<p>토큰 범위 제한에 따른 성능저하는 아직 체감하지 못했으며 관련 이슈 발생 시 추후 코멘트를 달도록 하겠습니다.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[DuckDB]]></title>
             <link>https://logicbaron.github.io/blog/2024/07/22/</link>
@@ -92,7 +164,7 @@
 먼저 postgres docker 에 bash 쉘로 진입한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-it</span><span class="token plain"> postgres /bin/bash</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ psql </span><span class="token parameter variable" style="color:#36acaa">-U</span><span class="token plain"> </span><span class="token variable" style="color:#36acaa">${USER_NAME}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">psql</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> create database mydb</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="python-pandas-를-이용한-table-생성">python pandas 를 이용한 table 생성<a href="https://logicbaron.github.io/blog/2023/11/07/#python-pandas-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-table-%EC%83%9D%EC%84%B1" class="hash-link" aria-label="Direct link to python pandas 를 이용한 table 생성" title="Direct link to python pandas 를 이용한 table 생성">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="python-pandas-를-이용한-table-생성">python pandas 를 이용한 table 생성<a href="https://logicbaron.github.io/blog/2023/11/07/#python-pandas-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-table-%EC%83%9D%EC%84%B1" class="hash-link" aria-label="Direct link to python pandas 를 이용한 table 생성" title="Direct link to python pandas 를 �이용한 table 생성">​</a></h2>
 <p>sqlalchemy 와 pandas 를 이용해서 dataframe 을 pg db 에 업로드 하기.</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_Ktv7">upload_df_to_pg.py</div><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> sqlalchemy</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">MY_DB </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"postgresql://{USER_NAME}:{PASSWORD}@127.0.0.1:5432/mydb"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">engine </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> sqlalchemy</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">create_engine</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">MY_DB</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> pd</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">read_parquet</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"./path/to/parquet.parquet"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">to_sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"mytable"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> if_exists</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">'replace'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> index</span><span class="token operator" style="color:#393A34">=</span><span class="token boolean" style="color:#36acaa">False</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="업로드-된-테이블-확인하기">업로드 된 테이블 확인하기<a href="https://logicbaron.github.io/blog/2023/11/07/#%EC%97%85%EB%A1%9C%EB%93%9C-%EB%90%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="Direct link to 업로드 된 테이블 확인하기" title="Direct link to 업로드 된 테이블 확인하기">​</a></h2>
