@@ -126,7 +126,9 @@ const DeepLearningSidebar = [
 
 const LargeModelConceptSidebar = [
   'concepts/largemodel/introduction',
+  'concepts/largemodel/scaling',
   'concepts/largemodel/decoding',
+  'concepts/largemodel/temperature',
   {
     type: 'category',
     label: 'Prompt Engineering',
