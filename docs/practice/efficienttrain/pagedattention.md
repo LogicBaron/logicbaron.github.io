@@ -4,7 +4,7 @@ sidebar_position: 2
 ---
 import motivation from './asset/pagedattention_motivation.png';
 import multiple_request from './asset/pagedattention_multiplerequest.png';
-import parallel_sampling from './asset/pagedattention_parallelsampling.png';
+import parallel_sampling from './asset/pagedattetion_parallelsampling.png';
 import beam_search from './asset/pagedattention_beamsearch.png';
 
 
