@@ -1,6 +1,6 @@
 ---
 id: paged attention
-sidebar_position: 2
+sidebar_position: 3
 ---
 import motivation from './asset/pagedattention_motivation.png';
 import multiple_request from './asset/pagedattention_multiplerequest.png';

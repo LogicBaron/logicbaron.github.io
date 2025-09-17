@@ -129,6 +129,7 @@ const LargeModelConceptSidebar = [
   'concepts/largemodel/scaling',
   'concepts/largemodel/decoding',
   'concepts/largemodel/temperature',
+  'concepts/largemodel/hallucination',
   {
     type: 'category',
     label: 'Prompt Engineering',
