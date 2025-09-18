@@ -38,7 +38,7 @@ Paged Attention 은 이 때문에 다음과 같은 솔루션을 제안한다.
 4. reference count 가 0 이된 KV block 은 메모리 해제한다.
 
 <div style={{textAlign: 'Center'}}>
-    <img src={motivation} style={{border: 'solid', width: 600}} />
+    <img src={motivation} style={{border: 'solid', wiㅈdth: 600}} />
 </div>
 
 KV cache 방식으로 인해 chunk 내에서 불필요한 메모리 활용이 줄어든다. 토큰 단위로 메모리를 최대한 채우므로 inference 과정에서 빈 block 이 많아질 염려가 적다. 또한, 보다 작은 단위로 block 을 나누어서 사용함으로써 inference 과정에서 메모리의 일부만 로드해서 사용해야하는 fragmentation 발생도 적다. 
