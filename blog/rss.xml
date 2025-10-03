@@ -10,7 +10,7 @@
         <language>en</language>
         <copyright>Copyright © 2025 Facebook, Inc.</copyright>
         <item>
-            <title><![CDATA[10-03 논문]]></title>
+            <title><![CDATA[10-23 Papers Summary]]></title>
             <link>https://logicbaron.github.io/blog/2025/10/03/</link>
             <guid>https://logicbaron.github.io/blog/2025/10/03/</guid>
             <pubDate>Fri, 03 Oct 2025 00:00:00 GMT</pubDate>
@@ -54,7 +54,7 @@
 <p>GEM은 에이전틱 LLM을 위한 표준 멀티턴 환경/툴킷으로, 다양한 태스크·툴·비동기 실행을 제공해 경험 기반 RL을 실용화한다. 특히 멀티턴에서 REINFORCE+ReBN이 간단·강력한 베이스라인임을 보이며, γ·툴 접근 같은 RL 핵심 설계를 체계적으로 비교·검증한다. 요컨대 **“환경 표준화 + 가벼운 알고리즘 + 툴 연동”**으로 에이전틱 LLM의 연구·벤치마크·실험을 한 자리에서 가능하게 한다.</p>]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[논문정리 0923]]></title>
+            <title><![CDATA[09-23 Papers Summary]]></title>
             <link>https://logicbaron.github.io/blog/2025/09/22/</link>
             <guid>https://logicbaron.github.io/blog/2025/09/22/</guid>
             <pubDate>Mon, 22 Sep 2025 00:00:00 GMT</pubDate>
@@ -83,7 +83,7 @@
 <p>으로 다양한 태스크에서 통합된 토크나이저 구조를 채용. 이후 classification , detection, scene parsing, sementic regression 에서 테스트 후 좋은 성능 확인.</p>]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[논문 정리]]></title>
+            <title><![CDATA[09-18 Papers Summary]]></title>
             <link>https://logicbaron.github.io/blog/2025/09/18/</link>
             <guid>https://logicbaron.github.io/blog/2025/09/18/</guid>
             <pubDate>Thu, 18 Sep 2025 00:00:00 GMT</pubDate>
@@ -212,7 +212,7 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="python-api">Python API<a href="https://logicbaron.github.io/blog/2024/07/22/#python-api" class="hash-link" aria-label="Direct link to Python API" title="Direct link to Python API" translate="no">​</a></h3>
 <p>아래 명령어를 통해 duckdb를 파이썬에서 직접 호출해 사용할 수 있습니다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">pip </span><span class="token function" style="color:#d73a49">install</span><span class="token plain"> duckdb </span><br></span></code></pre></div></div>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="parquet-활용-예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="parquet-활용-��예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
 <p>parquet 파일에서 random row를 가져오는 예시 코드입니다. random row 를 호출하는 예시입니다.</p>
 <p>(random row를 호출하는 쿼리는 매우 느립니다. select ~ where 정도의 쿼리는 훨씬 빠르게 동작합니다.)</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> duckdb</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> duckdb</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">result </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> conn</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string-interpolation string" style="color:#e3116c">f"select * from '</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">parquet_file_path</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">' offset floor(random() * </span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">data_file_size</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">) LIMIT 1"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
