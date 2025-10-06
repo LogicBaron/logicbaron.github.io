@@ -2,12 +2,66 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://logicbaron.github.io/blog</id>
     <title>Logic Baron Blog</title>
-    <updated>2025-10-03T00:00:00.000Z</updated>
+    <updated>2025-10-05T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://logicbaron.github.io/blog"/>
     <subtitle>Logic Baron Blog</subtitle>
     <icon>https://logicbaron.github.io/img/logicbaron_32.ico</icon>
     <rights>Copyright © 2025 Facebook, Inc.</rights>
+    <entry>
+        <title type="html"><![CDATA[10-05 papers review]]></title>
+        <id>https://logicbaron.github.io/blog/2025/10/05/</id>
+        <link href="https://logicbaron.github.io/blog/2025/10/05/"/>
+        <updated>2025-10-05T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Winning the Pruning Gamble]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="winning-the-pruning-gamble">Winning the Pruning Gamble<a href="https://logicbaron.github.io/blog/2025/10/05/#winning-the-pruning-gamble" class="hash-link" aria-label="Direct link to Winning the Pruning Gamble" title="Direct link to Winning the Pruning Gamble" translate="no">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba">A Unified Approach to Joint Sample and Token Pruning for Efficient Supervised Fine-Tuning  <code>alibaba</code><a href="https://logicbaron.github.io/blog/2025/10/05/#a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" class="hash-link" aria-label="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" title="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" translate="no">​</a></h3>
+<p>LLM의 Supervised Fine-Tuning(SFT)은 단순한 후처리가 아니라 중간 훈련(mid-training) 수준의 계산비용이 필요한 단계가 되었다. post-training 단계에서 데이터 효율성은 매우 치명적인 이슈다. 이 내용은 내가 블로그, 또는 논문 정리를 하면서 작성했던 적이 있다. 일반적으로는 <strong>data pruning</strong> 방식을 사용한다. data pruning 사용 시 일반적으로 두 가지 방법 중 하나를 선택한다. 샘플 단위 혹은 토큰 단위. 두 가지 방식의 장단점이 있는데, 본 논문에서는 두 방식의 장점을 합친 방식을 제안한다.</p>
+<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251005_img0-a5398e44d99f83a4ee734055d7f916bd.png" style="width:500px"></div>
+<p>논문의 핵심은 entropy 와 perplexity 를 통해 데이터를 4가지로 분류할 수 있고, 각 데이터에 대해 서로 다른 pruning 방법을 적용해야 한다는 것.</p>
+<p>entropy 와 perplexity 가 전부 낮다. -&gt; 이미 잘 알고있는 정보. 학습 중요도가 낮음.
+entropy 와 perpelxity 가 둘다 높다. -&gt; 노지으일 확률이 높은 데이터. 학습에서 제외.
+entopy 는 낮으나 perplexity 는 높은 데이터 -&gt; 모델이 확실하게 틀린 답을 내놓는 경우. decisoin boundary 이므로 학습 가치가 높음. 오개념을 수정하는 방향으로 학습.
+entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하다고 하며 틀린 답을 내놓는 경우가 많음. calibration 이 잘되고 있는 데이터. 그냥 사용.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="long-live">Long live<a href="https://logicbaron.github.io/blog/2025/10/05/#long-live" class="hash-link" aria-label="Direct link to Long live" title="Direct link to Long live" translate="no">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="real-time-interactive-long-video-generation-nvidia">REAL-TIME INTERACTIVE LONG VIDEO GENERATION <code>nvidia</code><a href="https://logicbaron.github.io/blog/2025/10/05/#real-time-interactive-long-video-generation-nvidia" class="hash-link" aria-label="Direct link to real-time-interactive-long-video-generation-nvidia" title="Direct link to real-time-interactive-long-video-generation-nvidia" translate="no">​</a></h3>
+<p>autoregressive 방식으로는 긴 영상을 잘 만들기 어려움. 근데 여기다가 prompt interaction 을 추가하기는 더 어려움. 그렇다고 diffusion 모델을 사용할수도 없다. 너무 느리니까.</p>
+<p>논문에서는 prompt interactive video generation 방식을 소개함. 기본적으로 autoregressive 방식을 사용.</p>
+<p>autoregressive 방식을 사용.</p>
+<p>prompt 전환시 kv-recahce 방식 사용. 이전 프레임의 시각 맥락은 유지하면서, prompt 의미 맥락만을 재활용.</p>
+<p>steaming long-tuning : 과거 kv 를 이어받은 후 autoregressive 모델을 이용해 5초 단위 roll-out 생성 + DMD alignment</p>
+<p>short video attention + frame sink 을 이용해서 영상 전반적인 일관성 유지 : 짧은 비디오 문맥만 파악하되, 영상 전반적으로 중요한 정보는 고정 키-밸류로 계속 참조시킴.</p>
+<p>20.7FPS + 240 초까지 영상 생성했다고 함.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="opengpt-4o-image">OpenGPT-4o-Image<a href="https://logicbaron.github.io/blog/2025/10/05/#opengpt-4o-image" class="hash-link" aria-label="Direct link to OpenGPT-4o-Image" title="Direct link to OpenGPT-4o-Image" translate="no">​</a></h2>
+<p>GPT4o-image 의 테크 리포트이자, 데이터를 어떻게 생성해서 어떻게 학습시켰는지에 대한 논문. 데이터 생성 방식의 중요성이 특히 pretraiing 에서 점점 커지고 있는 거 같다.</p>
+<p>gpt-4o-image 는 이미지-테스트 멀티모달 관련 데이터셑을  충분히 만들기 위해 먼저 필요한 과제들을 매우 세세하게 체계화시킴. 각 과제들을 분류하고 또 과제들을 하위 과제로 체계화시켰음. 예를 들어서 인과 추론의 경우 명시적인 추론, 암묵적인 추론, 복합 인과 사슬등으로 세분화함. 저자들은 이 과정이 매우 중요하다고 하는데, 이렇게 분류를 해놓아야 명확하게 템플릿화된 프롬프트를 통해 대량의 학습 데이터를 생성할 수 있기 떄문임.</p>
+<p>먼저 소스 이미지를 충분히 수집함. 실제 이미지 데이터 뿐 아니라 omniEdit, ImgEdit, gpt-4o 등도 활용함.</p>
+<ul>
+<li><a href="https://tiger-ai-lab.github.io/OmniEdit/" target="_blank" rel="noopener noreferrer">https://tiger-ai-lab.github.io/OmniEdit/</a></li>
+<li><a href="https://github.com/PKU-YuanGroup/ImgEdit" target="_blank" rel="noopener noreferrer">https://github.com/PKU-YuanGroup/ImgEdit</a></li>
+</ul>
+<p>다만, 모델 학습 일관성을 위해 특정 모듈 학습에는 특정 소스의 데이터만 사용함. 예를 들어, subject-driven generation 에서는 OmniEdit 소스 데이터만 활용.</p>
+<p>그 후, 체계화시킨 템플릿 기반으로 모듈별로 대량의 prompt 를 생성함.</p>
+<p>원본 이미지와 prompt 를 활용해서 gpt-1-image-api 를 활용해서 생성한 데이터를 사용함. reference image editing 의 경우 reference image, edited image 를 가지고 source image 를 다시 생성해내는 과정을 가짐. 그냥 학습 시켰을 때 잘 안되서 추가한 것으로 보임. gpt-1-api 는 비공개 모델.</p>
+<p>시스템화된 데이터 생성 파이프라인을 통해 고품질의 학습 데이터를 만들어서 모델 학습시킴으로써 오픈 소스 생태계 확장 및 distillation 의 중요성을 보여준다.</p>]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[10-04 papers summary]]></title>
+        <id>https://logicbaron.github.io/blog/2025/10/04/</id>
+        <link href="https://logicbaron.github.io/blog/2025/10/04/"/>
+        <updated>2025-10-04T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Self-Forcing++]]></summary>
+        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="self-forcing">Self-Forcing++<a href="https://logicbaron.github.io/blog/2025/10/04/#self-forcing" class="hash-link" aria-label="Direct link to Self-Forcing++" title="Direct link to Self-Forcing++" translate="no">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="towards-minute-scale-high-quality-video-generation-bytedance">Towards Minute-Scale High-Quality Video Generation <code>bytedance</code><a href="https://logicbaron.github.io/blog/2025/10/04/#towards-minute-scale-high-quality-video-generation-bytedance" class="hash-link" aria-label="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" title="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" translate="no">​</a></h3>
+<p>autoregressive 영양 생성 고품질의 긴 영상 생성이 어렵다. 그래서 짧은 단위 autoregressive 모델을 보통 학습시킴.</p>
+<p>짧은 시간 학습시켜서 long roll-out 시키면 당연히 에러가 누적되고 영상 퀄리티가 저하됨. self-forcing++ 논문의 핵심은 학생이 직접 긴 영상을 생성해보게 한 뒤, teacher 모델 (짧은 시간 학습) 이 국소적인 교정을 여러번 하게 만듬.</p>
+<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251004_img0-ce0ece5828866ff4eb2607d5e665bb4e.png" style="width:500px"></div>
+<p>student 모델이 긴 영상을 생성 한다. 그 후 영상을 일부 구간을 noise initialization ( 노이즈 추가 ) 한 뒤 teacher 모델이 영상을 생성하게 함. 그 후, teacher 모델과 student 모델 간의 DMD alignment 를 맞춰주는 방식으로 학습함.</p>
+<ul>
+<li>teacher 는 주로 diffusion 모델</li>
+</ul>
+<p>이는 기존 모방 방식 학습이 가지고 있던 long-term 영상 생성의 한계를 해결하는 방식을 제안하.</p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[10-23 Papers Summary]]></title>
         <id>https://logicbaron.github.io/blog/2025/10/03/</id>
@@ -211,7 +265,7 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="python-api">Python API<a href="https://logicbaron.github.io/blog/2024/07/22/#python-api" class="hash-link" aria-label="Direct link to Python API" title="Direct link to Python API" translate="no">​</a></h3>
 <p>아래 명령어를 통해 duckdb를 파이썬에서 직접 호출해 사용할 수 있습니다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">pip </span><span class="token function" style="color:#d73a49">install</span><span class="token plain"> duckdb </span><br></span></code></pre></div></div>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="parquet-활용-��예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="parquet-활용-예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
 <p>parquet 파일에서 random row를 가져오는 예시 코드입니다. random row 를 호출하는 예시입니다.</p>
 <p>(random row를 호출하는 쿼리는 매우 느립니다. select ~ where 정도의 쿼리는 훨씬 빠르게 동작합니다.)</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> duckdb</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> duckdb</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">result </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> conn</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string-interpolation string" style="color:#e3116c">f"select * from '</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">parquet_file_path</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">' offset floor(random() * </span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">data_file_size</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">) LIMIT 1"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
