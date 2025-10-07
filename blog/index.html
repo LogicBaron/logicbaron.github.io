@@ -12,7 +12,7 @@
 
 <link rel="search" type="application/opensearchdescription+xml" title="Logic Baron" href="/opensearch.xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css" integrity="sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.2ce03385.css">
-<script src="/assets/js/runtime~main.6ba4527a.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.392722ad.js" defer="defer"></script>
 <script src="/assets/js/main.8c23e9d5.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -46,13 +46,13 @@
 <div style="text-align:center"><img src="/assets/images/blog_20251007_img0-849ef228d1d37e3487053a47fb5f067c.png" style="width:500px"></div>
 <p>모델이 헷갈려하는 순간, 즉 entropy 가 높아지는 순간은 모델이 명시적으로 사고하도록 하고 모델의 entropy 가 낮은 순간은 모델이 잠재 사고를 하도록함. 그리고 너무 많은 switch 가 일어나지 않도록 control.</p>
 <p>이를 통해 정확도와 토큰 효율 둘다 달성했다고 함.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="hybrid-architectures-for-language-models">Hybrid Architectures for Language Models<a href="#hybrid-architectures-for-language-models" class="hash-link" aria-label="Direct link to Hybrid Architectures for Language Models" title="Direct link to Hybrid Architectures for Language Models" translate="no">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="hybrid-architectures-for-language-models-meta">Hybrid Architectures for Language Models <code>meta</code><a href="#hybrid-architectures-for-language-models-meta" class="hash-link" aria-label="Direct link to hybrid-architectures-for-language-models-meta" title="Direct link to hybrid-architectures-for-language-models-meta" translate="no">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="systematic-analysis-and-design-insights">Systematic Analysis and Design Insights<a href="#systematic-analysis-and-design-insights" class="hash-link" aria-label="Direct link to Systematic Analysis and Design Insights" title="Direct link to Systematic Analysis and Design Insights" translate="no">​</a></h3>
 <p>카이스트와 메타가 써서 흥미가 든 논문. transformer 와 mamba 구조의 장점을 잘 조합한 새로운 구조를 제안함. 나와 관련이 낮아 보여 가볍게 요약만 확인함.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="front-loading-reasoning">Front-Loading Reasoning<a href="#front-loading-reasoning" class="hash-link" aria-label="Direct link to Front-Loading Reasoning" title="Direct link to Front-Loading Reasoning" translate="no">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="front-loading-reasoning-nvidia">Front-Loading Reasoning <code>nvidia</code><a href="#front-loading-reasoning-nvidia" class="hash-link" aria-label="Direct link to front-loading-reasoning-nvidia" title="Direct link to front-loading-reasoning-nvidia" translate="no">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="the-synergy-between-pretraining-and-post-training-data">The Synergy between Pretraining and Post-Training Data<a href="#the-synergy-between-pretraining-and-post-training-data" class="hash-link" aria-label="Direct link to The Synergy between Pretraining and Post-Training Data" title="Direct link to The Synergy between Pretraining and Post-Training Data" translate="no">​</a></h3>
 <p>엔비디아니까 할만하다고 생각되는 규모의 대규모 실험. &quot;추론 데이터&quot; 를 언제, 어떻게 사용해야 최적의 효과를 볼 수 있는지에 대한 전방위적 분석. 기존 연구는 post-training 단계에 집중해서 분석하나 해당 논문은 pretraining 단계까지 분석 범위에 포함시켰고 다양한 재밌는 결과를 확인했다고 주장한다.</p>
-<p>결론부터 말하면, 다양한 대규모 추론 데이터를 사전 학습 단계에 전방 배치하고 (fron-load) SFT 단계에서는 고품질 데이터를 사용하는 것이 최적이라는 것. 기존의 <strong>추론 학습은 post-training (SFT, RL) 단계에서만 중요하  다</strong> 라는 관점을 정량지표와 함께 반박. 최대 19% 까지 수학, 과학, 코딩 벤치마크 지표 우위를 보였음.</p>
+<p>결론부터 말하면, 다양한 대규모 추론 데이터를 사전 학습 단계에 전방 배치하고 (fron-load) SFT 단계에서는 고품질 데이터를 사용하는 것이 최적이라는 것. 기존의 <strong>추론 학습은 post-training (SFT, RL) 단계에서만 중요하다</strong> 라는 관점을 정량지표와 함께 반박. 최대 19% 까지 수학, 과학, 코딩 벤치마크 지표 우위를 보였음.</p>
 <p>pretraining 단계에서 대규모의 다양한 추론 데이터의 중요성과 함께 재밌는 지점도 많이 적혀있다.</p>
 <ol>
 <li>사전학습 단계에서 추론을 연습하지 않으면, SFT 단계에서 추론 데이터를 2배까지 차이를 내도 추론을 사전 연습한 모델을 따라잡지 못한다. 즉, 사전 추론 학습이 모델의 추론 성능 상한선을 결정한다.</li>
@@ -74,7 +74,7 @@ entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하�
 <p>autoregressive 방식으로는 긴 영상을 잘 만들기 어려움. 근데 여기다가 prompt interaction 을 추가하기는 더 어려움. 그렇다고 diffusion 모델을 사용할수도 없다. 너무 느리니까.</p>
 <p>논문에서는 prompt interactive video generation 방식을 소개함. 기본적으로 autoregressive 방식을 사용.</p>
 <p>autoregressive 방식을 사용.</p>
-<p>prompt 전환시 kv-recahce 방식 사용. 이전 프레임의 시각 맥락은 유지하면서, prompt 의미 맥락만을 재활용.</p>
+<p>prompt 전환시 kv-recahce 방식 사용. 이전 프레임의 시각 맥락 은 유지하면서, prompt 의미 맥락만을 재활용.</p>
 <p>steaming long-tuning : 과거 kv 를 이어받은 후 autoregressive 모델을 이용해 5초 단위 roll-out 생성 + DMD alignment</p>
 <p>short video attention + frame sink 을 이용해서 영상 전반적인 일관성 유지 : 짧은 비디오 문맥만 파악하되, 영상 전반적으로 중요한 정보는 고정 키-밸류로 계속 참조시킴.</p>
 <p>20.7FPS + 240 초까지 영상 생성했다고 함.</p>
@@ -92,7 +92,7 @@ entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하�
 <p>시스템화된 데이터 생성 파이프라인을 통해 고품질의 학습 데이터를 만들어서 모델 학습시킴으로써 오픈 소스 생태계 확장 및 distillation 의 중요성을 보여준다.</p></div><footer class="row docusaurus-mt-lg"></footer></article><article class="margin-bottom--xl"><header><h2 class="title_f1Hy"><a href="/blog/2025/10/04/">10-04 papers summary</a></h2><div class="container_mt6G margin-vert--md"><time datetime="2025-10-04T00:00:00.000Z">October 4, 2025</time> · <!-- -->One min read</div></header><div class="markdown"><h2 class="anchor anchorWithStickyNavbar_LWe7" id="self-forcing">Self-Forcing++<a href="#self-forcing" class="hash-link" aria-label="Direct link to Self-Forcing++" title="Direct link to Self-Forcing++" translate="no">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="towards-minute-scale-high-quality-video-generation-bytedance">Towards Minute-Scale High-Quality Video Generation <code>bytedance</code><a href="#towards-minute-scale-high-quality-video-generation-bytedance" class="hash-link" aria-label="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" title="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" translate="no">​</a></h3>
 <p>autoregressive 영양 생성 고품질의 긴 영상 생성이 어렵다. 그래서 짧은 단위 autoregressive 모델을 보통 학습시킴.</p>
-<p>짧은 시간 학습시켜서 long roll-out 시키면 당연히 에러가 누적되  고 영상 퀄리티가 저하됨. self-forcing++ 논문의 핵심은 학생이 직접 긴 영상을 생성해보게 한 뒤, teacher 모델 (짧은 시간 학습) 이 국소적인 교정을 여러번 하게 만듬.</p>
+<p>짧은 시간 학습시켜서 long roll-out 시키면 당연히 에러가 누적되고 영상 퀄리티가 저하됨. self-forcing++ 논문의 핵심은 학생이 직접 긴 영상을 생성해보게 한 뒤, teacher 모델 (짧은 시간 학습) 이 국소적인 교정을 여러번 하게 만듬.</p>
 <div style="text-align:center"><img src="/assets/images/blog_20251004_img0-ce0ece5828866ff4eb2607d5e665bb4e.png" style="width:500px"></div>
 <p>student 모델이 긴 영상을 생성 한다. 그 후 영상을 일부 구간을 noise initialization ( 노이즈 추가 ) 한 뒤 teacher 모델이 영상을 생성하게 함. 그 후, teacher 모델과 student 모델 간의 DMD alignment 를 맞춰주는 방식으로 학습함.</p>
 <ul>
@@ -109,7 +109,7 @@ entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하�
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="probability-based-objectives-for-supervised-fine-tuning-across-the-model-capability-continuum">PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM<a href="#probability-based-objectives-for-supervised-fine-tuning-across-the-model-capability-continuum" class="hash-link" aria-label="Direct link to PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM" title="Direct link to PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM" translate="no">​</a></h3>
 <p><a href="https://arxiv.org/pdf/2510.00526" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2510.00526</a></p>
 <p>SFT 방식은 주로 negative log likelihood minimize 가 목표함수이지만, 이는 pretrained LLM 의 성질과 맞지 않아 일반화 성능이 제약된다고 주장함.</p>
-<p>NLL 은 &quot;약 한 모델&quot; 에 최적화된 학습 방법론임. 이론적인 설명과 경험적인 설명 두 가지.</p>
+<p>NLL 은 &quot;약한 모델&quot; 에 최적화된 학습 방법론임. 이론적인 설명과 경험적인 설명 두 가지.</p>
 <ul>
 <li>이론적인 설명<!-- -->
 <ul>
@@ -130,7 +130,7 @@ entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하�
 <p>강한 prior 일수록 prior-leaning -&gt; 즉 확률이 높은 확률을 더 많이 고려하는게 중요하다고 함. 단순하게 top-10% 토큰만 고려하기, $-p$, 또는 $-p^k$ 같은 함수들. (concave)</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-cant-transformers-learn-multiplication">WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION<a href="#why-cant-transformers-learn-multiplication" class="hash-link" aria-label="Direct link to WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION" title="Direct link to WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION" translate="no">​</a></h2>
 <p>transformer 구조가 곱셈을 못하는 이유? 특히 4자리 수 이상.</p>
-<p>4자리 이상 곱셈부터는 long-range dependency 를 오래 유지해야하는덱 구조상 어려움. chain of thoughts 구  조를 활용하면 이를 어느정도 해결가능함. 저자들은 CoT 구조를 모델 내부 attnetion 에 내재적으로 반영하고 싶었음. 예를 들어서, 곱셈의 중간 단계 값들이 attnetion 내부에 저장되도록.</p>
+<p>4자리 이상 곱셈부터는 long-range dependency 를 오래 유지해야하는덱 구조상 어려움. chain of thoughts 구조를 활용하면 이를 어느정도 해결가능함. 저자들은 CoT 구조를 모델 내부 attnetion 에 내재적으로 반영하고 싶었음. 예를 들어서, 곱셈의 중간 단계 값들이 attnetion 내부에 저장되도록.</p>
 <p>그러기 위해서 실질적인 학습은 학습 초기에는 곱셈의 중간 단계를 전부 생성하도록 하고, 갈수록 중간 단계를 없애는 식으로 학습시킴.</p>
 <div style="text-align:center"><img src="/assets/images/blog_20251003_img1-02852ba527f8e7c288c720500dfc3120.png" style="width:500px"></div>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="gem-a-gym-for-agentic-llms">GEM: A GYM FOR AGENTIC LLMS<a href="#gem-a-gym-for-agentic-llms" class="hash-link" aria-label="Direct link to GEM: A GYM FOR AGENTIC LLMS" title="Direct link to GEM: A GYM FOR AGENTIC LLMS" translate="no">​</a></h2>
