@@ -4,11 +4,64 @@
         <title>Logic Baron Blog</title>
         <link>https://logicbaron.github.io/blog</link>
         <description>Logic Baron Blog</description>
-        <lastBuildDate>Tue, 07 Oct 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 15 Oct 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2025 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[10-15 papers summary]]></title>
+            <link>https://logicbaron.github.io/blog/2025/10/15/</link>
+            <guid>https://logicbaron.github.io/blog/2025/10/15/</guid>
+            <pubDate>Wed, 15 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[연휴가 끝나니 확실히 시간이 적다.]]></description>
+            <content:encoded><![CDATA[<p>연휴가 끝나니 확실히 시간이 적다.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="are-large-reasoning-models-interruptible">Are Large Reasoning Models Interruptible?<a href="https://logicbaron.github.io/blog/2025/10/15/#are-large-reasoning-models-interruptible" class="hash-link" aria-label="Direct link to Are Large Reasoning Models Interruptible?" title="Direct link to Are Large Reasoning Models Interruptible?" translate="no">​</a></h2>
+<ul>
+<li>최근의 LRM(Large Reasoning Models)은 긴 사고 체인을 생성하지만, 계산량이 매우 크고 중단(interruption) 시 활용이 어렵다.</li>
+<li>실제 응용에서는 부분적인 사고만으로도 충분한 답변이 가능한 경우가 많음에도 불구하고, 전체 reasoning을 수행해야 결과를 얻을 수 있다.</li>
+<li>모델의 reasoning trace(사고 과정)를 실시간으로 모니터링하며, 다양한 시점에서 interruption을 적용.</li>
+<li>각 시점의 partial reasoning output을 통해 최종 정답 정확도와 reasoning 품질을 측정.</li>
+<li>또한, interruption-aware decoding을 도입해 중단 이후에도 자연스러운 결과를 생성할 수 있도록 훈련.</li>
+<li>LRM은 <strong>일정 길이 이전에는 reasoning quality가 급격히 떨어지지만, 특정 길이 이상에서는 점진적 개선만 존재함</strong>을 발견.</li>
+<li>즉, “충분한 사고 이후 중단”이 효율적 계산-성능 절충을 가능하게 한다.</li>
+<li>일부 모델은 interruption-aware 학습 시, 중단 시점에서도 90% 이상의 정답률을 유지.</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="qerl-beyond-efficiency">QeRL: Beyond Efficiency<a href="https://logicbaron.github.io/blog/2025/10/15/#qerl-beyond-efficiency" class="hash-link" aria-label="Direct link to QeRL: Beyond Efficiency" title="Direct link to QeRL: Beyond Efficiency" translate="no">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="quantization-enhanced-reinforcement-learning-for-llms">Quantization-enhanced Reinforcement Learning for LLMs<a href="https://logicbaron.github.io/blog/2025/10/15/#quantization-enhanced-reinforcement-learning-for-llms" class="hash-link" aria-label="Direct link to Quantization-enhanced Reinforcement Learning for LLMs" title="Direct link to Quantization-enhanced Reinforcement Learning for LLMs" translate="no">​</a></h3>
+<ul>
+<li>
+<p>기존 양자화(Quantization)는 모델 효율성은 높이지만, 성능 손실이 발생한다.</p>
+</li>
+<li>
+<p>반면, RLHF(강화학습 기반 미세조정)는 성능 향상엔 도움이 되지만 계산 비용이 크다.</p>
+</li>
+<li>
+<p>본 논문은 양자화가 단순한 효율화 도구가 아니라, 학습 성능을 높일 수 있는 조력자로 작동할 수 있음을 보인다.</p>
+</li>
+<li>
+<p>양자화 과정을 RLHF 루프에 통합하여 모델을 효율적이면서도 더 강하게 학습시킨다.</p>
+</li>
+<li>
+<p><strong>양자화 잡음(quantization noise)을 exploration으로 활용해 policy diversity를 높인다.</strong> -&gt; 이게 가능해..?</p>
+</li>
+<li>
+<p>양자화가 gradient update 시 regularization처럼 작용해 안정적인 학습을 유도한다.</p>
+</li>
+<li>
+<p>RL과 양자화의 상호작용을 수학적으로 분석하여 정량적 이득을 입증.</p>
+</li>
+<li>
+<p>QeRL은 기존 RLHF 대비 동일한 계산량으로 더 높은 reward 모델 점수를 달성. -&gt;  3~5% 향상, 추론 효율은 2배 이상 개선.</p>
+</li>
+<li>
+<p>INT8 또는 INT4 수준의 압축에서도 성능 저하가 거의 없으며, 일부 과제에서는 향상.</p>
+</li>
+</ul>
+<blockquote>
+<p>“Quantization noise acts as a stochastic perturbation that promotes exploration in the policy space.”</p>
+</blockquote>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[10-07 papers summary]]></title>
             <link>https://logicbaron.github.io/blog/2025/10/07/</link>
@@ -67,7 +120,7 @@
             <content:encoded><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="winning-the-pruning-gamble">Winning the Pruning Gamble<a href="https://logicbaron.github.io/blog/2025/10/05/#winning-the-pruning-gamble" class="hash-link" aria-label="Direct link to Winning the Pruning Gamble" title="Direct link to Winning the Pruning Gamble" translate="no">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba">A Unified Approach to Joint Sample and Token Pruning for Efficient Supervised Fine-Tuning  <code>alibaba</code><a href="https://logicbaron.github.io/blog/2025/10/05/#a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" class="hash-link" aria-label="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" title="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" translate="no">​</a></h3>
 <p>LLM의 Supervised Fine-Tuning(SFT)은 단순한 후처리가 아니라 중간 훈련(mid-training) 수준의 계산비용이 필요한 단계가 되었다. post-training 단계에서 데이터 효율성은 매우 치명적인 이슈다. 이 내용은 내가 블로그, 또는 논문 정리를 하면서 작성했던 적이 있다. 일반적으로는 <strong>data pruning</strong> 방식을 사용한다. data pruning 사용 시 일반적으로 두 가지 방법 중 하나를 선택한다. 샘플 단위 혹은 토큰 단위. 두 가지 방식의 장단점이 있는데, 본 논문에서는 두 방식의 장점을 합친 방식을 제안한다.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251005_img0-a5398e44d99f83a4ee734055d7f916bd.png" style="width:500px"></div>
+<p>ㅂ</p>
 <p>논문의 핵심은 entropy 와 perplexity 를 통해 데이터를 4가지로 분류할 수 있고, 각 데이터에 대해 서로 다른 pruning 방법을 적용해야 한다는 것.</p>
 <p>entropy 와 perplexity 가 전부 낮다. -&gt; 이미 잘 알고있는 정보. 학습 중요도가 낮음.
 entropy 와 perpelxity 가 둘다 높다. -&gt; 노지으일 확률이 높은 데이터. 학습에서 제외.
