@@ -4,11 +4,35 @@
         <title>Logic Baron Blog</title>
         <link>https://logicbaron.github.io/blog</link>
         <description>Logic Baron Blog</description>
-        <lastBuildDate>Wed, 15 Oct 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 16 Oct 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2025 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[10-16 papers summary]]></title>
+            <link>https://logicbaron.github.io/blog/2025/10/16/</link>
+            <guid>https://logicbaron.github.io/blog/2025/10/16/</guid>
+            <pubDate>Thu, 16 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[1. Detect Anything via Next Point Prediction]]></description>
+            <content:encoded><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-detect-anything-via-next-point-prediction">1. Detect Anything via Next Point Prediction<a href="https://logicbaron.github.io/blog/2025/10/16/#1-detect-anything-via-next-point-prediction" class="hash-link" aria-label="Direct link to 1. Detect Anything via Next Point Prediction" title="Direct link to 1. Detect Anything via Next Point Prediction" translate="no">​</a></h2>
+<p>기존 object detection 모듈은 크게 전통적인 detection 모델과 MLLM 모델로 나뉘어짐. detection 모델은 언어 이해 능력이 부족하고, MLLM 모델은 정밀한 위치 파악 능력이 부족함. MLLM 에서 사용하는 loss 는 좌표 예측에 불리하기도 함. (좌표값은 연속 값. regression 으로 학습하는 게 맞으나 loss 는 cross-entropy 임.)</p>
+<p><strong>Rex-Omni</strong> 모델은 MLLM 을 사용하여, 모든 시각 작업을 좌표 예측 문제로 해결함. 학습 난이도와 토큰 효율성을 개선하기 위해 0부터 999까지의 양자화된 좌표를 특수 토큰으로 표현하고, 고품질 데이터 엔진을 구축.</p>
+<p>SFT 1단계 -&gt; GRPO 2단계로 학습. GRPO 가 SFT 의 한계로 저자들이 지목한 기하학적 보상: IoU, Point-in-mask 등 - 을 추가함.</p>
+<div><p>MLLM 또는 VLM 계열에서 object detection 의 퀄리티를 더욱 짜내는 듯한 느낌의 논문. industry level , 특히 쇼핑 도메인에서는 소잡는칼이 아닌지 고민해볼만함. MLLM 을 활용한 object detection 자체는 의미있을 듯.</p><p>다만 데이터 구축 과정에서 사용된 grounding dino 를 활용하는게 단기간에는 더 효율적일듯?</p></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple">2. DeepMMSearch-R1: Empowering Multimodal LLMs in Multimodal Web Search <code>apple</code><a href="https://logicbaron.github.io/blog/2025/10/16/#2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" class="hash-link" aria-label="Direct link to 2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" title="Direct link to 2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" translate="no">​</a></h2>
+<p>기존 MLLM 에서 VQA 해결할때의 두가지 문제점.</p>
+<ul>
+<li>이미지 전체만을 검색 쿼리로써 사용함.</li>
+<li>RAG 검색 방식은 단일 웹 검색 결과를 사용하고 피드백이 없음.</li>
+</ul>
+<p>두 가지 문제점을 각각 해결함.</p>
+<ul>
+<li>Grounding DINO 를 이용한 Cropped Image Search 사용.</li>
+<li>on-demand 방식의 multi-turn 웹 검색. (최대 6턴) -&gt; 자기 반성 / 자기 교정 과정을 통해서 멀티 턴을 결정.</li>
+</ul>
+<p>이를 통해 comparable with gpt-o3 성능 달성. SFT + GRPO 통해서 학습.</p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[10-15 papers summary]]></title>
             <link>https://logicbaron.github.io/blog/2025/10/15/</link>
@@ -441,7 +465,7 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="python-pandas-를-이용한-table-생성">python pandas 를 이용한 table 생성<a href="https://logicbaron.github.io/blog/2023/11/07/#python-pandas-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-table-%EC%83%9D%EC%84%B1" class="hash-link" aria-label="Direct link to python pandas 를 이용한 table 생성" title="Direct link to python pandas 를 이용한 table 생성" translate="no">​</a></h2>
 <p>sqlalchemy 와 pandas 를 이용해서 dataframe 을 pg db 에 업로드 하기.</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">upload_df_to_pg.py</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> sqlalchemy</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">MY_DB </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"postgresql://{USER_NAME}:{PASSWORD}@127.0.0.1:5432/mydb"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">engine </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> sqlalchemy</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">create_engine</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">MY_DB</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> pd</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">read_parquet</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"./path/to/parquet.parquet"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">to_sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"mytable"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> if_exists</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">'replace'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> index</span><span class="token operator" style="color:#393A34">=</span><span class="token boolean" style="color:#36acaa">False</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="업로드-된-테이블-확인하기">업로드 된 테이블 확인하기<a href="https://logicbaron.github.io/blog/2023/11/07/#%EC%97%85%EB%A1%9C%EB%93%9C-%EB%90%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="Direct link to 업로드 된 테이블 확인하기" title="Direct link to 업로드 된 테이블 확인하기" translate="no">​</a></h2>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="업로드-된-테이블-확인하기">업로드 된 테이블 확인하기<a href="https://logicbaron.github.io/blog/2023/11/07/#%EC%97%85%EB%A1%9C%EB%93%9C-%EB%90%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="Direct link to 업로드 ��된 테이블 확인하기" title="Direct link to 업로드 된 테이블 확인하기" translate="no">​</a></h2>
 <p>다시 도커에 진입해서 진행한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-it</span><span class="token plain"> postgres /bin/bash</span><br></span></code></pre></div></div>
 <ul>
