@@ -129,14 +129,26 @@ const config = {
           },
           {
             type: 'dropdown',
-            label: 'Concept',
+            label: 'AIPapers',
             position: 'left',
             items: [
               {
                 type: 'docSidebar',
-                sidebarId: 'PapersSidebar',
-                label: 'AIPapers'
+                sidebarId: 'BigtechSidebar',
+                label: 'monthly bigtech'
               },
+              {
+                type: 'docSidebar',
+                sidebarId: 'Y2025Sidebar',
+                label: 'daily 2025'
+              },
+            ]
+          },
+          {
+            type: 'dropdown',
+            label: 'Concept',
+            position: 'left',
+            items: [
               {
                 type: 'docSidebar',
                 sidebarId: 'MathSidebar',

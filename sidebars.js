@@ -15,6 +15,7 @@ import DataSidebars from './data_sidebars.js';
 import ConceptSidebars from './concept_sidebars.js';
 import PracticeSidebars from './practice_sidebars.js';
 import TaskSidebars from './task_sidebars.js';
+import PapersSidebars from './papers_sidebars.js';
 
 const CommunitySidebars = {
   CommunitySidebar: [
@@ -32,6 +33,7 @@ const sidebars = {
   ...PracticeSidebars,
   ...TaskSidebars,
   ...CommunitySidebars,
+  ...PapersSidebars,
 }
 
 module.exports = sidebars;
