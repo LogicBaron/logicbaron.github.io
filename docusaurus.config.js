@@ -134,6 +134,11 @@ const config = {
             items: [
               {
                 type: 'docSidebar',
+                sidebarId: 'PapersSidebar',
+                label: 'AIPapers'
+              },
+              {
+                type: 'docSidebar',
                 sidebarId: 'MathSidebar',
                 label: 'Math'
               },
