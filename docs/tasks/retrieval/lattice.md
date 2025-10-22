@@ -1,9 +1,9 @@
 ---
 id: lattice
-sidebar_position: 0
+sidebar_position: 1
 ---
 
-import blog_2025101802_img0 from './asset/blog_2025101802_img0.png';
+import lattice_img0 from './asset/lattice_img0.png';
 
 # LLM-GUIDED HIERARCHICAL RETRIEVAL `google`
 
@@ -12,7 +12,7 @@ import blog_2025101802_img0 from './asset/blog_2025101802_img0.png';
 논문의 핵심은 문서 검색을 단순 인덱스 방식이 아니라 hierachical 방식으로 접근했다는 점. 이로 인해서 로그 시간 효율성을 달성했고, 초기 검색 성능을 보장하고 LLM 노이즈에 더욱 강건해짐.
 
 <div style={{textAlign: 'center'}}>
- <img src={blog_20251018_img0} style={{width: 500}} />
+ <img src={lattice_img0} style={{width: 500}} />
 </div>
 
 언제나 데이터 구축 방식은 중요하다. 구글은 트리를 어떻게 구축했을까?
@@ -40,12 +40,10 @@ import blog_2025101802_img0 from './asset/blog_2025101802_img0.png';
 문서의 연관도 점수는 분명 특정한 값을 가질텐데, LLM 은 관련 검색 slate 를 어떻게 구성하느냐에 따라 다른 연관도 점수를 내놓는다. 이를 해결하기 위해서, LLM 의 답변에서 보여지는 연관도가 진짜 점수, 슬레이트 구성에 따른 편향의 함수라고 가정함.
 
 $$
-$s_{v}^{i} \approx a \cdot \hat{s}_{v} + b^{i}$
+s_{v}^{i} \approx a \cdot \hat{s}_{v} + b^{i}
 $$
 
 많은 관찰 결과를 바탕으로 진짜 점수를 찾아간다고 이해하면 됨. 좋은 아이디어라고 생각됨. 연산량만 문제 없다면. 논문에서는 20번 탐색후에 종료했다고 함.
-
-Markdown
 
 #### LATTICE 계산 과정 예시: Calibrated Latent Relevance Score
 

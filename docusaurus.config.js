@@ -156,6 +156,16 @@ const config = {
               },
               {
                 type: 'docSidebar',
+                sidebarId: 'ProgrammingSidebar',
+                label: 'Programming'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'TorchSidebar',
+                label: 'Torch',
+              },
+              {
+                type: 'docSidebar',
                 sidebarId: 'MLConceptSidebar',
                 label: 'Machine Learning'
               },
@@ -169,12 +179,6 @@ const config = {
                 sidebarId: 'LargeModelConceptSidebar',
                 label: 'Large Model'
               },
-              {
-                type: 'docSidebar',
-                sidebarId: 'ProgrammingSidebar',
-                label: 'Programming'
-              },
-
             ]
           },
           {
@@ -218,40 +222,28 @@ const config = {
           },
           {
             type: 'dropdown',
-            label: 'Practice',
-            position: 'left',
-            items: [
-              {
-                type: 'docSidebar',
-                sidebarId: 'TorchSidebar',
-                label: 'Torch',
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'EfficienttrainSidebar',
-                label: 'Efficient Train'
-              },
-              {
-                type: 'docSidebar',
-                sidebarId: 'MLOPsSidebar',
-                label: 'MLOPs'
-              },
-            ]
-          },
-          {
-            type: 'dropdown',
             label: 'Tasks',
             position: 'left',
             items: [
               {
                 type: 'docSidebar',
-                sidebarId: 'RecommendationSidebar',
-                label: 'Recommendation'
+                sidebarId: 'LLMSidebar',
+                label: 'LLM Engineering'
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'InformationextractionSidebar',
-                label: 'Information Extraction'
+                sidebarId: 'EfficienttrainSidebar',
+                label: 'EfficientTrain'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'MlopsSidebar',
+                label: 'Mlops'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'RecommendationSidebar',
+                label: 'Recommendation'
               },
               {
                 type: 'docSidebar',
@@ -265,8 +257,13 @@ const config = {
               },
               {
                 type: 'docSidebar',
-                sidebarId: 'LLMSidebar',
-                label: 'LLM & Prompt'
+                sidebarId: 'InformationextractionSidebar',
+                label: 'Information Extraction'
+              },
+              {
+                type: 'docSidebar',
+                sidebarId: 'EtcSidebar',
+                label: 'etc.'
               }
             ]
           },

@@ -10,7 +10,7 @@ tags: [MOE, Transformer]
 
 Transformer 구조가 seq2seq 처리의 de-facto가 되고 scaling law가 주목받으면서 데이터의 크기와 함께 모델의 크기도 늘리기위한 시도가 많이 이루어졌다. 당시에도 multi-device training 은 이루어졌지만 Device 의 한계를 넘기기 힘들었다.
 
-이전까지 RNN-base 모델의 구조를 쪼개고, 병렬화하여 효율화하려는 시도가 있었는데 - [LSTM 에 MOE 를 적용](/docs/practice/efficienttrain/MOE/moe1.md) : GShard 논문은 Transformer 계열에 그러한 시도들을 적용한다. (당연히, 그 중 MOE 를 적용한다.)
+이전까지 RNN-base 모델의 구조를 쪼개고, 병렬화하여 효율화하려는 시도가 있었는데 - [LSTM 에 MOE 를 적용](/docs/tasks/efficienttrain/MOE/moe1.md) : GShard 논문은 Transformer 계열에 그러한 시도들을 적용한다. (당연히, 그 중 MOE 를 적용한다.)
 
 GShard 논문은 두 가지 어려움을 이야기한다.
 

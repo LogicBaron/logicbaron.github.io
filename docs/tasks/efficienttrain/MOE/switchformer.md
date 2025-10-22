@@ -38,7 +38,7 @@ Switch Transformer는 top-1 expert를 사용합니다. 저자들은 이 방식�
 
 ### Differentiable Load Balancing
 
-Switch Transformer 논문도 expert capacity 개념을 사용합니다. 그 외에도, [gshard](/docs/practice/efficienttrain/MOE/gshard.md)와 같이 load balancing loss 역시 활용합니다. 
+Switch Transformer 논문도 expert capacity 개념을 사용합니다. 그 외에도, [gshard](/docs/tasks/efficienttrain/MOE/gshard.md)와 같이 load balancing loss 역시 활용합니다. 
 
 GShard 논문의 load balancing loss 는 샘플 그룹 단위로, gating layer 의 output 을 이용한 gating 기댓값을 사용합니다. 
 
