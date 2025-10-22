@@ -2,390 +2,19 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://logicbaron.github.io/blog</id>
     <title>Logic Baron Blog</title>
-    <updated>2025-10-17T00:00:00.000Z</updated>
+    <updated>2025-09-14T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://logicbaron.github.io/blog"/>
     <subtitle>Logic Baron Blog</subtitle>
     <icon>https://logicbaron.github.io/img/logicbaron_32.ico</icon>
     <rights>Copyright © 2025 Facebook, Inc.</rights>
     <entry>
-        <title type="html"><![CDATA[10-17 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/17/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/17/"/>
-        <updated>2025-10-17T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[1. UniFusion: Vision-Language Model as Unified Encoder in Image Generation Adobe]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-unifusion-vision-language-model-as-unified-encoder-in-image-generation-adobe">1. UniFusion: Vision-Language Model as Unified Encoder in Image Generation <code>Adobe</code><a href="https://logicbaron.github.io/blog/2025/10/17/#1-unifusion-vision-language-model-as-unified-encoder-in-image-generation-adobe" class="hash-link" aria-label="Direct link to 1-unifusion-vision-language-model-as-unified-encoder-in-image-generation-adobe" title="Direct link to 1-unifusion-vision-language-model-as-unified-encoder-in-image-generation-adobe" translate="no">​</a></h2>
-<p>prompt base 이미지 편집 시 텍스트와 이미지 별도 인코더를 사용하는 부분으로 인해 모델 역량이 임베딩 aligning 에 소모된다.</p>
-<p>frozen VLM 을 통합된 멀티모달 인코더로 사용해서 임베딩을 추출하고 이로부터 이미지를 diffusion 방식을 생성함.</p>
-<p>구체적으로는 frozen VLM 에 이미지와 프롬프트 전체를 인입으로 사용해 모델 임베딩 추출. 이 때 하위 레이어부터 상위 레이어까지 다중 레이어 임베딩을 추출한다. 그 후 모든 임베딩을 통합해주는 Layer Attention Pooling (LAP) 모듈을 사용. 여러 레이어의 임베딩을 단일 임베딩을 통합시켜줌.</p>
-<p>LAP 모델의 의의는 VLM 의 정보를 효과적으로 추출하고 통합하는 것. 특히, shallow layer 에서 강조되는 디테일, 세부사항이 last embedding 만 사용하는 과정에서 무시되어서 편집 작업에서 내용이 부자연스러워지는 결과를 낳았음.</p>
-<p>몇 가지 방식을 테스트함.</p>
-<ul>
-<li>(as-is) last layer hidden state encoding</li>
-<li>layer wise key-value fusion : 각 layer 에서 k, v 를 concat 해서 사용.</li>
-<li>hidden state injection</li>
-<li>layerwise attention pooling<!-- -->
-<ul>
-<li>transformer block 생각하면 됨.</li>
-</ul>
-</li>
-</ul>
-<p>결과적으로 통합 인코더 설계를 통해 zero-shot 성능이 크게 올랐음. 또한, 편집 작업에 대한 파인튜닝 성능 역시 개선됨.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2-sail-embedding-technical-report-omni-modal-embedding-foundation-model-bytedance">2. SAIL-Embedding Technical Report: Omni-modal Embedding Foundation Model <code>bytedance</code><a href="https://logicbaron.github.io/blog/2025/10/17/#2-sail-embedding-technical-report-omni-modal-embedding-foundation-model-bytedance" class="hash-link" aria-label="Direct link to 2-sail-embedding-technical-report-omni-modal-embedding-foundation-model-bytedance" title="Direct link to 2-sail-embedding-technical-report-omni-modal-embedding-foundation-model-bytedance" translate="no">​</a></h2>
-<p>bytedance 뭐하나 체크용으로 읽어봄.</p>
-<p>일단 기존 MLLM 모델이 industry 환경에서는 좋지 않다고 주장. 공감하는 부분. omni-modal 까지 추가해서 모델을 학습시켰고 이를 통해 item-to-item, query-to-item 성능이 높아짐. 특히 <strong>비디오 기반 멀티미디어 검색에서 오디오 양식의 중요성</strong>을 확인함.</p>
-<p>데이터 구축이 중요하다고 봐서 좀 더 보긴함.</p>
-<p>일단 10B 이상 i2i, q21, classification (검색 분류) 포함하는 데이터 셑을 구축함. dynamic hard negative mining 과 adaptive multi-score data balance 방식 도입.</p>
-<ul>
-<li>dynamic hard negative minig<!-- -->
-<ul>
-<li>고정된 전역 임계값 대신, 각 데이터셑의 특성과 테스크에 맞게 최적의 유사성 임계값을 결정함.</li>
-<li>초기 모델을 통해을 통해서 모델이 가장 어려워하는 영역을 확인하고, 이 영역을 더 잘 구분하는 loss 를 추가해서 학습함.</li>
-</ul>
-</li>
-<li>adaptive multi-source data balancing<!-- -->
-<ul>
-<li>다양한 출처와 특성을 가진 훈련 데이터셑의 샘플링 가중치를 데이터 분포에 기반하여 자동으로 설정.</li>
-<li>검증 셋과 훈련 셋의 semantic similarity 를 측정.</li>
-<li>검증 셋과 유사한 훈련 셋일수록 더 가중치를 주어서 학습 -&gt; 음...</li>
-</ul>
-</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="3-honeybee-data-recipes-for-vision-language-reasoners-meta">3. HoneyBee: Data Recipes for Vision-Language Reasoners <code>meta</code><a href="https://logicbaron.github.io/blog/2025/10/17/#3-honeybee-data-recipes-for-vision-language-reasoners-meta" class="hash-link" aria-label="Direct link to 3-honeybee-data-recipes-for-vision-language-reasoners-meta" title="Direct link to 3-honeybee-data-recipes-for-vision-language-reasoners-meta" translate="no">​</a></h2>
-<p>고성능 VL 데이터셑 구축을 위한 프렝임 워크를 공개. 방법론이 꽤 복잡하나 "데이터의 설계" 라는 측면에서 아이디어를 잘 관조해볼만하다. 실제 산업 현장에서는 데이터의 구축에 충분히 심혈을 기울이기 힘들다. 작업의 일정이 있으니 인사이트와 감각, 경험에 의존하는 면이 많다.</p>
-<p>크게 3단계로 데이터 구축 과정을 정의함.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251017_img0-1d04a30efa34e41c30470cf7dd68d64d.png" style="width:500px"></div>
-<p>context curation -&gt; data interventions -&gt; scalining.</p>
-<ul>
-<li>
-<p>context curation</p>
-<ul>
-<li>데이터 수집과 검증.</li>
-<li>Sourcing : 데이터셑을 먼저 수집하고 기본적인 정제.<!-- -->
-<ul>
-<li>CoT : 고성능 VLM 을 이용해서 수집된 이미지-쿼리에 맞는 CoT 를 생성한다.</li>
-<li>품질 : 여러 VLM 모델에서 다운 스트림 추론 테스크에 대한 평균 성능 기반으로 각 소스 데이터셋의 품질을 평가하고 순위를 매긴다.</li>
-</ul>
-</li>
-<li>Mixing : 최상위 성능 소스 데이터셋들의 CoT 를 혼합하여 개별 소스보다 더 나은 성능을 달성하는지 평가. 단일 ViRL 을 능가하지 못했다고 함. ( * ViRL : 데이터셑 이름임 )</li>
-<li>
-<ul>
-<li>근데 학습 시켜서 비교하는건 사실 어렵지..</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>Data intervention</p>
-<ul>
-<li>최고 성능 데이터셋 기반으로 perception / problem-solving 능력 향상시키기 위해 맞춤형 개입 전략들을 평가.</li>
-<li>perception : 이미지 회전, 방해물 추가, 이미지-질문 렌더링, 이미지 없이도 풀 수 있는 문제 제거.<!-- -->
-<ul>
-<li>최종 선택된건 CoT 시작부분에 이미지 캡션을 포함하여 보조적인 시각 신호를 제공. -&gt; 이미지 캡션은 stronger generator 모델을 사용하여 생성</li>
-</ul>
-</li>
-<li>Problem-Solving : 선택지 증가, 긴 CoT 만 남기기, 난이도 균등화.<!-- -->
-<ul>
-<li>텍스트 전용 추론 데이터와 VL 전용 추론 데이터를 교차 태스크 전이 학습을 유도함.</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251017_img1-87520f41c94f6033b59d8aaa26e6c890.png" style="width:500px"></div>
-<ul>
-<li>Scaling<!-- -->
-<ul>
-<li>CoT 데이터의 확장.</li>
-<li>고유 이미지 수 늘리기, (이미지, 질문) 기반으로 새로운 질문 합성하기, 여러개의 CoT 생성하기, 전략 조합 등.</li>
-</ul>
-</li>
-</ul>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251017_img2-ff31205b7e6836b298b8d93ba1e87ac3.png" style="width:500px"></div>
-<p>흠 역시 pretrain 과 task-specific post-train 사이에는 엄청난 간극이 있는 것 같다. pretrain 에서 최고의 전략과 posttrain 의 최고의 전략은 확실히 다르다. <a href="https://logicbaron.github.io/blog/2025/10/07/">이 글</a> 의 <strong>Front-Loading Reasoning <code>nvidia</code></strong> 만 봐도 알 수 있는 내용이지만...</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-16 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/16/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/16/"/>
-        <updated>2025-10-16T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[1. Detect Anything via Next Point Prediction]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-detect-anything-via-next-point-prediction">1. Detect Anything via Next Point Prediction<a href="https://logicbaron.github.io/blog/2025/10/16/#1-detect-anything-via-next-point-prediction" class="hash-link" aria-label="Direct link to 1. Detect Anything via Next Point Prediction" title="Direct link to 1. Detect Anything via Next Point Prediction" translate="no">​</a></h2>
-<p>기존 object detection 모듈은 크게 전통적인 detection 모델과 MLLM 모델로 나뉘어짐. detection 모델은 언어 이해 능력이 부족하고, MLLM 모델은 정밀한 위치 파악 능력이 부족함. MLLM 에서 사용하는 loss 는 좌표 예측에 불리하기도 함. (좌표값은 연속 값. regression 으로 학습하는 게 맞으나 loss 는 cross-entropy 임.)</p>
-<p><strong>Rex-Omni</strong> 모델은 MLLM 을 사용하여, 모든 시각 작업을 좌표 예측 문제로 해결함. 학습 난이도와 토큰 효율성을 개선하기 위해 0부터 999까지의 양자화된 좌표를 특수 토큰으로 표현하고, 고품질 데이터 엔진을 구축.</p>
-<p>SFT 1단계 -&gt; GRPO 2단계로 학습. GRPO 가 SFT 의 한계로 저자들이 지목한 기하학적 보상: IoU, Point-in-mask 등 - 을 추가함.</p>
-<div><p>MLLM 또는 VLM 계열에서 object detection 의 퀄리티를 더욱 짜내는 듯한 느낌의 논문. industry level , 특히 쇼핑 도메인에서는 소잡는칼이 아닌지 고민해볼만함. MLLM 을 활용한 object detection 자체는 의미있을 듯.</p><p>다만 데이터 구축 과정에서 사용된 grounding dino 를 활용하는게 단기간에는 더 효율적일듯?</p></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple">2. DeepMMSearch-R1: Empowering Multimodal LLMs in Multimodal Web Search <code>apple</code><a href="https://logicbaron.github.io/blog/2025/10/16/#2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" class="hash-link" aria-label="Direct link to 2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" title="Direct link to 2-deepmmsearch-r1-empowering-multimodal-llms-in-multimodal-web-search-apple" translate="no">​</a></h2>
-<p>기존 MLLM 에서 VQA 해결할때의 두가지 문제점.</p>
-<ul>
-<li>이미지 전체만을 검색 쿼리로써 사용함.</li>
-<li>RAG 검색 방식은 단일 웹 검색 결과를 사용하고 피드백이 없음.</li>
-</ul>
-<p>두 가지 문제점을 각각 해결함.</p>
-<ul>
-<li>Grounding DINO 를 이용한 Cropped Image Search 사용.</li>
-<li>on-demand 방식의 multi-turn 웹 검색. (최대 6턴) -&gt; 자기 반성 / 자기 교정 과정을 통해서 멀티 턴을 결정.</li>
-</ul>
-<p>이를 통해 comparable with gpt-o3 성능 달성. SFT + GRPO 통해서 학습.</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-15 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/15/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/15/"/>
-        <updated>2025-10-15T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[연휴가 끝나니 확실히 시간이 적다.]]></summary>
-        <content type="html"><![CDATA[<p>연휴가 끝나니 확실히 시간이 적다.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="are-large-reasoning-models-interruptible">Are Large Reasoning Models Interruptible?<a href="https://logicbaron.github.io/blog/2025/10/15/#are-large-reasoning-models-interruptible" class="hash-link" aria-label="Direct link to Are Large Reasoning Models Interruptible?" title="Direct link to Are Large Reasoning Models Interruptible?" translate="no">​</a></h2>
-<ul>
-<li>최근의 LRM(Large Reasoning Models)은 긴 사고 체인을 생성하지만, 계산량이 매우 크고 중단(interruption) 시 활용이 어렵다.</li>
-<li>실제 응용에서는 부분적인 사고만으로도 충분한 답변이 가능한 경우가 많음에도 불구하고, 전체 reasoning을 수행해야 결과를 얻을 수 있다.</li>
-<li>모델의 reasoning trace(사고 과정)를 실시간으로 모니터링하며, 다양한 시점에서 interruption을 적용.</li>
-<li>각 시점의 partial reasoning output을 통해 최종 정답 정확도와 reasoning 품질을 측정.</li>
-<li>또한, interruption-aware decoding을 도입해 중단 이후에도 자연스러운 결과를 생성할 수 있도록 훈련.</li>
-<li>LRM은 <strong>일정 길이 이전에는 reasoning quality가 급격히 떨어지지만, 특정 길이 이상에서는 점진적 개선만 존재함</strong>을 발견.</li>
-<li>즉, “충분한 사고 이후 중단”이 효율적 계산-성능 절충을 가능하게 한다.</li>
-<li>일부 모델은 interruption-aware 학습 시, 중단 시점에서도 90% 이상의 정답률을 유지.</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="qerl-beyond-efficiency">QeRL: Beyond Efficiency<a href="https://logicbaron.github.io/blog/2025/10/15/#qerl-beyond-efficiency" class="hash-link" aria-label="Direct link to QeRL: Beyond Efficiency" title="Direct link to QeRL: Beyond Efficiency" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="quantization-enhanced-reinforcement-learning-for-llms">Quantization-enhanced Reinforcement Learning for LLMs<a href="https://logicbaron.github.io/blog/2025/10/15/#quantization-enhanced-reinforcement-learning-for-llms" class="hash-link" aria-label="Direct link to Quantization-enhanced Reinforcement Learning for LLMs" title="Direct link to Quantization-enhanced Reinforcement Learning for LLMs" translate="no">​</a></h3>
-<ul>
-<li>
-<p>기존 양자화(Quantization)는 모델 효율성은 높이지만, 성능 손실이 발생한다.</p>
-</li>
-<li>
-<p>반면, RLHF(강화학습 기반 미세조정)는 성능 향상엔 도움이 되지만 계산 비용이 크다.</p>
-</li>
-<li>
-<p>본 논문은 양자화가 단순한 효율화 도구가 아니라, 학습 성능을 높일 수 있는 조력자로 작동할 수 있음을 보인다.</p>
-</li>
-<li>
-<p>양자화 과정을 RLHF 루프에 통합하여 모델을 효율적이면서도 더 강하게 학습시킨다.</p>
-</li>
-<li>
-<p><strong>양자화 잡음(quantization noise)을 exploration으로 활용해 policy diversity를 높인다.</strong> -&gt; 이게 가능해..?</p>
-</li>
-<li>
-<p>양자화가 gradient update 시 regularization처럼 작용해 안정적인 학습을 유도한다.</p>
-</li>
-<li>
-<p>RL과 양자화의 상호작용을 수학적으로 분석하여 정량적 이득을 입증.</p>
-</li>
-<li>
-<p>QeRL은 기존 RLHF 대비 동일한 계산량으로 더 높은 reward 모델 점수를 달성. -&gt;  3~5% 향상, 추론 효율은 2배 이상 개선.</p>
-</li>
-<li>
-<p>INT8 또는 INT4 수준의 압축에서도 성능 저하가 거의 없으며, 일부 과제에서는 향상.</p>
-</li>
-</ul>
-<blockquote>
-<p>“Quantization noise acts as a stochastic perturbation that promotes exploration in the policy space.”</p>
-</blockquote>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-07 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/07/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/07/"/>
-        <updated>2025-10-07T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[THE DRAGON HATCHLING]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="the-dragon-hatchling">THE DRAGON HATCHLING<a href="https://logicbaron.github.io/blog/2025/10/07/#the-dragon-hatchling" class="hash-link" aria-label="Direct link to THE DRAGON HATCHLING" title="Direct link to THE DRAGON HATCHLING" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="the-missing-link-between-the-transformer-and-models-of-the-brain">THE MISSING LINK BETWEEN THE TRANSFORMER AND MODELS OF THE BRAIN<a href="https://logicbaron.github.io/blog/2025/10/07/#the-missing-link-between-the-transformer-and-models-of-the-brain" class="hash-link" aria-label="Direct link to THE MISSING LINK BETWEEN THE TRANSFORMER AND MODELS OF THE BRAIN" title="Direct link to THE MISSING LINK BETWEEN THE TRANSFORMER AND MODELS OF THE BRAIN" translate="no">​</a></h3>
-<p>개인적으로 흥미가 땡기는 논문. 보다 인간 뇌 뉴런 구조를 잘 모방한 AI 모델 구조를 연구한 논문이다. 최근 다양한 분야에서 연구되고 있는 장기 기억을 담당하는 : 예, long kv cache , 별도 장기기억 메모리 - 뉴런을 모방한 구조.</p>
-<p>•	BDH (Brain-like Dense Hierarchy): 뉴런 활성값을 벡터 공간으로 확장해, dense activation과 sparse positive activation을 결합.
-•	BDH-GPU: 병렬 계산에 맞춘 GPU 버전, 계층적 신경 interaction을 분산 병렬로 처리.
-•	Grandfather Neurons: 핵심 패턴을 장기 유지하는 메모리 유닛.
-•	Dense activation → “즉각적 반응”, Sparse activation → “장기 기억” 역할.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="judging-with-confidence-google">Judging with Confidence <code>google</code><a href="https://logicbaron.github.io/blog/2025/10/07/#judging-with-confidence-google" class="hash-link" aria-label="Direct link to judging-with-confidence-google" title="Direct link to judging-with-confidence-google" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="calibrating-autoraters-to-preference-distributions">Calibrating Autoraters to Preference Distributions<a href="https://logicbaron.github.io/blog/2025/10/07/#calibrating-autoraters-to-preference-distributions" class="hash-link" aria-label="Direct link to Calibrating Autoraters to Preference Distributions" title="Direct link to Calibrating Autoraters to Preference Distributions" translate="no">​</a></h3>
-<p>기존 llm autorator 는 A/B 둘 중 하나를 선택하는 0/1 label 방식 선택함. 하지만 실제 사람들의 선호도는 딱 떨어지는 게 아니라 확률적으로 나뉘어짐. 해당 논문은 LLM autorator 가 선호도의 확률 분포를 반영할 수 있도록 학습시킴.</p>
-<p>예) "A와 B중 A가 70% 더 사람들에게 선호된다."</p>
-<p>먼저, 데이터를 만듬. 답변의 선호 분포가 실제로 있는 케이스 그리고 선호 분포가 없는 "단일 답변" 마 소유하고 있는 케이스. 당연히 답변 선호 분포 데이터가 훨씬 만들기 어렵다.</p>
-<p>답변 선호 분포를 아는 경우 <strong>SFT</strong> 방식으로 학습시킴. 그냥 regression 처럼 학습시켰다 보면 됨.</p>
-<p>단일 답변인 경우 <strong>RL</strong> 방식을 사용함. binary classification 과 비슷. 답변의 선호 확률을 잘 맞춰야함. 답변이 1일 경우 확률을 1에 가깝게, 답변이 0일 경우 확률을 0에 가깝게. 별 효과가 있을까 의문이 드는 방식인데 논문에서는 이 방식으로도 충분히 의미있는 효과를 보여줬다고 함. RL 방식에서 loss 는 quadratic 과 cross-entropy 를 함께 사용. RL 이라 이름 붙인 이유는 loss 가 아니라 reward 형태로 학습시켰기 때문에. (RLHF)</p>
-<p>결과적으로,</p>
-<ul>
-<li>정량 지표 : MSE – 18<del>51% 감소, ECE – 44</del>45% 감소, 편향 감소.</li>
-<li>인간 평가 일치도 : RL-Brier 모델이 GPT-4 및 JudgeLM 보다 우수.</li>
-<li>객관 과제 : JudgeBench 정확도 46.6% 로 기존 모델과 동등 수준 유지 → 추론 능력 손상 없음.</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="swireasoning-microsoft">SWIREASONING <code>microsoft</code><a href="https://logicbaron.github.io/blog/2025/10/07/#swireasoning-microsoft" class="hash-link" aria-label="Direct link to swireasoning-microsoft" title="Direct link to swireasoning-microsoft" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="switch-thinking-in-latent-and-explicit-for-pareto-superior-reasoning-llms">SWITCH-THINKING IN LATENT AND EXPLICIT FOR PARETO-SUPERIOR REASONING LLMS<a href="https://logicbaron.github.io/blog/2025/10/07/#switch-thinking-in-latent-and-explicit-for-pareto-superior-reasoning-llms" class="hash-link" aria-label="Direct link to SWITCH-THINKING IN LATENT AND EXPLICIT FOR PARETO-SUPERIOR REASONING LLMS" title="Direct link to SWITCH-THINKING IN LATENT AND EXPLICIT FOR PARETO-SUPERIOR REASONING LLMS" translate="no">​</a></h3>
-<p>pareto-optimal 또는 pareto-frontier 는 어떤 지표를 좋게 하려면 어떤 지표를 희생해야 하는 상태. 반대로 본 논문은 pareto 관계의 두 가지 지표를 모두 상승 시켜 pareto-superior 라고 이름붙임.</p>
-<p>모델의 잠재 사고 과정은 token effciency 가 높지만 명시 사고보다 정확도가 떨어짐. 이를 해결하기 위해서 switch module 을 도입.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251007_img0-849ef228d1d37e3487053a47fb5f067c.png" style="width:500px"></div>
-<p>모델이 헷갈려하는 순간, 즉 entropy 가 높아지는 순간은 모델이 명시적으로 사고하도록 하고 모델의 entropy 가 낮은 순간은 모델이 잠재 사고를 하도록함. 그리고 너무 많은 switch 가 일어나지 않도록 control.</p>
-<p>이를 통해 정확도와 토큰 효율 둘다 달성했다고 함.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="hybrid-architectures-for-language-models-meta">Hybrid Architectures for Language Models <code>meta</code><a href="https://logicbaron.github.io/blog/2025/10/07/#hybrid-architectures-for-language-models-meta" class="hash-link" aria-label="Direct link to hybrid-architectures-for-language-models-meta" title="Direct link to hybrid-architectures-for-language-models-meta" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="systematic-analysis-and-design-insights">Systematic Analysis and Design Insights<a href="https://logicbaron.github.io/blog/2025/10/07/#systematic-analysis-and-design-insights" class="hash-link" aria-label="Direct link to Systematic Analysis and Design Insights" title="Direct link to Systematic Analysis and Design Insights" translate="no">​</a></h3>
-<p>카이스트와 메타가 써서 흥미가 든 논문. transformer 와 mamba 구조의 장점을 잘 조합한 새로운 구조를 제안함. 나와 관련이 낮아 보여 가볍게 요약만 확인함.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="front-loading-reasoning-nvidia">Front-Loading Reasoning <code>nvidia</code><a href="https://logicbaron.github.io/blog/2025/10/07/#front-loading-reasoning-nvidia" class="hash-link" aria-label="Direct link to front-loading-reasoning-nvidia" title="Direct link to front-loading-reasoning-nvidia" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="the-synergy-between-pretraining-and-post-training-data">The Synergy between Pretraining and Post-Training Data<a href="https://logicbaron.github.io/blog/2025/10/07/#the-synergy-between-pretraining-and-post-training-data" class="hash-link" aria-label="Direct link to The Synergy between Pretraining and Post-Training Data" title="Direct link to The Synergy between Pretraining and Post-Training Data" translate="no">​</a></h3>
-<p>엔비디아니까 할만하다고 생각되는 규모의 대규모 실험. "추론 데이터" 를 언제, 어떻게 사용해야 최적의 효과를 볼 수 있는지에 대한 전방위적 분석. 기존 연구는 post-training 단계에 집중해서 분석하나 해당 논문은 pretraining 단계까지 분석 범위에 포함시켰고 다양한 재밌는 결과를 확인했다고 주장한다.</p>
-<p>결론부터 말하면, 다양한 대규모 추론 데이터를 사전 학습 단계에 전방 배치하고 (fron-load) SFT 단계에서는 고품질 데이터를 사용하는 것이 최적이라는 것. 기존의 <strong>추론 학습은 post-training (SFT, RL) 단계에서만 중요하다</strong> 라는 관점을 정량지표와 함께 반박. 최대 19% 까지 수학, 과학, 코딩 벤치마크 지표 우위를 보였음.</p>
-<p>pretraining 단계에서 대규모의 다양한 추론 데이터의 중요성과 함께 재밌는 지점도 많이 적혀있다.</p>
-<ol>
-<li>사전학습 단계에서 추론을 연습하지 않으면, SFT 단계에서 추론 데이터를 2배까지 차이를 내도 추론을 사전 연습한 모델을 따라잡지 못한다. 즉, 사전 추론 학습이 모델의 추론 성능 상한선을 결정한다.</li>
-<li>사전학습에서는 다양성과 규모가 중요하고, SFT 에서는 품질이 중요하다.</li>
-<li>사전 학습 단계 데이터에서 고품질 데이터의 중요성 -&gt; 사전 학습 대규모 추론 데이터에 고품질 데이터의 포함 유무에 따른 모델의 성능 차이는 바로 드러나지 않는다. 그러나 SFT 이후에 효과가 드러난다. 즉 사전 학습 추론 데이터 중 고품질 데이터는 "잠재적" 으로 모델에 좋은 영향을 미친다.</li>
-</ol>
-<p>LLM pretraining 을 직접할 일은 거의 없겠지만 모델이 동작에서 얻어갈 수 있는 인사이트가 있을 것으로 보인다.</p>
-<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">“We define pretraining as large-scale self-supervised learning over a mixture of general and reasoning data,</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">and post-training as any supervised fine-tuning or reinforcement stage that aligns the model toward specific reasoning quality.”</span><br></span></code></pre></div></div>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-05 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/05/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/05/"/>
-        <updated>2025-10-05T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Winning the Pruning Gamble]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="winning-the-pruning-gamble">Winning the Pruning Gamble<a href="https://logicbaron.github.io/blog/2025/10/05/#winning-the-pruning-gamble" class="hash-link" aria-label="Direct link to Winning the Pruning Gamble" title="Direct link to Winning the Pruning Gamble" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba">A Unified Approach to Joint Sample and Token Pruning for Efficient Supervised Fine-Tuning  <code>alibaba</code><a href="https://logicbaron.github.io/blog/2025/10/05/#a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" class="hash-link" aria-label="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" title="Direct link to a-unified-approach-to-joint-sample-and-token-pruning-for-efficient-supervised-fine-tuning--alibaba" translate="no">​</a></h3>
-<p>LLM의 Supervised Fine-Tuning(SFT)은 단순한 후처리가 아니라 중간 훈련(mid-training) 수준의 계산비용이 필요한 단계가 되었다. post-training 단계에서 데이터 효율성은 매우 치명적인 이슈다. 이 내용은 내가 블로그, 또는 논문 정리를 하면서 작성했던 적이 있다. 일반적으로는 <strong>data pruning</strong> 방식을 사용한다. data pruning 사용 시 일반적으로 두 가지 방법 중 하나를 선택한다. 샘플 단위 혹은 토큰 단위. 두 가지 방식의 장단점이 있는데, 본 논문에서는 두 방식의 장점을 합친 방식을 제안한다.</p>
-<p>ㅂ</p>
-<p>논문의 핵심은 entropy 와 perplexity 를 통해 데이터를 4가지로 분류할 수 있고, 각 데이터에 대해 서로 다른 pruning 방법을 적용해야 한다는 것.</p>
-<p>entropy 와 perplexity 가 전부 낮다. -&gt; 이미 잘 알고있는 정보. 학습 중요도가 낮음.
-entropy 와 perpelxity 가 둘다 높다. -&gt; 노지으일 확률이 높은 데이터. 학습에서 제외.
-entopy 는 낮으나 perplexity 는 높은 데이터 -&gt; 모델이 확실하게 틀린 답을 내놓는 경우. decisoin boundary 이므로 학습 가치가 높음. 오개념을 수정하는 방향으로 학습.
-entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하다고 하며 틀린 답을 내놓는 경우가 많음. calibration 이 잘되고 있는 데이터. 그냥 사용.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="long-live">Long live<a href="https://logicbaron.github.io/blog/2025/10/05/#long-live" class="hash-link" aria-label="Direct link to Long live" title="Direct link to Long live" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="real-time-interactive-long-video-generation-nvidia">REAL-TIME INTERACTIVE LONG VIDEO GENERATION <code>nvidia</code><a href="https://logicbaron.github.io/blog/2025/10/05/#real-time-interactive-long-video-generation-nvidia" class="hash-link" aria-label="Direct link to real-time-interactive-long-video-generation-nvidia" title="Direct link to real-time-interactive-long-video-generation-nvidia" translate="no">​</a></h3>
-<p>autoregressive 방식으로는 긴 영상을 잘 만들기 어려움. 근데 여기다가 prompt interaction 을 추가하기는 더 어려움. 그렇다고 diffusion 모델을 사용할수도 없다. 너무 느리니까.</p>
-<p>논문에서는 prompt interactive video generation 방식을 소개함. 기본적으로 autoregressive 방식을 사용.</p>
-<p>autoregressive 방식을 사용.</p>
-<p>prompt 전환시 kv-recahce 방식 사용. 이전 프레임의 시각 맥락은 유지하면서, prompt 의미 맥락만을 재활용.</p>
-<p>steaming long-tuning : 과거 kv 를 이어받은 후 autoregressive 모델을 이용해 5초 단위 roll-out 생성 + DMD alignment</p>
-<p>short video attention + frame sink 을 이용해서 영상 전반적인 일관성 유지 : 짧은 비디오 문맥만 파악하되, 영상 전반적으로 중요한 정보는 고정 키-밸류로 계속 참조시킴.</p>
-<p>20.7FPS + 240 초까지 영상 생성했다고 함.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="opengpt-4o-image">OpenGPT-4o-Image<a href="https://logicbaron.github.io/blog/2025/10/05/#opengpt-4o-image" class="hash-link" aria-label="Direct link to OpenGPT-4o-Image" title="Direct link to OpenGPT-4o-Image" translate="no">​</a></h2>
-<p>GPT4o-image 의 테크 리포트이자, 데이터를 어떻게 생성해서 어떻게 학습시켰는지에 대한 논문. 데이터 생성 방식의 중요성이 특히 pretraiing 에서 점점 커지고 있는 거 같다.</p>
-<p>gpt-4o-image 는 이미지-테스트 멀티모달 관련 데이터셑을  충분히 만들기 위해 먼저 필요한 과제들을 매우 세세하게 체계화시킴. 각 과제들을 분류하고 또 과제들을 하위 과제로 체계화시켰음. 예를 들어서 인과 추론의 경우 명시적인 추론, 암묵적인 추론, 복합 인과 사슬등으로 세분화함. 저자들은 이 과정이 매우 중요하다고 하는데, 이렇게 분류를 해놓아야 명확하게 템플릿화된 프롬프트를 통해 대량의 학습 데이터를 생성할 수 있기 떄문임.</p>
-<p>먼저 소스 이미지를 충분히 수집함. 실제 이미지 데이터 뿐 아니라 omniEdit, ImgEdit, gpt-4o 등도 활용함.</p>
-<ul>
-<li><a href="https://tiger-ai-lab.github.io/OmniEdit/" target="_blank" rel="noopener noreferrer">https://tiger-ai-lab.github.io/OmniEdit/</a></li>
-<li><a href="https://github.com/PKU-YuanGroup/ImgEdit" target="_blank" rel="noopener noreferrer">https://github.com/PKU-YuanGroup/ImgEdit</a></li>
-</ul>
-<p>다만, 모델 학습 일관성을 위해 특정 모듈 학습에는 특정 소스의 데이터만 사용함. 예를 들어, subject-driven generation 에서는 OmniEdit 소스 데이터만 활용.</p>
-<p>그 후, 체계화시킨 템플릿 기반으로 모듈별로 대량의 prompt 를 생성함.</p>
-<p>원본 이미지와 prompt 를 활용해서 gpt-1-image-api 를 활용해서 생성한 데이터를 사용함. reference image editing 의 경우 reference image, edited image 를 가지고 source image 를 다시 생성해내는 과정을 가짐. 그냥 학습 시켰을 때 잘 안되서 추가한 것으로 보임. gpt-1-api 는 비공개 모델.</p>
-<p>시스템화된 데이터 생성 파이프라인을 통해 고품질의 학습 데이터를 만들어서 모델 학습시킴으로써 오픈 소스 생태계 확장 및 distillation 의 중요성을 보여준다.</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-04 papers summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/04/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/04/"/>
-        <updated>2025-10-04T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Self-Forcing++]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="self-forcing">Self-Forcing++<a href="https://logicbaron.github.io/blog/2025/10/04/#self-forcing" class="hash-link" aria-label="Direct link to Self-Forcing++" title="Direct link to Self-Forcing++" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="towards-minute-scale-high-quality-video-generation-bytedance">Towards Minute-Scale High-Quality Video Generation <code>bytedance</code><a href="https://logicbaron.github.io/blog/2025/10/04/#towards-minute-scale-high-quality-video-generation-bytedance" class="hash-link" aria-label="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" title="Direct link to towards-minute-scale-high-quality-video-generation-bytedance" translate="no">​</a></h3>
-<p>autoregressive 영양 생성 고품질의 긴 영상 생성이 어렵다. 그래서 짧은 단위 autoregressive 모델을 보통 학습시킴.</p>
-<p>짧은 시간 학습시켜서 long roll-out 시키면 당연히 에러가 누적되고 영상 퀄리티가 저하됨. self-forcing++ 논문의 핵심은 학생이 직접 긴 영상을 생성해보게 한 뒤, teacher 모델 (짧은 시간 학습) 이 국소적인 교정을 여러번 하게 만듬.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251004_img0-ce0ece5828866ff4eb2607d5e665bb4e.png" style="width:500px"></div>
-<p>student 모델이 긴 영상을 생성 한다. 그 후 영상을 일부 구간을 noise initialization ( 노이즈 추가 ) 한 뒤 teacher 모델이 영상을 생성하게 함. 그 후, teacher 모델과 student 모델 간의 DMD alignment 를 맞춰주는 방식으로 학습함.</p>
-<ul>
-<li>teacher 는 주로 diffusion 모델</li>
-</ul>
-<p>이는 기존 모방 방식 학습이 가지고 있던 long-term 영상 생성의 한계를 해결하는 방식을 제안하.</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[10-23 Papers Summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/10/03/</id>
-        <link href="https://logicbaron.github.io/blog/2025/10/03/"/>
-        <updated>2025-10-03T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[메인으로 읽으려고 하는 논문은 두 편.]]></summary>
-        <content type="html"><![CDATA[<p>메인으로 읽으려고 하는 논문은 두 편.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="vla-rft">VLA-RFT<a href="https://logicbaron.github.io/blog/2025/10/03/#vla-rft" class="hash-link" aria-label="Direct link to VLA-RFT" title="Direct link to VLA-RFT" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="vision-language-action-reinforcement-fine-tuning-with-verified-rewards-in-world-simulators">VISION-LANGUAGE-ACTION REINFORCEMENT FINE-TUNING WITH VERIFIED REWARDS IN WORLD SIMULATORS<a href="https://logicbaron.github.io/blog/2025/10/03/#vision-language-action-reinforcement-fine-tuning-with-verified-rewards-in-world-simulators" class="hash-link" aria-label="Direct link to VISION-LANGUAGE-ACTION REINFORCEMENT FINE-TUNING WITH VERIFIED REWARDS IN WORLD SIMULATORS" title="Direct link to VISION-LANGUAGE-ACTION REINFORCEMENT FINE-TUNING WITH VERIFIED REWARDS IN WORLD SIMULATORS" translate="no">​</a></h3>
-<p>VLA, vision-language-action 모델은 모방학습에 의존해서 다른 환경(분포) 에서 사용하기 어려웠고 일반화와 안정성이 부족했음. RL은 도움이 되나 현실적인 문제에 부딪힘. 실제 환경에서 실행하기 어렵거나, 시뮬레이션시 격차 이슈가 있었음.</p>
-<p>데이터 기반 world model 이 많이 발전함. 데이터가 많이 모였고 모델 구조도 개선됨. 그래서 world model 을 시뮬레이터로 사용해 행동 시퀀스로 미래 상태를 예측하고 GRPO 기반으로 최적화함.</p>
-<p>결과적으로 400회 미만 파인튜닝으로 강력한 모델을 학습함.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251003_img0-7d21bb924bcdd4ab14b3087b7ef259ce.png" style="width:500px"></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="beyond-log-likelihood">BEYOND LOG LIKELIHOOD<a href="https://logicbaron.github.io/blog/2025/10/03/#beyond-log-likelihood" class="hash-link" aria-label="Direct link to BEYOND LOG LIKELIHOOD" title="Direct link to BEYOND LOG LIKELIHOOD" translate="no">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="probability-based-objectives-for-supervised-fine-tuning-across-the-model-capability-continuum">PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM<a href="https://logicbaron.github.io/blog/2025/10/03/#probability-based-objectives-for-supervised-fine-tuning-across-the-model-capability-continuum" class="hash-link" aria-label="Direct link to PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM" title="Direct link to PROBABILITY-BASED OBJECTIVES FOR SUPERVISED FINE-TUNING ACROSS THE MODEL CAPABILITY CONTINUUM" translate="no">​</a></h3>
-<p><a href="https://arxiv.org/pdf/2510.00526" target="_blank" rel="noopener noreferrer">https://arxiv.org/pdf/2510.00526</a></p>
-<p>SFT 방식은 주로 negative log likelihood minimize 가 목표함수이지만, 이는 pretrained LLM 의 성질과 맞지 않아 일반화 성능이 제약된다고 주장함.</p>
-<p>NLL 은 "약한 모델" 에 최적화된 학습 방법론임. 이론적인 설명과 경험적인 설명 두 가지.</p>
-<ul>
-<li>이론적인 설명<!-- -->
-<ul>
-<li>NLL 은 정답 토큰 확률이 낮을수록 gradient 가 커짐. 즉, 모델이 정답을 low-probability 로 예측할 때 효과적인 방법.</li>
-<li>모델이 약할때는 정답이 낮은 확률로 나올 가능성이 크므로 강한 학습 신호를 주는게 유리함.</li>
-<li>반면 모델이 강할떄는 이미 정답의 확률이 높음. NLL 은 오히려 노이즈나 아웃라이어에 강한 신호를 줘서 오버피팅이나 부작용(e.g. hallucination)을 유발함.</li>
-</ul>
-</li>
-<li>경험적 설명.<!-- -->
-<ul>
-<li>다양한 도메인에서 실험함.</li>
-<li>pretrained LLM 이 이미 충분한 prior 정보를 가지고 있는 분야일수록 확률이 이미 높은 토큰에 더 큰 웨이트를 주는게 유효하다고 함.</li>
-<li>실제로 top-10% 토큰만 gradient 에 영향을 미치게할 때 가장 학습이 잘된다고 함.</li>
-</ul>
-</li>
-</ul>
-<p>실험은 수학처럼 모델이 pretrained 에서 충분히 배우는 문제, 의학처럼 중간 수준 그리고 퍼즐같이 약한 수준으로 분류함.</p>
-<p>강한 prior 일수록 prior-leaning -&gt; 즉 확률이 높은 확률을 더 많이 고려하는게 중요하다고 함. 단순하게 top-10% 토큰만 고려하기, $-p$, 또는 $-p^k$ 같은 함수들. (concave)</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="why-cant-transformers-learn-multiplication">WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION<a href="https://logicbaron.github.io/blog/2025/10/03/#why-cant-transformers-learn-multiplication" class="hash-link" aria-label="Direct link to WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION" title="Direct link to WHY CAN’T TRANSFORMERS LEARN MULTIPLICATION" translate="no">​</a></h2>
-<p>transformer 구조가 곱셈을 못하는 이유? 특히 4자리 수 이상.</p>
-<p>4자리 이상 곱셈부터는 long-range dependency 를 오래 유지해야하는덱 구조상 어려움. chain of thoughts 구조를 활용하면 이를 어느정도 해결가능함. 저자들은 CoT 구조를 모델 내부 attnetion 에 내재적으로 반영하고 싶었음. 예를 들어서, 곱셈의 중간 단계 값들이 attnetion 내부에 저장되도록.</p>
-<p>그러기 위해서 실질적인 학습은 학습 초기에는 곱셈의 중간 단계를 전부 생성하도록 하고, 갈수록 중간 단계를 없애는 식으로 학습시킴.</p>
-<div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_20251003_img1-02852ba527f8e7c288c720500dfc3120.png" style="width:500px"></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="gem-a-gym-for-agentic-llms">GEM: A GYM FOR AGENTIC LLMS<a href="https://logicbaron.github.io/blog/2025/10/03/#gem-a-gym-for-agentic-llms" class="hash-link" aria-label="Direct link to GEM: A GYM FOR AGENTIC LLMS" title="Direct link to GEM: A GYM FOR AGENTIC LLMS" translate="no">​</a></h2>
-<p>GEM은 에이전틱 LLM을 위한 표준 멀티턴 환경/툴킷으로, 다양한 태스크·툴·비동기 실행을 제공해 경험 기반 RL을 실용화한다. 특히 멀티턴에서 REINFORCE+ReBN이 간단·강력한 베이스라인임을 보이며, γ·툴 접근 같은 RL 핵심 설계를 체계적으로 비교·검증한다. 요컨대 **“환경 표준화 + 가벼운 알고리즘 + 툴 연동”**으로 에이전틱 LLM의 연구·벤치마크·실험을 한 자리에서 가능하게 한다.</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[09-23 Papers Summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/09/22/</id>
-        <link href="https://logicbaron.github.io/blog/2025/09/22/"/>
-        <updated>2025-09-22T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[1. Towards General Agentic Intelligence via Environment Scaling bytedance]]></summary>
-        <content type="html"><![CDATA[<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-towards-general-agentic-intelligence-via-environment-scaling-bytedance">1. Towards General Agentic Intelligence via Environment Scaling <code>bytedance</code><a href="https://logicbaron.github.io/blog/2025/09/22/#1-towards-general-agentic-intelligence-via-environment-scaling-bytedance" class="hash-link" aria-label="Direct link to 1-towards-general-agentic-intelligence-via-environment-scaling-bytedance" title="Direct link to 1-towards-general-agentic-intelligence-via-environment-scaling-bytedance" translate="no">​</a></h2>
-<p>LLM 기반 에이전트는 다양한 API 와 상호작용해야 하지만, 실제 환경 데이터와 학습 환경이 부족해 일반화된 도구 호출 능력이 제한적임. 문서 기반은 즉흥적으로 이루어졌고, 파인 튜닝 기반은 특정 API 종속됨. 이 문서는 LLM 의 보다 일반적인 API 사용 능력을 향상 시킴.</p>
-<p>자동화된 환경 스케일링 파이프라인을 설계함 : 다양한 API를 수집, 도메인화 하고 DB 스키마에 기반한 환경을 프로그램적으로 구성.</p>
-<ul>
-<li>Environment Build and Scalinig : API 3만개 이상 수집 후 도구 그래프 구성. louvain 알고리즘으로 도메인 분리. 각 도메인에 DB 스키마 생성.</li>
-<li>Agent Experience Learning : 시뮬레이션된 사용자-에이전트 상호작용으로 학습. 유효성-상태 일치-함수 일치 세 단계를 통해 데이터를 정제한다.<!-- -->
-<ul>
-<li>범용 학습 -&gt; 도메인 특화 학습</li>
-</ul>
-</li>
-</ul>
-<p>제안한 모델 <strong>AgentScaler</strong> 는 τ-bench, τ²-Bench, ACEBench 등에서 오픈소스 모델 중 SOTA를 달성. 장기적 도구 사용 능력과 RL 통합은 여전히 과제로 남아있음.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2-mind-the-gap-a-closer-look-at-tokenization-for-multiple-choice-question-answering-with-llms">2. Mind the Gap: A Closer Look at Tokenization for Multiple-Choice Question Answering with LLMs<a href="https://logicbaron.github.io/blog/2025/09/22/#2-mind-the-gap-a-closer-look-at-tokenization-for-multiple-choice-question-answering-with-llms" class="hash-link" aria-label="Direct link to 2. Mind the Gap: A Closer Look at Tokenization for Multiple-Choice Question Answering with LLMs" title="Direct link to 2. Mind the Gap: A Closer Look at Tokenization for Multiple-Choice Question Answering with LLMs" translate="no">​</a></h2>
-<p>Answer 뒤의 첫 공백을 어떻게 토크나이즈하느냐에 따라 모델 정확도, 심지어 순위까지도 크게 바뀐다는 내용. 표준화가 없어 비교 신뢰성이 떨어진다. MCQA 평가 방식에 대한 이야기이므로, 개발 입장에서는 크게 중요도가 없음.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="3-atoken-a-unified-tokenizer-for-vision-apple">3. AToken: A Unified Tokenizer for Vision <code>apple</code><a href="https://logicbaron.github.io/blog/2025/09/22/#3-atoken-a-unified-tokenizer-for-vision-apple" class="hash-link" aria-label="Direct link to 3-atoken-a-unified-tokenizer-for-vision-apple" title="Direct link to 3-atoken-a-unified-tokenizer-for-vision-apple" translate="no">​</a></h2>
-<p>기존 비전 토크나이저는 호환성이 보통 낮다. 통합된 비전 토크나이저가 필요하나, 성능 유지가 어렵다. AToken 은 단일 구조로 다양한 vision task 를 지원하는 통합 토크나이저이다. 토큰 개수를 줄이면서도 시각 정보 손실을 최소화하도록 설계함.</p>
-<p>Vision tokenizer 의 예시: 패치 분할, region proposal 등.</p>
-<p>Atoken 구조 : CNN feature 추출 -&gt; adaptive pooling -&gt; dynamic token merging.</p>
-<ul>
-<li>각 토큰의 중요도를  로 계산. 비슷하거나 중요도가 낮은 토큰은 합치고, 중요도가 높은 토큰은 유지한다.</li>
-</ul>
-<p>으로 다양한 태스크에서 통합된 토크나이저 구조를 채용. 이후 classification , detection, scene parsing, sementic regression 에서 테스트 후 좋은 성능 확인.</p>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[09-18 Papers Summary]]></title>
-        <id>https://logicbaron.github.io/blog/2025/09/18/</id>
-        <link href="https://logicbaron.github.io/blog/2025/09/18/"/>
-        <updated>2025-09-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[읽어서 정리 못할 것 같아서 GPT 사용]]></summary>
-        <content type="html"><![CDATA[<p>읽어서 정리 못할 것 같아서 GPT 사용</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="1-measuring-epistemic-humility-in-multimodal-large-language-models">1. Measuring Epistemic Humility in Multimodal Large Language Models<a href="https://logicbaron.github.io/blog/2025/09/18/#1-measuring-epistemic-humility-in-multimodal-large-language-models" class="hash-link" aria-label="Direct link to 1. Measuring Epistemic Humility in Multimodal Large Language Models" title="Direct link to 1. Measuring Epistemic Humility in Multimodal Large Language Models" translate="no">​</a></h2>
-<p><a href="https://arxiv.org/abs/2509.09658" target="_blank" rel="noopener noreferrer">https://arxiv.org/abs/2509.09658</a></p>
-<p>epsitemic humility : 인지적 겸손 -&gt; 모르는 것을 모른다고 하는 능력. calibration.</p>
-<ul>
-<li>HumbleBench라는 새로운 멀티모달 대형 언어 모델(MLLM)의 평가 벤치마크를 제안하며, 보기 중에 정답이 없을 때 “None of the above (NOTA)”을 고를 수 있는지를 평가하여 인식 정확도뿐 아니라 **오답 거부능력(epistemic humility)**을 측정.</li>
-<li>벤치마크는 객체, 관계, 속성(attribute) 세 가지 유형의 환각(hallucination)을 다루며, 약 22,831개의 다지선다형(multiple-choice) 질문으로 구성됨.</li>
-<li>기존 최신 MLLMs를 시험한 결과, 정답이 “None of the above”인 경우 정확도가 매우 낮았고, 모델 규모가 크다고 해서 무조건 성능이 더 좋지는 않으며, reasoning-fine-tune된 모델들도 환각 회피면에서 일관되게 우수하지 않다는 중요한 발견이 나옴.</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="2lost-in-embeddings-information-loss-in-visionlanguage-models">2.Lost in Embeddings: Information Loss in Vision–Language Models<a href="https://logicbaron.github.io/blog/2025/09/18/#2lost-in-embeddings-information-loss-in-visionlanguage-models" class="hash-link" aria-label="Direct link to 2.Lost in Embeddings: Information Loss in Vision–Language Models" title="Direct link to 2.Lost in Embeddings: Information Loss in Vision–Language Models" translate="no">​</a></h2>
-<p>VLM 에서 비전 인코더 출력을 언어 임베딩 공간으로 투영하는 connector 가 정보 손실을 일으킬 수 있음. 이로 인한 영향과 해결방법이 본격적으로 논의된 적은 별로없음. 이 논문은 connector 로 인한 정보 손실을 정량적으로 측정하고 그 영향을 확인함.</p>
-<p>논문에서는 k-NN overlap ratio, 그리고 embedding reconstruction 방식을 제안함.</p>
-<p>k-NN overlap ratio 방식은 connector 통과 전후의 k-nn 을 확인함. 투영 후 보존율은 50~60% 수준. retrieval 성능 도 투영후 전반적으로 하락. 임베딩 공간 상에서의 구조적인 왜곡.</p>
-<p>reconstruction 과정에서도 정보 손실이 꽤 많이 이루어진다고 확인됨. reconstruction model 크기를 늘려도 성능 개선은 제한적이었다고 함. pacth-level 의 국소적인 정보 손실.</p>
-<p>connector 는 구조적/세부적 시각 정보를 상당히 잃는다!</p>]]></content>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[LLM 한국어 튜닝 OpenAI cookbook]]></title>
         <id>https://logicbaron.github.io/blog/2025/09/14/</id>
         <link href="https://logicbaron.github.io/blog/2025/09/14/"/>
         <updated>2025-09-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean]]></summary>
-        <content type="html"><![CDATA[<p><a href="https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean" target="_blank" rel="noopener noreferrer">https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean</a></p>]]></content>
+        <content type="html"><![CDATA[<p><a href="https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean" target="_blank" rel="noopener noreferrer" class="">https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean</a></p>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Best_of vs BeamSearch]]></title>
@@ -410,25 +39,25 @@ entropy 는 높고 perplexity 는 높은 데이터 -&gt; 모델이 불확실하�
         <summary type="html"><![CDATA[중국 LLM 인데 vllm 을 지원한다면 일관적으로 사용해볼 수 있을 것 같은 방법.]]></summary>
         <content type="html"><![CDATA[<p>중국 LLM 인데 vllm 을 지원한다면 일관적으로 사용해볼 수 있을 것 같은 방법.</p>
 <ul>
-<li>원글 : <a href="https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw" target="_blank" rel="noopener noreferrer">https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw</a></li>
-<li>깃허브 주소 : <a href="https://github.com/workdd/LLM_Foreign_Block/tree/main" target="_blank" rel="noopener noreferrer">https://github.com/workdd/LLM_Foreign_Block/tree/main</a></li>
+<li class="">원글 : <a href="https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw" target="_blank" rel="noopener noreferrer" class="">https://www.linkedin.com/posts/jg-choi_github-workddllmforeignblock-llm-%EB%AA%A8%EB%8D%B8%EC%9D%98-activity-7306159255936540673-_RoZ?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAAC7-dbUBG-XQMPqLKY1zf5Mg4XS8xsYErtw</a></li>
+<li class="">깃허브 주소 : <a href="https://github.com/workdd/LLM_Foreign_Block/tree/main" target="_blank" rel="noopener noreferrer" class="">https://github.com/workdd/LLM_Foreign_Block/tree/main</a></li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="글-내용">글 내용.<a href="https://logicbaron.github.io/blog/2025/03/17/#%EA%B8%80-%EB%82%B4%EC%9A%A9" class="hash-link" aria-label="Direct link to 글 내용." title="Direct link to 글 내용." translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="글-내용">글 내용.<a href="https://logicbaron.github.io/blog/2025/03/17/#%EA%B8%80-%EB%82%B4%EC%9A%A9" class="hash-link" aria-label="Direct link to 글 내용." title="Direct link to 글 내용." translate="no">​</a></h2>
 <ol>
-<li>아이디어
+<li class="">아이디어
 LLM 모델 추론 시 출력될 토큰들에 대한 확률값, 정확히는 Logit값을 임의로 조정</li>
 </ol>
 <p>로짓(Logit) 값이란?</p>
 <ul>
-<li>로짓은 모델이 다음에 올 수 있는 모든 토큰에 부여하는 점수로, 이 점수가 높을수록 해당 단어가 선택될 가능성이 커집니다.
+<li class="">로짓은 모델이 다음에 올 수 있는 모든 토큰에 부여하는 점수로, 이 점수가 높을수록 해당 단어가 선택될 가능성이 커집니다.
 이 값은 Softmax 함수를 통해 확률로 변환되어 최종적으로 출력될 단어가 결정됩니다.</li>
 </ul>
 <p>중국어 토큰을 안나오게 하려면?</p>
 <ul>
-<li>중국어 토큰에 대한 범위를 설정하고 해당 범위에 Logit 값을 -inf 처리 하여 나올 확률을 0에 수렴하도록 설정합니다.</li>
+<li class="">중국어 토큰에 대한 범위를 설정하고 해당 범위에 Logit 값을 -inf 처리 하여 나올 확률을 0에 수렴하도록 설정합니다.</li>
 </ul>
 <ol start="2">
-<li>구현 방법</li>
+<li class="">구현 방법</li>
 </ol>
 <p>중국어 아스키 코드 범위 정의</p>
 <div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">chinese_ranges = [</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x4E00, 0x9FFF), # CJK Unified Ideographs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x3400, 0x4DBF), # CJK Unified Ideographs Extension A</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0x20000, 0x2A6DF), # CJK Unified Ideographs Extension B</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">(0xF900, 0xFAFF), # CJK Compatibility Ideographs</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">]</span><br></span></code></pre></div></div>
@@ -448,14 +77,14 @@ logits[valid_indices] = -float("inf") # valid_indices는 중국어 토큰에 대
 <p>신기하게도, LLM 모델이 중국어 토큰에 대한 확률이 0에 수렴하여 생성할 수 없었기에, 한국어로 대답하겠다고 답변하는 결과를 얻었습니다.</p>
 <p>4.결론</p>
 <ul>
-<li>모델이 추론할 때에 선택할 수 있는 토큰 범위를 임의로 조정하여 중국어 토큰에 대한 확률을 0에 수렴하도록 수정</li>
-<li>간단한 처리로 중국어 토큰을 출력하지 않는 즉각적인 결과를 확인</li>
-<li>중국어 외에도 다른 외국어도 토큰 범위만 안다면 제외할 수 있음</li>
+<li class="">모델이 추론할 때에 선택할 수 있는 토큰 범위를 임의로 조정하여 중국어 토큰에 대한 확률을 0에 수렴하도록 수정</li>
+<li class="">간단한 처리로 중국어 토큰을 출력하지 않는 즉각적인 결과를 확인</li>
+<li class="">중국어 외에도 다른 외국어도 토큰 범위만 안다면 제외할 수 있음</li>
 </ul>
 <ul>
-<li>
+<li class="">
 <ol start="5">
-<li>추가 성능 관련 리포트
+<li class="">추가 성능 관련 리포트
 LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 번째 토큰 생성 시 한번 처리하게 됩니다.
 관련하여 기존 첫 번째 토큰 생성 시간인 TTFT가 얼마나 느려지는가에 대해 리포트를 남겨놓습니다.</li>
 </ol>
@@ -464,11 +93,11 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
 <p>Qwen2.5-7B-Instruct 모델 기준</p>
 <p>모델의 첫번째 generate 시,</p>
 <ul>
-<li>TTFT: 1534.34ms, TPS: 39.77 tokens/sec</li>
+<li class="">TTFT: 1534.34ms, TPS: 39.77 tokens/sec</li>
 </ul>
 <p>그 이후,</p>
 <ul>
-<li>TTFT: 101.48ms, TPS: 39.72 tokens/sec</li>
+<li class="">TTFT: 101.48ms, TPS: 39.72 tokens/sec</li>
 </ul>
 <p>리포트 대로 첫번째 generate에서 첫 토큰 생성 시 생성 속도가 많이 느려지는 것을 알 수 있습니다.
 따라서 사용 시 warm up 과정이 한번 필요함을 공유드립니다.</p>
@@ -480,14 +109,14 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
         <link href="https://logicbaron.github.io/blog/2024/07/22/"/>
         <updated>2024-07-22T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[머신 러닝 학습을 위해 대규모 데이터를 로딩하거나, 데모 페이지에서 데이터를 연동해야하는 경우가 있습니다. 대부분의 경우 데이터파일 자체를 읽어와도 좋지만 데이터가 메모리에 올리기에 부족하거나 웹 데모와 같이 데이터 로드가 자주 필요한 경우에는 DB 활용을 고려하게 됩니다. 실제로 이 블로그 첫 글인 웹 데이터 뷰어 만들기가 그런 내용입니다.]]></summary>
-        <content type="html"><![CDATA[<p>머신 러닝 학습을 위해 대규모 데이터를 로딩하거나, 데모 페이지에서 데이터를 연동해야하는 경우가 있습니다. 대부분의 경우 데이터파일 자체를 읽어와도 좋지만 데이터가 메모리에 올리기에 부족하거나 웹 데모와 같이 데이터 로드가 자주 필요한 경우에는 DB 활용을 고려하게 됩니다. 실제로 이 블로그 첫 글인 <a href="https://logicbaron.github.io/blog/2023/11/07/">웹 데이터 뷰어 만들기</a>가 그런 내용입니다.</p>
+        <content type="html"><![CDATA[<p>머신 러닝 학습을 위해 대규모 데이터를 로딩하거나, 데모 페이지에서 데이터를 연동해야하는 경우가 있습니다. 대부분의 경우 데이터파일 자체를 읽어와도 좋지만 데이터가 메모리에 올리기에 부족하거나 웹 데모와 같이 데이터 로드가 자주 필요한 경우에는 DB 활용을 고려하게 됩니다. 실제로 이 블로그 첫 글인 <a class="" href="https://logicbaron.github.io/blog/2023/11/07/">웹 데이터 뷰어 만들기</a>가 그런 내용입니다.</p>
 <p>다만 DB를 띄워서 활용하는 방식은 번거롭다는 단점이 있습니다. <strong>DuckDB</strong>는 이런 단점을 해소해주는 로컬에서 별다른 설치 없이 바로 DB처럼 활용 가능하고 sql도 날릴 수 있습니다.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="installation">Installation<a href="https://logicbaron.github.io/blog/2024/07/22/#installation" class="hash-link" aria-label="Direct link to Installation" title="Direct link to Installation" translate="no">​</a></h3>
-<p>DuckDB의 <a href="https://duckdb.org/docs/installation/?version=stable&amp;environment=cli&amp;platform=macos&amp;download_method=package_manager" target="_blank" rel="noopener noreferrer">installation 페이지</a> 를 참조해서 duckdb 를 설치합니다.</p>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="python-api">Python API<a href="https://logicbaron.github.io/blog/2024/07/22/#python-api" class="hash-link" aria-label="Direct link to Python API" title="Direct link to Python API" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="installation">Installation<a href="https://logicbaron.github.io/blog/2024/07/22/#installation" class="hash-link" aria-label="Direct link to Installation" title="Direct link to Installation" translate="no">​</a></h3>
+<p>DuckDB의 <a href="https://duckdb.org/docs/installation/?version=stable&amp;environment=cli&amp;platform=macos&amp;download_method=package_manager" target="_blank" rel="noopener noreferrer" class="">installation 페이지</a> 를 참조해서 duckdb 를 설치합니다.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="python-api">Python API<a href="https://logicbaron.github.io/blog/2024/07/22/#python-api" class="hash-link" aria-label="Direct link to Python API" title="Direct link to Python API" translate="no">​</a></h3>
 <p>아래 명령어를 통해 duckdb를 파이썬에서 직접 호출해 사용할 수 있습니다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">pip </span><span class="token function" style="color:#d73a49">install</span><span class="token plain"> duckdb </span><br></span></code></pre></div></div>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="parquet-활용-예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="parquet-활용-예시">parquet 활용 예시<a href="https://logicbaron.github.io/blog/2024/07/22/#parquet-%ED%99%9C%EC%9A%A9-%EC%98%88%EC%8B%9C" class="hash-link" aria-label="Direct link to parquet 활용 예시" title="Direct link to parquet 활용 예시" translate="no">​</a></h3>
 <p>parquet 파일에서 random row를 가져오는 예시 코드입니다. random row 를 호출하는 예시입니다.</p>
 <p>(random row를 호출하는 쿼리는 매우 느립니다. select ~ where 정도의 쿼리는 훨씬 빠르게 동작합니다.)</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> duckdb</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> duckdb</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">result </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> conn</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string-interpolation string" style="color:#e3116c">f"select * from '</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">parquet_file_path</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">' offset floor(random() * </span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">data_file_size</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">) LIMIT 1"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
@@ -502,7 +131,7 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
         <summary type="html"><![CDATA[LLM finetuning을 과제에서 진행해야 해서 수행해봤다. 물론 팀원분들이 짜주신 코드가 있었지만 그래도 생각보다 엄청 쉽게 돌아가는 라이브러리들이 잘 작성되어 있다는 사실이 신기했다. 예전에 공부하고 사용은 안 했던 deepspeed도 본격적으로 사용되는 현상도 봤다.]]></summary>
         <content type="html"><![CDATA[<p>LLM finetuning을 과제에서 진행해야 해서 수행해봤다. 물론 팀원분들이 짜주신 코드가 있었지만 그래도 생각보다 엄청 쉽게 돌아가는 라이브러리들이 잘 작성되어 있다는 사실이 신기했다. 예전에 공부하고 사용은 안 했던 deepspeed도 본격적으로 사용되는 현상도 봤다.</p>
 <p>LORA, peft, deepspeed, SFT 등의 기술을 사용했는데 급하게 진행한다고 기술 내용까지는 상세히 못봤다. 또 LLM 논문에서 사용하는 metrics도 이해가 잘 안됐고, 마치 처음 DeepLearning을 공부하던 시절로 돌아간 것 같았다. 아직 Deep learning 분야에서도 공부해야할 것들이 많은데 LLM 쪽 기술 공부를 따라잡아야한다는 생각이 강하게 들었다.</p>
-<p>GPT technical Report 가 정석같은 책이지만 <a href="https://arxiv.org/pdf/2404.01954.pdf" target="_blank" rel="noopener noreferrer">HCX Technical Reprot</a> 먼저 쭉 읽으며 공부를 주말부터 본격적으로 시작해보려 한다.</p>]]></content>
+<p>GPT technical Report 가 정석같은 책이지만 <a href="https://arxiv.org/pdf/2404.01954.pdf" target="_blank" rel="noopener noreferrer" class="">HCX Technical Reprot</a> 먼저 쭉 읽으며 공부를 주말부터 본격적으로 시작해보려 한다.</p>]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[MatPlotlib 한글 설정 간편하게 하기]]></title>
@@ -511,7 +140,7 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
         <updated>2024-02-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[matplotlib 한글 설정하는 게 생각보다 언제나 까다롭고 세팅하기 귀찮아서 영어로 전부 처리해왔는데, 이 과정을 편하게 해주는 라이브러리가 있다.]]></summary>
         <content type="html"><![CDATA[<p>matplotlib 한글 설정하는 게 생각보다 언제나 까다롭고 세팅하기 귀찮아서 영어로 전부 처리해왔는데, 이 과정을 편하게 해주는 라이브러리가 있다.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="koreanize_matplotlib">koreanize_matplotlib<a href="https://logicbaron.github.io/blog/2024/02/14/#koreanize_matplotlib" class="hash-link" aria-label="Direct link to koreanize_matplotlib" title="Direct link to koreanize_matplotlib" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="koreanize_matplotlib">koreanize_matplotlib<a href="https://logicbaron.github.io/blog/2024/02/14/#koreanize_matplotlib" class="hash-link" aria-label="Direct link to koreanize_matplotlib" title="Direct link to koreanize_matplotlib" translate="no">​</a></h2>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> matplotlib</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">pyplot </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> plt</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> koreanize_matplotlib</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">plt</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">plot</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">[</span><span class="token operator" style="color:#393A34">-</span><span class="token number" style="color:#36acaa">1</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">0</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">1</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">2</span><span class="token punctuation" style="color:#393A34">]</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">plt</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">title</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">'그래프 제목'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> fontweight</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">"bold"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">plt</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">xlabel</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">'간단한 그래프'</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">plt</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">show</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
 <div style="text-align:center"><img src="https://logicbaron.github.io/assets/images/blog_2024021401-011accaac88598f95b984cc41f7b8263.png" style="width:500px"></div>
 <p>바로 한글로 된 텍스트가 정상적으로 출력이 된다!</p>]]></content>
@@ -523,19 +152,19 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
         <updated>2023-11-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[tmux 설치를 sudo 권한이 필요한 패키지 매니저를 거치지 않고 바로 하기 위해서 수동 설치에 대해서 알아봤다.]]></summary>
         <content type="html"><![CDATA[<p>tmux 설치를 sudo 권한이 필요한 패키지 매니저를 거치지 않고 바로 하기 위해서 수동 설치에 대해서 알아봤다.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="libevent-빌드">Libevent 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#libevent-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to Libevent 빌드" title="Direct link to Libevent 빌드" translate="no">​</a></h2>
-<p><a href="https://libevent.org/" target="_blank" rel="noopener noreferrer">https://libevent.org/</a> 사이트에서 libevent 압축 파일 다운로드.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="libevent-빌드">Libevent 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#libevent-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to Libevent 빌드" title="Direct link to Libevent 빌드" translate="no">​</a></h2>
+<p><a href="https://libevent.org/" target="_blank" rel="noopener noreferrer" class="">https://libevent.org/</a> 사이트에서 libevent 압축 파일 다운로드.</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">tar</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-xvzf</span><span class="token plain"> libevent-2.0.17-stable.tar.gz</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token builtin class-name">cd</span><span class="token plain"> libevent-2.0.17-stable</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ ./configure </span><span class="token parameter variable" style="color:#36acaa">--prefix</span><span class="token operator" style="color:#393A34">=</span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">install</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="ncurses-빌드">ncurses 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#ncurses-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to ncurses 빌드" title="Direct link to ncurses 빌드" translate="no">​</a></h2>
-<p><a href="https://invisible-island.net/ncurses/announce.html" target="_blank" rel="noopener noreferrer">ncurses</a> 다운로드 페이지 에서 stable 다운로드.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="ncurses-빌드">ncurses 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#ncurses-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to ncurses 빌드" title="Direct link to ncurses 빌드" translate="no">​</a></h2>
+<p><a href="https://invisible-island.net/ncurses/announce.html" target="_blank" rel="noopener noreferrer" class="">ncurses</a> 다운로드 페이지 에서 stable 다운로드.</p>
 <ul>
-<li>다운로드 페이지 : <a href="https://ftp.gnu.org/pub/gnu/ncurses/" target="_blank" rel="noopener noreferrer">https://ftp.gnu.org/pub/gnu/ncurses/</a></li>
+<li class="">다운로드 페이지 : <a href="https://ftp.gnu.org/pub/gnu/ncurses/" target="_blank" rel="noopener noreferrer" class="">https://ftp.gnu.org/pub/gnu/ncurses/</a></li>
 </ul>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">tar</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-xvzf</span><span class="token plain"> ncurses-5.9.tar.gz</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token builtin class-name">cd</span><span class="token plain"> ncurses-5.9/</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ ./configure </span><span class="token parameter variable" style="color:#36acaa">--prefix</span><span class="token operator" style="color:#393A34">=</span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">install</span><br></span></code></pre></div></div>
 <p>$HOME/tmux/include/ncurses 아래에 빌드가 이루어지므로, $HOME/tmux/include 경로로 옮겨줘야 한다.</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">cp</span><span class="token plain"> </span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/include/ncurses/* </span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/include/</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="tmux-빌드">tmux 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#tmux-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to tmux 빌드" title="Direct link to tmux 빌드" translate="no">​</a></h2>
-<p><a href="https://github.com/tmux/tmux/releases" target="_blank" rel="noopener noreferrer">https://github.com/tmux/tmux/releases</a> 에서 tmux 최신 버전 다운로드.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="tmux-빌드">tmux 빌드<a href="https://logicbaron.github.io/blog/2023/11/09/#tmux-%EB%B9%8C%EB%93%9C" class="hash-link" aria-label="Direct link to tmux 빌드" title="Direct link to tmux 빌드" translate="no">​</a></h2>
+<p><a href="https://github.com/tmux/tmux/releases" target="_blank" rel="noopener noreferrer" class="">https://github.com/tmux/tmux/releases</a> 에서 tmux 최신 버전 다운로드.</p>
 <div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">tar</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-xvzf</span><span class="token plain"> tmux-1.6.tar.gz</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token builtin class-name">cd</span><span class="token plain"> tmux-1.6</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ ./configure </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token assign-left variable" style="color:#36acaa">CFLAGS</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">"-I</span><span class="token string environment constant" style="color:#36acaa">$HOME</span><span class="token string" style="color:#e3116c">/tmux/include"</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token assign-left variable" style="color:#36acaa">LDFLAGS</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">"-L</span><span class="token string environment constant" style="color:#36acaa">$HOME</span><span class="token string" style="color:#e3116c">/tmux/lib"</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token parameter variable" style="color:#36acaa">--prefix</span><span class="token operator" style="color:#393A34">=</span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">make</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">install</span><br></span></code></pre></div></div>
 <p>마지막으로 LD_LIBRARY_PATH 환경 변수를 설정해주면 끝난다. ~/.bashrc 와 같은 파일에서 다음 행을 추가한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">~/.bashrc</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token builtin class-name">export</span><span class="token plain"> </span><span class="token assign-left variable" style="color:#36acaa">LD_LIBRARY_PATH</span><span class="token operator" style="color:#393A34">=</span><span class="token environment constant" style="color:#36acaa">$HOME</span><span class="token plain">/tmux/lib</span><br></span></code></pre></div></div>]]></content>
@@ -547,29 +176,29 @@ LogitProcessor 처리 관련 로직은, LLM 모델의 최초 generate에서 첫 
         <updated>2023-11-07T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.]]></summary>
         <content type="html"><![CDATA[<p>서버에서 postgres DB 를 띄우고, streamlit 에서 table 을 읽어서 이미지를 띄울 수 있는 코드를 작성했음.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="postgres-서버-띄우기">postgres 서버 띄우기<a href="https://logicbaron.github.io/blog/2023/11/07/#postgres-%EC%84%9C%EB%B2%84-%EB%9D%84%EC%9A%B0%EA%B8%B0" class="hash-link" aria-label="Direct link to postgres 서버 띄우기" title="Direct link to postgres 서버 띄우기" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="postgres-서버-띄우기">postgres 서버 띄우기<a href="https://logicbaron.github.io/blog/2023/11/07/#postgres-%EC%84%9C%EB%B2%84-%EB%9D%84%EC%9A%B0%EA%B8%B0" class="hash-link" aria-label="Direct link to postgres 서버 띄우기" title="Direct link to postgres 서버 띄우기" translate="no">​</a></h2>
 <p>postgres docker 이미지를 사용했다. 인증 관련해서 문제가 있어서 꽤 구버전을 사용했음.</p>
-<p><a href="https://hub.docker.com/_/postgres" target="_blank" rel="noopener noreferrer">https://hub.docker.com/_/postgres</a> 에서 postgres docker image 를 다운로드 한다.</p>
+<p><a href="https://hub.docker.com/_/postgres" target="_blank" rel="noopener noreferrer" class="">https://hub.docker.com/_/postgres</a> 에서 postgres docker image 를 다운로드 한다.</p>
 <p>최신버전 사용하면 client server 와 인증 오류가 있어서 12-alphine tag 사용했다. postgres db 의 기본 포트인 5432번 사용한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> pull postgres:12-alphine</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> run </span><span class="token parameter variable" style="color:#36acaa">-d</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-p</span><span class="token plain"> </span><span class="token number" style="color:#36acaa">5432</span><span class="token plain">:5432 </span><span class="token parameter variable" style="color:#36acaa">--name</span><span class="token plain"> postgres </span><span class="token parameter variable" style="color:#36acaa">-e</span><span class="token plain"> </span><span class="token assign-left variable" style="color:#36acaa">POSTGRES_USER</span><span class="token operator" style="color:#393A34">=</span><span class="token variable" style="color:#36acaa">${USER_NAME}</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-e</span><span class="token plain"> </span><span class="token assign-left variable" style="color:#36acaa">POSTGRES_PASSWORD</span><span class="token operator" style="color:#393A34">=</span><span class="token variable" style="color:#36acaa">${PASSWROD}</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-i</span><span class="token plain"> postgres:12-alphine</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="postgres-데이터베이스-설정">postgres 데이터베이스 설정<a href="https://logicbaron.github.io/blog/2023/11/07/#postgres-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EC%A0%95" class="hash-link" aria-label="Direct link to postgres 데이터베이스 설정" title="Direct link to postgres 데이터베이스 설정" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="postgres-데이터베이스-설정">postgres 데이터베이스 설정<a href="https://logicbaron.github.io/blog/2023/11/07/#postgres-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EC%84%A4%EC%A0%95" class="hash-link" aria-label="Direct link to postgres 데이터베이스 설정" title="Direct link to postgres 데이터베이스 설정" translate="no">​</a></h2>
 <p>컨테이너 진입해서 pg 내부에 데이터베이스와 테이블을 생성해야 한다.
 먼저 postgres docker 에 bash 쉘로 진입한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-it</span><span class="token plain"> postgres /bin/bash</span><br></span></code></pre></div></div>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ psql </span><span class="token parameter variable" style="color:#36acaa">-U</span><span class="token plain"> </span><span class="token variable" style="color:#36acaa">${USER_NAME}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">psql</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> create database mydb</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="python-pandas-를-이용한-table-생성">python pandas 를 이용한 table 생성<a href="https://logicbaron.github.io/blog/2023/11/07/#python-pandas-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-table-%EC%83%9D%EC%84%B1" class="hash-link" aria-label="Direct link to python pandas 를 이용한 table 생성" title="Direct link to python pandas 를 이용한 table 생성" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="python-pandas-를-이용한-table-생성">python pandas 를 이용한 table 생성<a href="https://logicbaron.github.io/blog/2023/11/07/#python-pandas-%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-table-%EC%83%9D%EC%84%B1" class="hash-link" aria-label="Direct link to python pandas 를 이용한 table 생성" title="Direct link to python pandas 를 이용한 table 생성" translate="no">​</a></h2>
 <p>sqlalchemy 와 pandas 를 이용해서 dataframe 을 pg db 에 업로드 하기.</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">upload_df_to_pg.py</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> sqlalchemy</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> pandas </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> pd</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">MY_DB </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"postgresql://{USER_NAME}:{PASSWORD}@127.0.0.1:5432/mydb"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">engine </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> sqlalchemy</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">create_engine</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">MY_DB</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">conn </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">connect</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> pd</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">read_parquet</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"./path/to/parquet.parquet"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">df</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">to_sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"mytable"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> if_exists</span><span class="token operator" style="color:#393A34">=</span><span class="token string" style="color:#e3116c">'replace'</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> index</span><span class="token operator" style="color:#393A34">=</span><span class="token boolean" style="color:#36acaa">False</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="업로드-된-테이블-확인하기">업로드 된 테이블 확인하기<a href="https://logicbaron.github.io/blog/2023/11/07/#%EC%97%85%EB%A1%9C%EB%93%9C-%EB%90%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="Direct link to 업로드 된 테이블 확인하기" title="Direct link to 업로드 된 테이블 확인하기" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="업로드-된-테이블-확인하기">업로드 된 테이블 확인하기<a href="https://logicbaron.github.io/blog/2023/11/07/#%EC%97%85%EB%A1%9C%EB%93%9C-%EB%90%9C-%ED%85%8C%EC%9D%B4%EB%B8%94-%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0" class="hash-link" aria-label="Direct link to 업로드 된 테이블 확인하기" title="Direct link to 업로드 된 테이블 확인하기" translate="no">​</a></h2>
 <p>다시 도커에 진입해서 진행한다.</p>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token function" style="color:#d73a49">docker</span><span class="token plain"> </span><span class="token builtin class-name">exec</span><span class="token plain"> </span><span class="token parameter variable" style="color:#36acaa">-it</span><span class="token plain"> postgres /bin/bash</span><br></span></code></pre></div></div>
 <ul>
-<li>데이터베이스 접속 : <code>\c</code></li>
-<li>테이블 조회 명령 : <code>\dt</code></li>
-<li>사용자 조회 : <code>\du</code></li>
+<li class="">데이터베이스 접속 : <code>\c</code></li>
+<li class="">테이블 조회 명령 : <code>\dt</code></li>
+<li class="">사용자 조회 : <code>\du</code></li>
 </ul>
 <div class="language-sh codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-sh codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">$ psql </span><span class="token parameter variable" style="color:#36acaa">-U</span><span class="token plain"> </span><span class="token variable" style="color:#36acaa">${USER_NAME}</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">psql</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain">c mydb</span><span class="token punctuation" style="color:#393A34">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">$ </span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">psql</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token punctuation" style="color:#393A34">\</span><span class="token plain">dt</span><span class="token punctuation" style="color:#393A34">;</span><br></span></code></pre></div></div>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="streamlit-이용한-웹데이터-뷰어-만들기">streamlit 이용한 웹데이터 뷰어 만들기<a href="https://logicbaron.github.io/blog/2023/11/07/#streamlit-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9B%B9%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B7%B0%EC%96%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0" class="hash-link" aria-label="Direct link to streamlit 이용한 웹데이터 뷰어 만들기" title="Direct link to streamlit 이용한 웹데이터 뷰어 만들기" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="streamlit-이용한-웹데이터-뷰어-만들기">streamlit 이용한 웹데이터 뷰어 만들기<a href="https://logicbaron.github.io/blog/2023/11/07/#streamlit-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9B%B9%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B7%B0%EC%96%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0" class="hash-link" aria-label="Direct link to streamlit 이용한 웹데이터 뷰어 만들기" title="Direct link to streamlit 이용한 웹데이터 뷰어 만들기" translate="no">​</a></h2>
 <p>large dataframe 의 경우 streamlit 에 직접 올려서 사용하면 속도가 너무 느려진다. 그래서 데이터프레임을 postgres 에 올려두고 sql 을 이용해서 데이터를 읽어옵니다.</p>
 <div class="language-python codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockTitle_OeMC">my_viewer.py</div><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-python codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> streamlit </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> st</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> sqlalchemy</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">from</span><span class="token plain"> PIL </span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> Image</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">import</span><span class="token plain"> numpy </span><span class="token keyword" style="color:#00009f">as</span><span class="token plain"> np</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token decorator annotation punctuation" style="color:#393A34">@st</span><span class="token decorator annotation punctuation" style="color:#393A34">.</span><span class="token decorator annotation punctuation" style="color:#393A34">cache_data</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">def</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">get_all_id</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    engine </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> sqlalchemy</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">create_engine</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    sql_select </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string-interpolation string" style="color:#e3116c">f"select id from </span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">table</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    all_id </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> pd</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">read_sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">sql_select</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">return</span><span class="token plain"> all_id</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">tolist</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">def</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">get_random_id</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    list_all_id </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> get_all_id</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">return</span><span class="token plain"> np</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">random</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">choice</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">list_all_id</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token keyword" style="color:#00009f">def</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">get_image</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token builtin">id</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    engine </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> sqlalchemy</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">create_engine</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    sql_select </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> </span><span class="token string-interpolation string" style="color:#e3116c">f"select img_path from </span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation">table</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c"> where id=</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">{</span><span class="token string-interpolation interpolation builtin">id</span><span class="token string-interpolation interpolation punctuation" style="color:#393A34">}</span><span class="token string-interpolation string" style="color:#e3116c">"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    img_path </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> pd</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">read_sql</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">sql_select</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> engine</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">at</span><span class="token punctuation" style="color:#393A34">[</span><span class="token number" style="color:#36acaa">0</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">'img_path'</span><span class="token punctuation" style="color:#393A34">]</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">    </span><span class="token keyword" style="color:#00009f">return</span><span class="token plain"> Image</span><span class="token punctuation" style="color:#393A34">.</span><span class="token builtin">open</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">img_path</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">st</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">title</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">"이미지 웹뷰어 데모"</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">random_id </span><span class="token operator" style="color:#393A34">=</span><span class="token plain"> get_random_id</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">st</span><span class="token punctuation" style="color:#393A34">.</span><span class="token plain">image</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">get_image</span><span class="token punctuation" style="color:#393A34">(</span><span class="token plain">db</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> table</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"> random_id</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">)</span><br></span></code></pre></div></div>]]></content>
     </entry>
