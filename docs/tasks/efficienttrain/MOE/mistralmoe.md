@@ -66,7 +66,7 @@ Mixtral 이 long context 에 얼마나 잘 대응하는지 확인하기 위해�
 
 이 실험 결과는 라우팅의 semantic behavior 보다 syntatic behavior 에 강하다는 사실을 보여준다. 같은 도메인에서 비슷한 구문적 역할을 하는 토큰은 당연하고 일부 다른 도메인(언어) 에서도 비슷한 역할을 하는 토큰이 같은 expert 로 라우팅 되는 것을 확인했다고 한다. 예를 들어, 아래 그림에서 영어 문장에서 'Question' 이라는 단어와 파이썬에서 'self' 라는 단어가 같은 expert 로 라우팅된다.
 
-이 내용은 [Adaptive Attention Span in Transformer](/docs/practice/efficienttrain/MOE/moe2.md) 에서 관찰한 attention layer 의 역할과 매우 비슷하다. 즉, moe 는 일종의 adaptive attention span 에서 가지고 있던 인사이트를 다른 방식으로 구현했다고 봐도 될 것 같다. MOE 모듈은 기존 attention 모듈의 비효율성을 개선한다. Conversely, MOE는 완전히 새로운 역할을 하는 모듈이 아니라 dense 모델의 역할을 대체할 수 있는 효율성 있는 모듈로 해석해야 한다는 것을 다시 확인할 수 있다.
+이 내용은 [Adaptive Attention Span in Transformer](/docs/tasks/efficienttrain/MOE/moe2.md) 에서 관찰한 attention layer 의 역할과 매우 비슷하다. 즉, moe 는 일종의 adaptive attention span 에서 가지고 있던 인사이트를 다른 방식으로 구현했다고 봐도 될 것 같다. MOE 모듈은 기존 attention 모듈의 비효율성을 개선한다. Conversely, MOE는 완전히 새로운 역할을 하는 모듈이 아니라 dense 모델의 역할을 대체할 수 있는 효율성 있는 모듈로 해석해야 한다는 것을 다시 확인할 수 있다.
 
 <div style={{textAlign: 'Center'}}>
     <img src={mixtral_routingexample} style={{border: 'solid', width: 600}} />

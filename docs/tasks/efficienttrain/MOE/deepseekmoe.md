@@ -23,7 +23,7 @@ Deepseek MOE 구조에 대해 두 가지 개선안을 제안한다. 첫 번쨰�
 
 ### Fine-Grained Expert Segmentation
 
-기존의 LLM MOE 모듈 E개의 Experts FFN Layer를 사용하고 그 중 K개를 선택하는 방식으로 동작한다. [Mixtral](/docs/practice/efficienttrain/MOE/mistralmoe.md)에서는 각 expert의 역할을 심층적으로 분석하여 각 expert는 semantic 분석보다는 syntatic 분석에 강하다는 사실을 밝혀낸다. 또한, input/output 에 가까운 layer일수록 분석하는 가까운 token들간의 상호작용에 집중한다고 이야기한다.
+기존의 LLM MOE 모듈 E개의 Experts FFN Layer를 사용하고 그 중 K개를 선택하는 방식으로 동작한다. [Mixtral](/docs/tasks/efficienttrain/MOE/mistralmoe.md)에서는 각 expert의 역할을 심층적으로 분석하여 각 expert는 semantic 분석보다는 syntatic 분석에 강하다는 사실을 밝혀낸다. 또한, input/output 에 가까운 layer일수록 분석하는 가까운 token들간의 상호작용에 집중한다고 이야기한다.
 
 Deepseek 저자들은 각 expert 의 역할이 분명히 나누어지고 있다는 사실에 집중했다. 훨씬 다양한 역할을 수행할 수 있도록 expert 를 많이 늘리면 좋지만 그러기엔 LLM 모델의 잠재 parameter 수의 한계가 명확했다. 
 
