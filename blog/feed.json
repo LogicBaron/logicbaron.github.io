@@ -5,6 +5,15 @@
     "description": "Logic Baron Blog",
     "items": [
         {
+            "id": "https://logicbaron.github.io/blog/2025/10/30/",
+            "content_html": "<p>깔끔해서 가져왔다. 영어에 더 익숙해져 보기.</p>\n<p><a href=\"https://huggingface.co/papers/2510.22849\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">https://huggingface.co/papers/2510.22849</a></p>\n<p><img decoding=\"async\" loading=\"lazy\" alt=\"alt text\" src=\"https://logicbaron.github.io/assets/images/image-798e7a651a2552ba758aa604831eed59.png\" width=\"1690\" height=\"2202\" class=\"img_ev3q\"></p>",
+            "url": "https://logicbaron.github.io/blog/2025/10/30/",
+            "title": "좋은 한 페이지 논문 요약의 예시.",
+            "summary": "깔끔해서 가져왔다. 영어에 더 익숙해져 보기.",
+            "date_modified": "2025-10-30T00:00:00.000Z",
+            "tags": []
+        },
+        {
             "id": "https://logicbaron.github.io/blog/2025/09/14/",
             "content_html": "<p><a href=\"https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"\">https://cookbook.openai.com/articles/gpt-oss/fine-tune-korean</a></p>",
             "url": "https://logicbaron.github.io/blog/2025/09/14/",

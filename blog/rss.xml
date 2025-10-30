@@ -4,11 +4,21 @@
         <title>Logic Baron Blog</title>
         <link>https://logicbaron.github.io/blog</link>
         <description>Logic Baron Blog</description>
-        <lastBuildDate>Sun, 14 Sep 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 30 Oct 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>Copyright © 2025 Facebook, Inc.</copyright>
+        <item>
+            <title><![CDATA[좋은 한 페이지 논문 요약의 예시.]]></title>
+            <link>https://logicbaron.github.io/blog/2025/10/30/</link>
+            <guid>https://logicbaron.github.io/blog/2025/10/30/</guid>
+            <pubDate>Thu, 30 Oct 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[깔끔해서 가져왔다. 영어에 더 익숙해져 보기.]]></description>
+            <content:encoded><![CDATA[<p>깔끔해서 가져왔다. 영어에 더 익숙해져 보기.</p>
+<p><a href="https://huggingface.co/papers/2510.22849" target="_blank" rel="noopener noreferrer" class="">https://huggingface.co/papers/2510.22849</a></p>
+<p><img decoding="async" loading="lazy" alt="alt text" src="https://logicbaron.github.io/assets/images/image-798e7a651a2552ba758aa604831eed59.png" width="1690" height="2202" class="img_ev3q"></p>]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[LLM 한국어 튜닝 OpenAI cookbook]]></title>
             <link>https://logicbaron.github.io/blog/2025/09/14/</link>

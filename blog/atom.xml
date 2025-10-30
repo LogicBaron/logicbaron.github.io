@@ -2,12 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://logicbaron.github.io/blog</id>
     <title>Logic Baron Blog</title>
-    <updated>2025-09-14T00:00:00.000Z</updated>
+    <updated>2025-10-30T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://logicbaron.github.io/blog"/>
     <subtitle>Logic Baron Blog</subtitle>
     <icon>https://logicbaron.github.io/img/logicbaron_32.ico</icon>
     <rights>Copyright © 2025 Facebook, Inc.</rights>
+    <entry>
+        <title type="html"><![CDATA[좋은 한 페이지 논문 요약의 예시.]]></title>
+        <id>https://logicbaron.github.io/blog/2025/10/30/</id>
+        <link href="https://logicbaron.github.io/blog/2025/10/30/"/>
+        <updated>2025-10-30T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[깔끔해서 가져왔다. 영어에 더 익숙해져 보기.]]></summary>
+        <content type="html"><![CDATA[<p>깔끔해서 가져왔다. 영어에 더 익숙해져 보기.</p>
+<p><a href="https://huggingface.co/papers/2510.22849" target="_blank" rel="noopener noreferrer" class="">https://huggingface.co/papers/2510.22849</a></p>
+<p><img decoding="async" loading="lazy" alt="alt text" src="https://logicbaron.github.io/assets/images/image-798e7a651a2552ba758aa604831eed59.png" width="1690" height="2202" class="img_ev3q"></p>]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LLM 한국어 튜닝 OpenAI cookbook]]></title>
         <id>https://logicbaron.github.io/blog/2025/09/14/</id>
